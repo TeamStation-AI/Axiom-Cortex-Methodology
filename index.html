@@ -2,99 +2,220 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Axiom Cortex™: A Methodology Brief</title>
-  <meta name="description" content="Technical methodology brief for the Axiom Cortex cognitive AI engine." />
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Axiom Cortex™ Documentation</title>
+  <meta name="theme-color" content="#0b1220"/>
+  <meta name="description" content="Technical documentation microsite for Axiom Cortex™."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --bg:#161b22;
-      --panel:#0d1117;
-      --accent:#7bb3ff;
-      --text:#e6e9f0;
-      --muted:#a6adbb;
-      --border:rgba(255,255,255,.12);
-      --radius:16px;
+    :root {
+      --bg: #161b22;
+      --panel: #0d1117;
+      --accent: #7bb3ff;
+      --text: #e6e9f0;
+      --muted: #a6adbb;
+      --border: rgba(255,255,255,.12);
+      --radius: 16px;
+      --header-h: 70px;
     }
-    body { background: var(--bg); color: var(--text); font-family: sans-serif; }
-    header, footer { background: var(--panel); }
-    main { max-width: 900px; margin: 0 auto; padding: 90px 16px 48px; }
-    article { background: var(--panel); border-radius: var(--radius); padding: 2em; }
-    h1, h2, h3 { margin-top: 1.5em; font-weight: bold;}
-    h1 { font-size: 2em; }
-    h2 { font-size: 1.4em; }
-    h3 { font-size: 1.1em; }
-    h4 { margin-top: 1.3em; font-size: 1em; font-weight: bold;}
-    ul, ol { margin: 1em 0 1em 1.3em; }
-    blockquote { border-left: 4px solid var(--accent); background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: var(--muted);}
-    a { color: var(--accent); text-decoration: underline; }
-    em { font-style: italic; }
-    strong { font-weight: bold; }
-    hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
-    code { background: #212c3b; border-radius: 4px; padding: 0.2em 0.4em; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    ::-webkit-scrollbar { width: 10px; background: var(--panel);}
+    ::-webkit-scrollbar-thumb { background: #222b3c; border-radius: 6px;}
+    main :where(h1,h2,h3,h4,h5,h6) { scroll-margin-top: calc(var(--header-h) + 18px); }
+    .toc-active { background: rgba(123,179,255,0.15); color: var(--accent) !important; }
+    .toc-link { cursor: pointer;}
+    .prose a { color: var(--accent); text-underline-offset: 2px; }
+    .prose pre, .prose code { background-color: #202737!important; border-radius: 8px;}
+    .prose blockquote { border-left: 4px solid var(--accent); background: #232b3b; padding: 1em; margin: 1em 0;}
+    .prose img { max-width: 100%; border-radius: 8px; }
+    .prose table { border-collapse: collapse; border: 1px solid #333; }
+    .prose th, .prose td { border: 1px solid #333; padding: 6px 12px;}
+    .prose ul, .prose ol { margin-left: 1.4em; }
+    @media (max-width: 1023px) {
+      aside#tocWrap { display: none !important; }
+    }
+    @media (max-width: 640px) {
+      nav#mainNav { flex-direction: column; gap: 0.5rem;}
+      .prose { padding: 0.8em !important; }
+    }
   </style>
 </head>
-<body>
-  <header>
-    <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
-      <span class="text-base font-semibold tracking-wide text-white">TeamStation AI | Axiom Cortex™</span>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank"
-        class="rounded-full bg-[#7bb3ff] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
+<body class="min-h-screen flex flex-col">
+  <header class="bg-[--panel] border-b border-white/10 sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-4">
+      <span class="text-xl font-extrabold tracking-tight text-white" aria-label="Site Title">Axiom Cortex™</span>
+      <nav id="mainNav" class="flex flex-wrap items-center gap-6" aria-label="Primary"></nav>
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank" rel="noopener"
+         class="rounded-full bg-[--accent] px-4 py-2 text-xs font-semibold text-black hover:brightness-110 shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--accent]"
+         aria-label="Schedule Demo">
         Schedule Demo
       </a>
     </div>
   </header>
-  <main>
-    <article>
-      <h1>Axiom Cortex™: A Methodology Brief</h1>
-      <p>Let's be blunt. The nearshore industry is a sea of sameness. You’ve seen the pitch decks from the usual suspects—BairesDev, Tecla, Deel—and they all boil down to the same thing: a database of résumés and a promise to fill seats. It’s a numbers game. A keyword-matching lottery.</p>
-      <p>And it’s fundamentally broken.</p>
-      <p>We didn’t set out to build a better version of that broken model. We decided to build a different machine entirely. This document is a look under the hood. It’s for the technical leaders who care about the <em>how</em> because they know the <em>how</em> is the only thing that guarantees the <em>what</em>.</p>
-      <hr>
-      <h3>The Core Idea: Stop Guessing, Start Engineering</h3>
-      <p>At the heart of the TeamStation product is our platform, the <strong>Nearshore IT Co-Pilot™</strong>. And at the heart of that platform is our engine: <strong>Axiom Cortex™</strong>.</p>
-      <p>Axiom Cortex isn't a search tool. It’s a cognitive evaluation engine designed to do one thing: transform team building from a game of chance into a deterministic engineering discipline. It’s built on a non-negotiable principle: <strong>zero-tolerance for hallucination.</strong> Every insight is grounded, every claim is auditable, and every process is designed to measure one thing—a candidate's actual ability to think and execute.</p>
-      <p>It’s powered by 44 proprietary algorithms. Not off-the-shelf models, but a purpose-built stack of psychometric, behavioral, and technical analyzers.</p>
-      <hr>
-      <h3>The "Secret Sauce" Isn't a Secret, It's Just Hard Work</h3>
-      <p>Any system is only as good as its inputs and its refusal to take shortcuts. Here’s a sample of the methodologies that make our engine different.</p>
-      <h4>1. The L2-Aware Validation Layer</h4>
-      <p>This is probably the most important thing we’ve built. Standard NLP models are notoriously biased against non-native English speakers. They mistake linguistic artifacts—like a different sentence structure or a slight accent—for a lack of clarity or skill. It’s a critical flaw that disqualifies incredible talent for the wrong reasons.</p>
-      <p>Our L2-Aware layer fixes this. Think of it like noise-cancellation for an interview. It uses a suite of techniques to isolate the <em>signal</em> (the quality of the thinking) from the <em>noise</em> (the linguistic delivery).</p>
-      <ul>
-        <li><strong>Proficiency-Normalized Scoring:</strong> We mathematically separate semantic content from grammatical form errors, ensuring we’re not penalizing someone for thinking in two languages.</li>
-        <li><strong>Cross-Lingual Semantics:</strong> We use multilingual embeddings and techniques like Fréchet Semantic Distance so that a concept explained in Spanish-influenced English is understood to be identical to one explained by a native speaker. No translation penalty. Ever.</li>
-      </ul>
-      <p>Bottom line: We measure the quality of the engineering mind, not the accent.</p>
-      <h4>2. Network Psychometrics (aka "Skill Graphs")</h4>
-      <p>A résumé is a flat list of keywords. A real engineer is a network of interconnected skills. We use Gaussian Graphical Models to build a "skill graph" for every candidate from the interview evidence. This lets us see not just that they know <code>React</code> and <code>Node.js</code>, but the actual strength of the connection between those skills. It helps us find the true full-stack developer versus the front-end developer who just lists Node.js.</p>
-      <h4>3. Constrained Bayesian Decision Theory</h4>
-      <p>The final recommendation isn't based on a simple score. That’s a rookie move. We use a constrained optimization model that maximizes the expected utility of a hire, subject to hard constraints. A candidate might have a high technical score, but if our models show a high probability of failing a core competency gate (like team collaboration), the system will not recommend them. It’s a data-driven safety check that prevents costly mismatches.</p>
-      <hr>
-      <h3>The Output: An Intelligent Services Infrastructure</h3>
-      <p>All of this science and data feeds into the <strong>Nearshore IT Co-Pilot™</strong> platform. It’s not just a list of names. It’s a fully-managed infrastructure that delivers:</p>
-      <ul>
-        <li>A shortlist of candidates with a <strong>Predictive Alignment Score (PAS™) of 95% or higher.</strong></li>
-        <li>A comprehensive, auditable <strong>Evidence Locker</strong> for every single evaluation.</li>
-        <li>An all-encompassing service that includes devices, offices, insurance, cybersecurity, and payroll under a single, accountable SLA.</li>
-      </ul>
-      <p>We didn’t just build a better talent filter. We built an end-to-end infrastructure for engineering elite nearshore teams.</p>
-      <h3>See the Proof</h3>
-      <ul>
-        <li><strong><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5188490" target="_blank">Read Our Foundational Research (SSRN)</a></strong></li>
-        <li><strong><a href="https://teamstation.dev/nearshore-integrated-services" target="_blank">Explore the Nearshore IT Co-Pilot™ Platform</a></strong></li>
-      </ul>
-      <hr>
-      <p><em>This is the high-level view. If you want to go deeper, schedule a demo. We’re happy to show you the data.</em></p>
-    </article>
+  <main class="flex-1 w-full max-w-7xl mx-auto flex flex-row gap-6 px-2 md:px-6" id="mainContainer">
+    <aside id="tocWrap" class="hidden lg:block w-72 shrink-0 pt-8" aria-label="Table of Contents">
+      <div class="sticky top-32 bg-[#101624] rounded-xl border border-white/10 shadow-lg p-5">
+        <div class="font-bold text-white mb-2 text-lg tracking-wide">Contents</div>
+        <nav id="toc" class="text-[15px] flex flex-col gap-1"></nav>
+      </div>
+    </aside>
+    <section class="flex-1 min-w-0">
+      <article id="content" class="prose prose-invert max-w-none lg:rounded-2xl bg-[--panel] border border-white/10 shadow-xl mt-8 mb-12 p-6" tabindex="0" aria-live="polite">Loading…</article>
+    </section>
   </main>
-  <footer>
-    <div class="text-center py-6 text-[--muted]">
-      © 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.<br>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq"
-        class="text-[#7bb3ff] hover:brightness-110" target="_blank">Schedule a Technical Demo →</a>
+  <footer class="bg-[--panel] border-t border-white/10 text-center py-8 mt-auto">
+    <div class="text-[15px] text-[--muted]">© 2025 TeamStation AI. Axiom Cortex™ Technical Methodology. | 
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" class="text-[--accent] underline" target="_blank">Schedule a Demo</a>
     </div>
   </footer>
+  <script>
+    const RAW_BASE = "https://raw.githubusercontent.com/TeamstationAI/Axiom-Cortex-Methodology/main/";
+    const PAGES_JSON = "_pages.json";
+    let pages = [];
+
+    // Markdown Parser (Minimal, Accessible, Autonomous)
+    function parseMarkdown(md) {
+      md = md.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
+        code = code.replace(/[<>&]/g, c=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[c]));
+        return `<pre class="overflow-auto my-4 rounded-lg border border-white/10 bg-[#202737] p-4"><code class="lang-${lang||''}">${code}</code></pre>`;
+      });
+      md = md.replace(/^>\s?(.*)$/gm, '<blockquote>$1</blockquote>');
+      md = md.replace(/^###### (.*)$/gm, '<h6>$1</h6>')
+             .replace(/^##### (.*)$/gm, '<h5>$1</h5>')
+             .replace(/^#### (.*)$/gm, '<h4>$1</h4>')
+             .replace(/^### (.*)$/gm, '<h3>$1</h3>')
+             .replace(/^## (.*)$/gm, '<h2>$1</h2>')
+             .replace(/^# (.*)$/gm, '<h1>$1</h1>');
+      md = md.replace(/^\s*([-*_])\1\1+\s*$/gm,'<hr>');
+      md = md.replace(/^\s*[-*+] (.*)$/gm, '<li>$1</li>');
+      md = md.replace(/(<li>.*<\/li>)/gms, m => `<ul>${m}</ul>`);
+      md = md.replace(/`([^`]+)`/g, '<code>$1</code>');
+      md = md.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+      md = md.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+      md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      md = md.replace(/^(?!<[hluo][lina]|<blockquote|<hr|<pre|<code|<img|<table|<tr|<td|<th|<ul|<ol|<li|<strong|<em|<a|<p)([^\n]+)\n?/gm, '<p>$1</p>');
+      return md;
+    }
+
+    // Minimal syntax highlighter for code blocks (autonomous)
+    function highlightAllCode() {
+      document.querySelectorAll('pre > code').forEach(code => {
+        const lang = code.className.match(/lang-(\w+)/)?.[1] || '';
+        if (lang === "js" || lang === "javascript") {
+          code.innerHTML = code.innerHTML
+            .replace(/(\/\/.*)/g, '<span style="color:#8abeb7;">$1</span>')
+            .replace(/\b(const|let|function|return|if|else|for|while|true|false|null|new|class|await|async|import|from|export)\b/g, '<span style="color:#7bb3ff;">$1</span>');
+        }
+      });
+    }
+
+    // Navigation: Fetch and Build
+    async function loadNav() {
+      try {
+        const resp = await fetch(RAW_BASE + PAGES_JSON);
+        pages = await resp.json();
+        const nav = document.getElementById('mainNav');
+        nav.innerHTML = "";
+        pages.forEach((p, idx) => {
+          const a = document.createElement("a");
+          a.href = "#" + encodeURIComponent(p.file);
+          a.className = "text-[--accent] font-medium hover:text-white px-2 py-1 rounded transition navlink focus:outline-none focus-visible:ring-2 focus-visible:ring-[--accent]";
+          a.textContent = p.title;
+          nav.appendChild(a);
+        });
+      } catch (e) {
+        document.getElementById('mainNav').innerHTML = "<span class='text-red-400'>[Navigation failed]</span>";
+      }
+    }
+
+    // Routing & Content Loading
+    async function loadPage(mdfile) {
+      const content = document.getElementById('content');
+      content.innerHTML = "<div class='text-gray-400'>Loading…</div>";
+      try {
+        const resp = await fetch(RAW_BASE + mdfile + "?v=" + Date.now());
+        if (!resp.ok) throw new Error("Could not load: " + mdfile);
+        const md = await resp.text();
+        content.innerHTML = parseMarkdown(md);
+        highlightAllCode();
+        buildTOC();
+        highlightActiveNav(mdfile);
+        content.focus();
+        window.scrollTo({top:0});
+      } catch (e) {
+        content.innerHTML = `<div class="text-red-400">Error loading <b>${mdfile}</b><br>${e.message}</div>`;
+        document.getElementById('toc').innerHTML = "";
+      }
+    }
+
+    // TOC & Scrollspy
+    function buildTOC() {
+      const toc = document.getElementById('toc');
+      toc.innerHTML = "";
+      const content = document.getElementById('content');
+      const hs = [...content.querySelectorAll('h1, h2, h3')];
+      if (!hs.length) { document.getElementById('tocWrap').style.display = "none"; return; }
+      else { document.getElementById('tocWrap').style.display = ""; }
+      hs.forEach(h => {
+        if (!h.id) h.id = h.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+      });
+      hs.forEach(h => {
+        const a = document.createElement('a');
+        a.href = "#" + h.id;
+        a.textContent = h.textContent;
+        a.className = "block toc-link py-1 px-2 rounded hover:bg-[#202737] focus:outline-none";
+        a.style.marginLeft = h.tagName === "H2" ? "1rem" : h.tagName === "H3" ? "2rem" : "0";
+        a.setAttribute('aria-label', h.textContent);
+        toc.appendChild(a);
+      });
+      toc.querySelectorAll('.toc-link').forEach(a => {
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          const t = document.getElementById(this.getAttribute('href').slice(1));
+          if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+      // Scrollspy
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+          const tocLinks = toc.querySelectorAll('.toc-link');
+          tocLinks.forEach(link => {
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.toggle('toc-active', entry.isIntersecting && entry.intersectionRatio > 0.55);
+            }
+          });
+        });
+      }, {
+        root: null,
+        threshold: [0.55],
+        rootMargin: "-40% 0px -50% 0px"
+      });
+      hs.forEach(h => observer.observe(h));
+    }
+
+    // Active Nav Highlight
+    function highlightActiveNav(mdfile) {
+      document.querySelectorAll('.navlink').forEach(a => {
+        a.classList.toggle('bg-[#202737]', a.getAttribute('href') === "#" + mdfile);
+        a.setAttribute('aria-current', a.getAttribute('href') === "#" + mdfile ? 'page' : 'false');
+      });
+    }
+
+    // Routing
+    function route() {
+      let file = decodeURIComponent(location.hash.replace(/^#/, "")) || (pages[0]?.file || "README.md");
+      loadPage(file);
+    }
+
+    // Init
+    (async function() {
+      await loadNav();
+      window.addEventListener('hashchange', route);
+      route();
+    })();
+  </script>
 </body>
 </html>
