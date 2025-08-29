@@ -1,73 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <title>TeamStation AI | Axiom Cortex™ — Technical Methodology</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#0b1220" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { background: #161b22; color: #e6e9f0; font-family: sans-serif; }
-    header, footer { background: #0d1117; }
-    main { max-width: 900px; margin: 0 auto; padding: 90px 16px 48px; }
-    article { background: #0d1117; border-radius: 16px; padding: 2em; }
-    h1, h2, h3 { margin-top: 1.5em; font-weight: bold;}
-    h1 { font-size: 2em; }
-    h2 { font-size: 1.4em; }
-    h3 { font-size: 1.1em; }
-    ul, ol { margin: 1em 0 1em 1.3em; }
-    blockquote { border-left: 4px solid #7bb3ff; background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: #a6adbb;}
-    pre { background: #0a162d !important; border-radius: 10px; padding: 1em; overflow-x: auto; }
-    code { background: #212c3b !important; border-radius: 4px; padding: 0.2em 0.4em; }
-    a { color: #7bb3ff; text-decoration: underline; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axiom Cortex | Technical Methodology</title>
+    <meta name="description" content="Technical methodology brief for the Axiom Cortex cognitive AI engine." />
+    <meta name="theme-color" content="#0b1220" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root{
+            --bg:#161b22;
+            --panel:#0d1117;
+            --accent:#7bb3ff;
+            --text:#e6e9f0;
+            --muted:#a6adbb;
+            --border:rgba(255,255,255,.12);
+            --radius:16px;
+        }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; }
+        header, footer { background: var(--panel); }
+        main { max-width: 900px; margin: 0 auto; padding: 90px 16px 48px; }
+        article { background: var(--panel); border-radius: var(--radius); padding: 2em; }
+        h1, h2, h3 { margin-top: 1.5em; font-weight: bold;}
+        h1 { font-size: 2em; }
+        h2 { font-size: 1.4em; }
+        h3 { font-size: 1.1em; }
+        ul, ol { margin: 1em 0 1em 1.3em; }
+        blockquote { border-left: 4px solid var(--accent); background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: var(--muted);}
+        a { color: var(--accent); text-decoration: underline; }
+        em { font-style: italic; }
+        strong { font-weight: bold; }
+        hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
-      <span class="text-base font-semibold tracking-wide text-white">TeamStation AI | Axiom Cortex™</span>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank"
-         class="rounded-full bg-[#7bb3ff] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
-         Schedule Demo
-      </a>
-    </div>
-  </header>
-  <main>
-    <article id="content">
-      <h1>Axiom Cortex™: A Methodology Brief</h1>
-      <p>Let’s be blunt. The nearshore industry is a sea of sameness. You’ve seen the pitch decks from the usual suspects—BairesDev, Tecla, Deel—and they all boil down to the same thing: a database of résumés and a promise to fill seats. It’s a numbers game. A keyword-matching lottery.</p>
-      <p>And it’s fundamentally broken.</p>
-      <p>We didn’t set out to build a better version of that broken model. We decided to build a different machine entirely. This document is a look under the hood. It’s for the technical leaders who care about the <strong>how</strong> because they know the <strong>how</strong> is the only thing that guarantees the <strong>what</strong>.</p>
-      <h2>The Core Idea: Stop Guessing, Start Engineering</h2>
-      <p>At the heart of the TeamStation product is our platform, the <strong>Nearshore IT Co-Pilot™</strong>. And at the heart of that platform is our engine: <strong>Axiom Cortex™</strong>.</p>
-      <p>Axiom Cortex isn’t a search tool. It’s a cognitive evaluation engine designed to do one thing: transform team building from a game of chance into a deterministic engineering discipline. It’s built on a non-negotiable principle: zero-tolerance for hallucination. Every insight is grounded, every claim is auditable, and every process is designed to measure one thing—a candidate’s actual ability to think and execute.</p>
-      <p>It’s powered by 44 proprietary algorithms. Not off-the-shelf models, but a purpose-built stack of psychometric, behavioral, and technical analyzers.</p>
-      <h2>The "Secret Sauce" Isn't a Secret, It's Just Hard Work</h2>
-      <p>Any system is only as good as its inputs and its refusal to take shortcuts. Here’s a sample of the methodologies that make our engine different:</p>
-      <ol>
-        <li>
-          <strong>The L2-Aware Validation Layer</strong><br>
-          This is probably the most important thing we’ve built. Standard NLP models are notoriously biased against non-native English speakers. They mistake linguistic artifacts—like a different sentence structure or a slight accent—for a lack of clarity or skill. It’s a critical flaw that disqualifies incredible talent for the wrong reasons.<br>
-          Our L2-Aware layer fixes this. Think of it like noise-cancellation for an interview. It uses a suite of techniques to isolate the <em>signal</em> (the quality of the thinking) from the <em>noise</em> (the linguistic delivery).
-        </li>
-        <li>
-          <strong>Proficiency-Normalized Scoring</strong>:<br>
-          We mathematically separate semantic content from grammatical form errors, ensuring we’re not penalizing someone for thinking in two languages.
-        </li>
-        <li>
-          <strong>Cross-Lingual Semantics</strong>:<br>
-          We use multilingual embeddings and techniques like Fréchet Semantic Distance so that a concept explained in Spanish-influenced English is understood to be identical to one explained by a native speaker. No translation applied.
-        </li>
-      </ol>
-      <p>For more, see our <a href="https://teamstation.dev/nearshore-integrated-services" target="_blank">Nearshore IT Co-Pilot™ platform</a>.</p>
-    </article>
-  </main>
-  <footer>
-    <div class="text-center py-6 text-[--muted]">
-      © 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.<br>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq"
-         class="text-[#7bb3ff] hover:brightness-110" target="_blank">Schedule a Technical Demo →</a>
-    </div>
-  </footer>
+    <header>
+        <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
+            <span class="text-base font-semibold tracking-wide text-white">TeamStation AI | Axiom Cortex™</span>
+            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank"
+            class="rounded-full bg-[#7bb3ff] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
+                Schedule Demo
+            </a>
+        </div>
+    </header>
+    <main>
+        <article id="content">
+            <h1>Axiom Cortex™: A Methodology Brief</h1>
+            <p>Let's be blunt. The nearshore industry is a sea of sameness. You’ve seen the pitch decks from the usual suspects—BairesDev, Tecla, Deel—and they all boil down to the same thing: a database of résumés and a promise to fill seats. It’s a numbers game. A keyword-matching lottery.</p>
+            <p>And it’s fundamentally broken.</p>
+            <p>We didn’t set out to build a better version of that broken model. We decided to build a different machine entirely. This document is a look under the hood. It’s for the technical leaders who care about the <em>how</em> because they know the <em>how</em> is the only thing that guarantees the <em>what</em>.</p>
+            <hr>
+            <h3>The Core Idea: Stop Guessing, Start Engineering</h3>
+            <p>At the heart of the TeamStation product is our platform, the <strong>Nearshore IT Co-Pilot™</strong>. And at the heart of that platform is our engine: <strong>Axiom Cortex™</strong>.</p>
+            <p>Axiom Cortex isn't a search tool. It’s a cognitive evaluation engine designed to do one thing: transform team building from a game of chance into a deterministic engineering discipline. It’s built on a non-negotiable principle: <strong>zero-tolerance for hallucination.</strong> Every insight is grounded, every claim is auditable, and every process is designed to measure one thing—a candidate's actual ability to think and execute.</p>
+            <p>It’s powered by 44 proprietary algorithms. Not off-the-shelf models, but a purpose-built stack of psychometric, behavioral, and technical analyzers.</p>
+            <hr>
+            <h3>The "Secret Sauce" Isn't a Secret, It's Just Hard Work</h3>
+            <p>Any system is only as good as its inputs and its refusal to take shortcuts. Here’s a sample of the methodologies that make our engine different.</p>
+            <h4>1. The L2-Aware Validation Layer</h4>
+            <p>This is probably the most important thing we’ve built. Standard NLP models are notoriously biased against non-native English speakers. They mistake linguistic artifacts—like a different sentence structure or a slight accent—for a lack of clarity or skill. It’s a critical flaw that disqualifies incredible talent for the wrong reasons.</p>
+            <p>Our L2-Aware layer fixes this. Think of it like noise-cancellation for an interview. It uses a suite of techniques to isolate the <em>signal</em> (the quality of the thinking) from the <em>noise</em> (the linguistic delivery).</p>
+            <ul>
+                <li><strong>Proficiency-Normalized Scoring:</strong> We mathematically separate semantic content from grammatical form errors, ensuring we’re not penalizing someone for thinking in two languages.</li>
+                <li><strong>Cross-Lingual Semantics:</strong> We use multilingual embeddings and techniques like Fréchet Semantic Distance so that a concept explained in Spanish-influenced English is understood to be identical to one explained by a native speaker. No translation penalty. Ever.</li>
+            </ul>
+            <p>Bottom line: We measure the quality of the engineering mind, not the accent.</p>
+            <h4>2. Network Psychometrics (aka "Skill Graphs")</h4>
+            <p>A résumé is a flat list of keywords. A real engineer is a network of interconnected skills. We use Gaussian Graphical Models to build a "skill graph" for every candidate from the interview evidence. This lets us see not just that they know <code>React</code> and <code>Node.js</code>, but the actual strength of the connection between those skills. It helps us find the true full-stack developer versus the front-end developer who just lists Node.js.</p>
+            <h4>3. Constrained Bayesian Decision Theory</h4>
+            <p>The final recommendation isn't based on a simple score. That’s a rookie move. We use a constrained optimization model that maximizes the expected utility of a hire, subject to hard constraints. A candidate might have a high technical score, but if our models show a high probability of failing a core competency gate (like team collaboration), the system will not recommend them. It’s a data-driven safety check that prevents costly mismatches.</p>
+            <hr>
+            <h3>The Output: An Intelligent Services Infrastructure</h3>
+            <p>All of this science and data feeds into the <strong>Nearshore IT Co-Pilot™</strong> platform. It’s not just a list of names. It’s a fully-managed infrastructure that delivers:</p>
+            <ul>
+                <li>A shortlist of candidates with a <strong>Predictive Alignment Score (PAS™) of 95% or higher.</strong></li>
+                <li>A comprehensive, auditable <strong>Evidence Locker</strong> for every single evaluation.</li>
+                <li>An all-encompassing service that includes devices, offices, insurance, cybersecurity, and payroll under a single, accountable SLA.</li>
+            </ul>
+            <p>We didn’t just build a better talent filter. We built an end-to-end infrastructure for engineering elite nearshore teams.</p>
+            <h3>See the Proof</h3>
+            <ul>
+                <li><strong><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5188490" target="_blank">Read Our Foundational Research (SSRN)</a></strong></li>
+                <li><strong><a href="https://teamstation.dev/nearshore-integrated-services" target="_blank">Explore the Nearshore IT Co-Pilot™ Platform</a></strong></li>
+            </ul>
+            <hr>
+            <p><em>This is the high-level view. If you want to go deeper, schedule a demo. We’re happy to show you the data.</em></p>
+        </article>
+    </main>
+    <footer>
+        <div class="text-center py-6 text-[--muted]">
+            © 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.<br>
+            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq"
+                class="text-[#7bb3ff] hover:brightness-110" target="_blank">Schedule a Technical Demo →</a>
+        </div>
+    </footer>
 </body>
 </html>
