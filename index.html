@@ -6,42 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0b1220" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Marked.js for full markdown support -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body { background: #161b22; color: #e6e9f0; font-family: sans-serif; }
     header, footer { background: #0d1117; }
-    nav a.active, nav a:hover { color: #7bb3ff; }
     main { max-width: 900px; margin: 0 auto; padding: 90px 16px 48px; }
-    .toc { margin-bottom: 2em; }
-    .toc a { display: inline-block; margin-right: 1.5em; margin-bottom: 0.5em; color: #a6adbb; text-decoration: none; font-weight: 500; }
-    .toc a.active, .toc a:hover { color: #7bb3ff; }
     article { background: #0d1117; border-radius: 16px; padding: 2em; }
-    pre { background: #0a162d !important; border-radius: 10px; padding: 1em; overflow-x: auto; }
-    code { background: #212c3b !important; border-radius: 4px; padding: 0.2em 0.4em; }
-    blockquote { border-left: 4px solid #7bb3ff; background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: #a6adbb;}
     h1, h2, h3 { margin-top: 1.5em; font-weight: bold;}
     h1 { font-size: 2em; }
     h2 { font-size: 1.4em; }
     h3 { font-size: 1.1em; }
     ul, ol { margin: 1em 0 1em 1.3em; }
-    .external-link {
-      color: #7bb3ff !important;
-      font-weight: 600;
-      text-decoration: none;
-      margin-right: 1.5em;
-      margin-bottom: 0.5em;
-      display: inline-block;
-    }
-    .external-link:hover { text-decoration: underline; }
+    blockquote { border-left: 4px solid #7bb3ff; background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: #a6adbb;}
+    pre { background: #0a162d !important; border-radius: 10px; padding: 1em; overflow-x: auto; }
+    code { background: #212c3b !important; border-radius: 4px; padding: 0.2em 0.4em; }
   </style>
 </head>
 <body>
-  <header class="fixed top-0 left-0 w-full border-b border-white/10 z-10">
+  <header>
     <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
-      <a href="#README.md" class="text-base font-semibold tracking-wide text-white hover:text-[--accent]">
-        TeamStation AI | Axiom Cortex™
-      </a>
+      <span class="text-base font-semibold tracking-wide text-white">TeamStation AI | Axiom Cortex™</span>
       <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank"
          class="rounded-full bg-[#7bb3ff] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
          Schedule Demo
@@ -49,76 +32,42 @@
     </div>
   </header>
   <main>
-    <nav class="toc" id="toc"></nav>
-    <article id="content">Loading…</article>
+    <article id="content">
+      <!-- PASTE YOUR README.md HTML HERE -->
+      <h1>Axiom Cortex™: A Methodology Brief</h1>
+      <p>Let’s be blunt. The nearshore industry is a sea of sameness. You’ve seen the pitch decks from the usual suspects—BairesDev, Tecla, Deel—and they all boil down to the same thing: a database of résumés and a promise to fill seats. It’s a numbers game. A keyword-matching lottery.</p>
+      <p>And it’s fundamentally broken.</p>
+      <p>We didn’t set out to build a better version of that broken model. We decided to build a different machine entirely. This document is a look under the hood. It’s for the technical leaders who care about the <strong>how</strong> because they know the <strong>how</strong> is the only thing that guarantees the <strong>what</strong>.</p>
+      <h2>The Core Idea: Stop Guessing, Start Engineering</h2>
+      <p>At the heart of the TeamStation product is our platform, the <strong>Nearshore IT Co-Pilot™</strong>. And at the heart of that platform is our engine: <strong>Axiom Cortex™</strong>.</p>
+      <p>Axiom Cortex isn’t a search tool. It’s a cognitive evaluation engine designed to do one thing: transform team building from a game of chance into a deterministic engineering discipline. It’s built on a non-negotiable principle: zero-tolerance for hallucination. Every insight is grounded, every claim is auditable, and every process is designed to measure one thing—a candidate’s actual ability to think and execute.</p>
+      <p>It’s powered by 44 proprietary algorithms. Not off-the-shelf models, but a purpose-built stack of psychometric, behavioral, and technical analyzers.</p>
+      <h2>The "Secret Sauce" Isn't a Secret, It's Just Hard Work</h2>
+      <p>Any system is only as good as its inputs and its refusal to take shortcuts. Here’s a sample of the methodologies that make our engine different:</p>
+      <ol>
+        <li>
+          <strong>The L2-Aware Validation Layer</strong><br>
+          This is probably the most important thing we’ve built. Standard NLP models are notoriously biased against non-native English speakers. They mistake linguistic artifacts—like a different sentence structure or a slight accent—for a lack of clarity or skill. It’s a critical flaw that disqualifies incredible talent for the wrong reasons.<br>
+          Our L2-Aware layer fixes this. Think of it like noise-cancellation for an interview. It uses a suite of techniques to isolate the <em>signal</em> (the quality of the thinking) from the <em>noise</em> (the linguistic delivery).
+        </li>
+        <li>
+          <strong>Proficiency-Normalized Scoring</strong>:<br>
+          We mathematically separate semantic content from grammatical form errors, ensuring we’re not penalizing someone for thinking in two languages.
+        </li>
+        <li>
+          <strong>Cross-Lingual Semantics</strong>:<br>
+          We use multilingual embeddings and techniques like Fréchet Semantic Distance so that a concept explained in Spanish-influenced English is understood to be identical to one explained by a native speaker. No translation applied.
+        </li>
+        <!-- Add more from your README as needed -->
+      </ol>
+    </article>
   </main>
-  <footer class="border-t border-white/10 py-6 text-center text-[--muted]">
-    <div id="footer">
+  <footer>
+    <div class="text-center py-6 text-[--muted]">
       © 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.<br>
       <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq"
          class="text-[#7bb3ff] hover:brightness-110" target="_blank">Schedule a Technical Demo →</a>
     </div>
   </footer>
-  <script>
-    // List of shown markdown files:
-    const docs = [
-      { file: "README.md", title: "Overview" },
-      { file: "architecture.md", title: "Architecture" },
-      { file: "deliverables.md", title: "Deliverables" },
-      { file: "risk-and-reliability.md", title: "Risk & Reliability" },
-      { file: "scientific-foundations.md", title: "Scientific Foundations" }
-    ];
-    // External links for navigation
-    const externalLinks = [
-      {
-        title: "Nearshore IT Co‑Pilot™",
-        url: "https://teamstation.dev/nearshore-integrated-services"
-      }
-    ];
-
-    function setActiveNav(hash) {
-      document.querySelectorAll('.toc a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === hash);
-      });
-    }
-
-    async function loadDoc(file) {
-      setActiveNav(`#${file}`);
-      document.getElementById('content').textContent = 'Loading…';
-      try {
-        const res = await fetch(file + '?ts=' + Date.now());
-        if (!res.ok) throw new Error('Not found');
-        const md = await res.text();
-        // Use marked.js for full markdown rendering
-        document.getElementById('content').innerHTML = marked.parse(md);
-      } catch (e) {
-        document.getElementById('content').innerHTML = `<h1>404 — Not found</h1>
-          <p class="text-[--muted]">Could not load <code>${file}</code>.</p>
-          <p><a href="#README.md" class="text-[#7bb3ff]">Go to Overview</a></p>`;
-      }
-    }
-
-    function buildNav() {
-      const toc = document.getElementById('toc');
-      toc.innerHTML = docs.map(d =>
-        `<a href="#${d.file}"${location.hash === '#' + d.file ? ' class="active"' : ''}>${d.title}</a>`
-      ).join("");
-      for (const ext of externalLinks) {
-        toc.innerHTML += `<a class="external-link" href="${ext.url}" target="_blank" rel="noopener">${ext.title} &#8599;</a>`;
-      }
-    }
-
-    window.addEventListener('hashchange', () => {
-      const hash = location.hash || '#README.md';
-      const doc = docs.find(d => '#' + d.file === hash);
-      if (doc) loadDoc(doc.file);
-      setActiveNav(hash);
-    });
-
-    // Initial build and load
-    buildNav();
-    if (!location.hash || !docs.some(d => '#' + d.file === location.hash)) location.hash = '#README.md';
-    loadDoc(location.hash.slice(1));
-  </script>
 </body>
 </html>
