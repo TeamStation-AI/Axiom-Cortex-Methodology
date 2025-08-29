@@ -8,7 +8,6 @@
   <meta name="description" content="Technical documentation microsite for Axiom Cortex™."/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- MARKDOWN PARSER -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
@@ -73,7 +72,6 @@
     </div>
   </footer>
   <script>
-    // CONFIGURATION
     const RAW_BASE = "https://raw.githubusercontent.com/teamstation-ai/Axiom-Cortex-Methodology/main/";
     const PAGES_JSON = "_pages.json";
     let pages = [];
@@ -82,27 +80,14 @@
       return marked.parse(md);
     }
 
-    function highlightAllCode() {
-      document.querySelectorAll('pre > code').forEach(code => {
-        const lang = code.className.match(/lang-(\w+)/)?.[1] || '';
-        if (lang === "js" || lang === "javascript") {
-          code.innerHTML = code.innerHTML
-            .replace(/(\/\/.*)/g, '<span style="color:#8abeb7;">$1</span>')
-            .replace(/\b(const|let|function|return|if|else|for|while|true|false|null|new|class|await|async|import|from|export)\b/g, '<span style="color:#7bb3ff;">$1</span>');
-        }
-      });
-    }
-
-    // Navigation Fetch & Build
     async function loadNav() {
       try {
         const resp = await fetch(RAW_BASE + PAGES_JSON);
         pages = await resp.json();
         const nav = document.getElementById('mainNav');
         nav.innerHTML = "";
-        pages.forEach((p, idx) => {
+        pages.forEach((p) => {
           const a = document.createElement("a");
-          // Support external links
           if (p.external) {
             a.href = p.file;
             a.target = "_blank";
@@ -119,9 +104,7 @@
       }
     }
 
-    // Routing & Content Loading
     async function loadPage(mdfile) {
-      // Don't try to load if this is an external link!
       const page = pages.find(p => p.file === mdfile);
       if (page && page.external) {
         window.open(page.file, "_blank", "noopener");
@@ -134,7 +117,6 @@
         if (!resp.ok) throw new Error("Could not load: " + mdfile);
         const md = await resp.text();
         content.innerHTML = parseMarkdown(md);
-        highlightAllCode();
         buildTOC();
         highlightActiveNav(mdfile);
         content.focus();
@@ -145,7 +127,6 @@
       }
     }
 
-    // TOC & Scrollspy
     function buildTOC() {
       const toc = document.getElementById('toc');
       toc.innerHTML = "";
@@ -172,7 +153,6 @@
           if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
         });
       });
-      // Scrollspy
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           const id = entry.target.id;
@@ -191,7 +171,6 @@
       hs.forEach(h => observer.observe(h));
     }
 
-    // Active Nav Highlight
     function highlightActiveNav(mdfile) {
       document.querySelectorAll('.navlink').forEach(a => {
         a.classList.toggle('bg-[#202737]', a.getAttribute('href') === "#" + mdfile);
@@ -199,10 +178,8 @@
       });
     }
 
-    // Routing
     function route() {
       let file = decodeURIComponent(location.hash.replace(/^#/, "")) || (pages[0]?.file || "index.md");
-      // Don't try to load content for external links
       const page = pages.find(p => p.file === file);
       if (page && page.external) {
         window.location.hash = "";
@@ -212,7 +189,6 @@
       loadPage(file);
     }
 
-    // INIT
     (async function() {
       await loadNav();
       window.addEventListener('hashchange', route);
