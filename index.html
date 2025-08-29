@@ -9,7 +9,6 @@
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style type="text/tailwindcss">
     @layer base {
       :root{
@@ -60,7 +59,7 @@
       <nav id="toc" class="max-h-[65vh] overflow-auto px-2 py-2 text-sm"></nav>
     </aside>
     <article id="content" class="min-w-0 rounded-2xl border border-white/10 bg-[--panel] p-5 shadow-2xl">
-      <p class="text-[--muted]">Loading…</p>
+      <p class="text-[--muted]" id="main-status">Loading…</p>
     </article>
   </main>
 
@@ -90,37 +89,41 @@
 
     // Recursively get all .md files in the repo using the GitHub API
     async function fetchMarkdownFiles(path = "") {
-      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
-      const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
-      const files = await res.json();
-      let mdFiles = [];
-      for (const f of files) {
-        if (f.type === "dir") {
-          const subFiles = await fetchMarkdownFiles(f.path);
-          mdFiles = mdFiles.concat(subFiles);
-        } else if (
-          f.name.endsWith(".md") &&
-          !f.name.startsWith("_") &&
-          // ignore .github folder content
-          !f.path.startsWith(".github/")
-        ) {
-          mdFiles.push({
-            title: prettifyTitle(f.name),
-            file: f.path
-          });
+      try {
+        const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+        const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
+        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+        const files = await res.json();
+        let mdFiles = [];
+        for (const f of files) {
+          if (f.type === "dir") {
+            // Do not recurse into .github or hidden/system folders
+            if (!f.name.startsWith('.')) {
+              const subFiles = await fetchMarkdownFiles(f.path);
+              mdFiles = mdFiles.concat(subFiles);
+            }
+          } else if (
+            f.name.endsWith(".md") &&
+            !f.name.startsWith("_")
+          ) {
+            mdFiles.push({
+              title: prettifyTitle(f.name, f.path),
+              file: f.path
+            });
+          }
         }
+        return mdFiles;
+      } catch (err) {
+        throw err;
       }
-      // Sort by file path (can customize if you want a different order)
-      mdFiles.sort((a, b) => a.title.localeCompare(b.title));
-      return mdFiles;
     }
 
-    // Prettify filename to title (e.g. scientific-foundations.md -> Scientific Foundations)
-    function prettifyTitle(name) {
+    // Prettify filename to title (e.g. files/deliverables.md -> Deliverables)
+    function prettifyTitle(name, path) {
       let base = name.replace(/\.md$/i, "");
       // Special case: README.md always "Overview"
       if (/^readme$/i.test(base)) return "Overview";
-      // Replace dashes/underscores with spaces, capitalize each word
+      // For files in folders: use name only
       return base.replace(/[-_]+/g, ' ')
         .replace(/\b\w/g, c => c.toUpperCase());
     }
@@ -303,6 +306,7 @@
         $$('pre > code', $('#content')).forEach(highlight);
         buildTOC();
         window.scrollTo({top:0, behavior:'instant'});
+        $('#main-status')?.remove();
       }catch(e){
         $('#content').innerHTML = `
           <h1 class="mb-2 text-2xl font-bold">404 — Not found</h1>
@@ -315,7 +319,14 @@
     // Build top nav automatically from all .md files (even in subfolders)
     async function buildTopNav() {
       const nav = $('#top-nav'); nav.innerHTML='';
-      const pages = await fetchMarkdownFiles();
+      let pages = [];
+      try {
+        pages = await fetchMarkdownFiles();
+      } catch (err) {
+        nav.innerHTML = `<li><span class="text-red-400 text-sm">Error loading docs: ${esc(err.message)}</span></li>`;
+        $('#main-status').textContent = 'Error loading documentation navigation. Please try again later.';
+        return;
+      }
       for (const p of pages){
         const li = document.createElement('li');
         li.innerHTML = `<a href="#/${p.file}" data-file="${p.file}" class="navlink text-sm font-medium hover:text-[--accent]">${p.title}</a>`;
