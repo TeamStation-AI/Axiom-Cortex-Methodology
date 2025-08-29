@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Axiom Cortex™: Technical Methodology Brief | TeamStation AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Public technical brief for the Axiom Cortex™ cognitive AI engine." />
   <meta name="theme-color" content="#0b1220" />
 
@@ -29,19 +28,22 @@
       --border:rgba(255,255,255,.12);
       --card:rgba(255,255,255,.04);
       --radius:16px;
+      --footer-h:150px;     /* will be updated at runtime */
     }
 
-    /* ===== Background (no red/peach, no green) ===== */
+    /* ===== Background (blues only, broad browser support) ===== */
     html,body{height:100%;}
     body{
       margin:0;
       font-family:'Poppins',sans-serif !important;
       color:var(--text) !important;
-      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 70%);
+      background:
+        radial-gradient(900px 600px at 88% -10%, rgba(123,179,255,.18), rgba(123,179,255,0) 60%),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 70%);
       background-attachment:fixed !important;
     }
 
-    /* ===== Docsify polish (non-intrusive; preserves default layout) ===== */
+    /* ===== Docsify polish (keep default layout functional) ===== */
     .sidebar, .content { background:transparent !important; }
     .markdown-section{ max-width: 940px; }
     .markdown-section h1, .markdown-section h2, .markdown-section h3,
@@ -49,9 +51,7 @@
       color:#fff !important; font-weight:700 !important;
     }
     .markdown-section p, .markdown-section li{ color:var(--text) !important; }
-    .markdown-section a{
-      color:var(--accent) !important; font-weight:600; text-underline-offset:3px;
-    }
+    .markdown-section a{ color:var(--accent) !important; font-weight:600; text-underline-offset:3px; }
     .markdown-section a:hover{ color:var(--accent-weak) !important; }
     .markdown-section blockquote{
       background:var(--card); border-left:4px solid var(--accent);
@@ -59,19 +59,22 @@
     }
     .markdown-section pre code{ border-radius:var(--radius) !important; }
     .markdown-section table{ border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+
     .sidebar-nav > ul > li > a{ color:#fff !important; }
     .sidebar-nav > ul > li > a.active,
     .sidebar-nav > ul > li > a:hover{ color:var(--accent) !important; }
     .sidebar-nav > ul > li.active > a{ border-right:2px solid var(--accent) !important; }
 
-    /* Keep room so footer never overlaps short pages */
-    .content{ padding-bottom:160px !important; }
+    /* Mobile sidebar toggle should remain usable (don’t hide it) */
+    .sidebar-toggle { background: rgba(255,255,255,.06) !important; border:1px solid var(--border) !important; }
 
-    /* ===== Footer (static; no JS; no plugins) ===== */
+    /* Space so footer never overlaps content; updated via JS for accuracy */
+    .content{ padding-bottom: var(--footer-h) !important; }
+
+    /* ===== Built-in footer (static; no plugin) ===== */
     footer.ts-footer{
       border-top:1px solid var(--border);
       background:rgba(0,0,0,.20);
-      position:relative; z-index:0;
     }
     .ts-footer-inner{
       max-width:1100px; margin:0 auto; padding:28px 20px; text-align:center;
@@ -93,12 +96,12 @@
   </style>
 </head>
 <body>
-  <!-- Docsify app root (default structure => working sidebar, normal scrolling) -->
+  <!-- Default Docsify root (keeps sidebar + scrolling intact) -->
   <div id="app"><p style="padding:2rem">Loading…</p></div>
 
-  <!-- Footer -->
+  <!-- Persistent footer -->
   <footer class="ts-footer" role="contentinfo" aria-label="Site footer">
-    <div class="ts-footer-inner">
+    <div class="ts-footer-inner" id="ts-footer-inner">
       <p><strong>Tired of the noise? See what data-driven team building actually looks like.</strong></p>
       <div class="cta-row">
         <a class="btn primary" href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener">Schedule a Technical Demo →</a>
@@ -114,15 +117,31 @@
   </noscript>
 
   <script>
+    // Docsify config — zero plugins that fight layout
     window.$docsify = {
       name: 'Axiom Cortex™',
       repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
-      loadSidebar: true,      // expects _sidebar.md at repo root
+      loadSidebar: true,
       auto2top: true,
       homepage: 'README.md',
-      relativePath: true
+      relativePath: true,
+      plugins: [
+        function (hook, vm) {
+          // After each route render, measure footer and reserve space
+          function setFooterHeight() {
+            var el = document.getElementById('ts-footer-inner');
+            if (!el) return;
+            var h = el.offsetHeight + 24; // buffer
+            document.documentElement.style.setProperty('--footer-h', h + 'px');
+          }
+          hook.mounted(setFooterHeight);
+          hook.doneEach(setFooterHeight);
+          window.addEventListener('resize', setFooterHeight);
+        }
+      ]
     };
   </script>
+
   <!-- Docsify (pinned) + fallback -->
   <script defer src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
   <script>
