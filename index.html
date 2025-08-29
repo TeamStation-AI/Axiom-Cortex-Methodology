@@ -23,6 +23,15 @@
     h2 { font-size: 1.4em; }
     h3 { font-size: 1.1em; }
     ul { list-style: disc inside; margin: 1em 0; }
+    .external-link {
+      color: #7bb3ff !important;
+      font-weight: 600;
+      text-decoration: none;
+      margin-right: 1.5em;
+      margin-bottom: 0.5em;
+      display: inline-block;
+    }
+    .external-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -57,6 +66,13 @@
       { file: "risk-and-reliability.md", title: "Risk & Reliability" },
       { file: "scientific-foundations.md", title: "Scientific Foundations" }
     ];
+    // External links for navigation
+    const externalLinks = [
+      {
+        title: "Nearshore IT Co‑Pilot™",
+        url: "https://teamstation.dev/nearshore-integrated-services"
+      }
+    ];
 
     function setActiveNav(hash) {
       document.querySelectorAll('.toc a').forEach(a => {
@@ -64,20 +80,22 @@
       });
     }
 
+    // Improved Markdown to HTML function
     function mdToHtml(md) {
-      // very basic Markdown rendering, enough for your docs
-      md = md.replace(/^# (.+)$/gm, "<h1>$1</h1>")
-             .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-             .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-             .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
-             .replace(/```([^`\n]*)\n([\s\S]+?)```/g, '<pre><code>$2</code></pre>')
-             .replace(/`([^`]+)`/g, '<code>$1</code>')
-             .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-             .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
-             .replace(/\n\n+/g, "</p><p>")
-             .replace(/<p>/g, '<p class="my-3 leading-relaxed">');
-      return "<p>" + md + "</p>";
+      md = md.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+      md = md.replace(/```([\s\S]*?)```/g, (m, code) => `<pre><code>${code.replace(/</g,"&lt;")}</code></pre>`);
+      md = md.replace(/`([^`]+)`/g, "<code>$1</code>");
+      md = md.replace(/^### (.*)$/gm, "<h3>$1</h3>")
+             .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+             .replace(/^# (.*)$/gm, "<h1>$1</h1>");
+      md = md.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+             .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+      md = md.replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>");
+      md = md.replace(/^(?:\s*)[-*+] (.+)$/gm, "<li>$1</li>");
+      md = md.replace(/(<li>[\s\S]*?<\/li>)/gms, "<ul>$1</ul>");
+      md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+      md = md.replace(/(?:^|\n)(?!<[hulpbqo])([^\n<][^\n]*)\n/g, '<p>$1</p>\n');
+      return md;
     }
 
     async function loadDoc(file) {
@@ -97,9 +115,14 @@
 
     function buildNav() {
       const toc = document.getElementById('toc');
+      // Internal docs nav
       toc.innerHTML = docs.map(d =>
         `<a href="#${d.file}"${location.hash === '#' + d.file ? ' class="active"' : ''}>${d.title}</a>`
       ).join("");
+      // Add external links
+      for (const ext of externalLinks) {
+        toc.innerHTML += `<a class="external-link" href="${ext.url}" target="_blank" rel="noopener">${ext.title} &#8599;</a>`;
+      }
     }
 
     window.addEventListener('hashchange', () => {
@@ -113,7 +136,6 @@
     buildNav();
     if (!location.hash || !docs.some(d => '#' + d.file === location.hash)) location.hash = '#README.md';
     loadDoc(location.hash.slice(1));
-
   </script>
 </body>
 </html>
