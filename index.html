@@ -1,199 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Axiom Cortex™ Documentation</title>
-  <meta name="theme-color" content="#0b1220"/>
-  <meta name="description" content="Technical documentation microsite for Axiom Cortex™."/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Axiom Cortex™: A Technical Methodology Brief | TeamStation AI</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="A public-facing technical brief on the Axiom Cortex™ cognitive AI engine. For CTOs and VPs of Engineering who demand a higher standard of rigor in nearshore talent evaluation.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  
+  <!-- Open Graph Metadata for professional sharing -->
+  <meta property="og:title" content="Axiom Cortex™: A Technical Methodology Brief">
+  <meta property="og:description" content="The scientific principles, architectural design, and mathematical foundations of the AI engine that powers the TeamStation Nearshore IT Co-Pilot™ platform.">
+  <meta property="og:url" content="https://teamstation-ai.github.io/Axiom-Cortex-Methodology/">
+  <meta property="og:site_name" content="TeamStation AI">
+  <meta property="og:type" content="article">
+
+  <!-- 1. Load a robust base theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+
+  <!-- 2. Load the Poppins font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- 3. All custom styles are here -->
   <style>
     :root {
-      --bg: #161b22;
-      --panel: #0d1117;
-      --accent: #7bb3ff;
-      --text: #e6e9f0;
-      --muted: #a6adbb;
-      --border: rgba(255,255,255,.12);
-      --radius: 16px;
-      --header-h: 70px;
+      --theme-color: #64ffda; /* Accent color */
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
-    ::-webkit-scrollbar { width: 10px; background: var(--panel);}
-    ::-webkit-scrollbar-thumb { background: #222b3c; border-radius: 6px;}
-    main :where(h1,h2,h3,h4,h5,h6) { scroll-margin-top: calc(var(--header-h) + 18px); }
-    .toc-active { background: rgba(123,179,255,0.15); color: var(--accent) !important; }
-    .toc-link { cursor: pointer;}
-    .prose a { color: var(--accent); text-underline-offset: 2px; }
-    .prose pre, .prose code { background-color: #202737!important; border-radius: 8px;}
-    .prose blockquote { border-left: 4px solid var(--accent); background: #232b3b; padding: 1em; margin: 1em 0;}
-    .prose img { max-width: 100%; border-radius: 8px; }
-    .prose table { border-collapse: collapse; border: 1px solid #333; }
-    .prose th, .prose td { border: 1px solid #333; padding: 6px 12px;}
-    .prose ul, .prose ol { margin-left: 1.4em; }
-    @media (max-width: 1023px) {
-      aside#tocWrap { display: none !important; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0a192f 0%, #1d3d66 100%);
+      background-attachment: fixed;
+      color: #FFFFFF;
     }
-    @media (max-width: 640px) {
-      nav#mainNav { flex-direction: column; gap: 0.5rem;}
-      .prose { padding: 0.8em !important; }
+    .app-name .nav-link {
+      color: #FFFFFF !important;
+    }
+    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: #FFFFFF;
+      border-bottom-color: #2a4d80;
+    }
+    .markdown-section a {
+      color: #64ffda;
+      font-weight: 600;
+    }
+    .sidebar, .content {
+      background: transparent;
+    }
+    .sidebar-nav > ul > li > a {
+      color: #FFFFFF !important;
+    }
+    .sidebar-nav > ul > li > a.active, .sidebar-nav > ul > li > a:hover {
+      color: var(--theme-color) !important;
+    }
+    .sidebar-nav > ul > li.active > a {
+      border-right: 2px solid var(--theme-color) !important;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <header class="bg-[--panel] border-b border-white/10 sticky top-0 z-40" role="banner">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-4">
-      <span class="text-xl font-extrabold tracking-tight text-white" aria-label="Site Title">Axiom Cortex™</span>
-      <nav id="mainNav" class="flex flex-wrap items-center gap-6" aria-label="Primary"></nav>
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank" rel="noopener"
-         class="rounded-full bg-[--accent] px-4 py-2 text-xs font-semibold text-black hover:brightness-110 shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[--accent]"
-         aria-label="Schedule Demo">
-        Schedule Demo
-      </a>
-    </div>
-  </header>
-  <main class="flex-1 w-full max-w-7xl mx-auto flex flex-row gap-6 px-2 md:px-6" id="mainContainer">
-    <aside id="tocWrap" class="hidden lg:block w-72 shrink-0 pt-8" aria-label="Table of Contents">
-      <div class="sticky top-32 bg-[#101624] rounded-xl border border-white/10 shadow-lg p-5">
-        <div class="font-bold text-white mb-2 text-lg tracking-wide">Contents</div>
-        <nav id="toc" class="text-[15px] flex flex-col gap-1"></nav>
-      </div>
-    </aside>
-    <section class="flex-1 min-w-0">
-      <article id="content" class="prose prose-invert max-w-none lg:rounded-2xl bg-[--panel] border border-white/10 shadow-xl mt-8 mb-12 p-6" tabindex="0" aria-live="polite">Loading…</article>
-    </section>
-  </main>
-  <footer class="bg-[--panel] border-t border-white/10 text-center py-8 mt-auto">
-    <div class="text-[15px] text-[--muted]">© 2025 TeamStation AI. Axiom Cortex™ Technical Methodology. | 
-      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" class="text-[--accent] underline" target="_blank">Schedule a Demo</a>
-    </div>
-  </footer>
+<body>
+  <div id="app"></div>
   <script>
-    const RAW_BASE = "https://raw.githubusercontent.com/teamstation-ai/Axiom-Cortex-Methodology/main/";
-    const PAGES_JSON = "_pages.json";
-    let pages = [];
-
-    function parseMarkdown(md) {
-      return marked.parse(md);
+    window.$docsify = {
+      name: 'Axiom Cortex™',
+      repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
+      loadSidebar: true,
+      auto2top: true,
+      homepage: 'README.md'
     }
-
-    async function loadNav() {
-      try {
-        const resp = await fetch(RAW_BASE + PAGES_JSON);
-        pages = await resp.json();
-        const nav = document.getElementById('mainNav');
-        nav.innerHTML = "";
-        pages.forEach((p) => {
-          const a = document.createElement("a");
-          if (p.external) {
-            a.href = p.file;
-            a.target = "_blank";
-            a.rel = "noopener";
-          } else {
-            a.href = "#" + encodeURIComponent(p.file);
-          }
-          a.className = "text-[--accent] font-medium hover:text-white px-2 py-1 rounded transition navlink focus:outline-none focus-visible:ring-2 focus-visible:ring-[--accent]";
-          a.textContent = p.title;
-          nav.appendChild(a);
-        });
-      } catch (e) {
-        document.getElementById('mainNav').innerHTML = "<span class='text-red-400'>[Navigation failed]</span>";
-      }
-    }
-
-    async function loadPage(mdfile) {
-      const page = pages.find(p => p.file === mdfile);
-      if (page && page.external) {
-        window.open(page.file, "_blank", "noopener");
-        return;
-      }
-      const content = document.getElementById('content');
-      content.innerHTML = "<div class='text-gray-400'>Loading…</div>";
-      try {
-        const resp = await fetch(RAW_BASE + mdfile + "?v=" + Date.now());
-        if (!resp.ok) throw new Error("Could not load: " + mdfile);
-        const md = await resp.text();
-        content.innerHTML = parseMarkdown(md);
-        buildTOC();
-        highlightActiveNav(mdfile);
-        content.focus();
-        window.scrollTo({top:0});
-      } catch (e) {
-        content.innerHTML = `<div class="text-red-400">Error loading <b>${mdfile}</b><br>Could not load: ${mdfile}</div>`;
-        document.getElementById('toc').innerHTML = "";
-      }
-    }
-
-    function buildTOC() {
-      const toc = document.getElementById('toc');
-      toc.innerHTML = "";
-      const content = document.getElementById('content');
-      const hs = [...content.querySelectorAll('h1, h2, h3')];
-      if (!hs.length) { document.getElementById('tocWrap').style.display = "none"; return; }
-      else { document.getElementById('tocWrap').style.display = ""; }
-      hs.forEach(h => {
-        if (!h.id) h.id = h.textContent.toLowerCase().replace(/[^\w]+/g, '-');
-      });
-      hs.forEach(h => {
-        const a = document.createElement('a');
-        a.href = "#" + h.id;
-        a.textContent = h.textContent;
-        a.className = "block toc-link py-1 px-2 rounded hover:bg-[#202737] focus:outline-none";
-        a.style.marginLeft = h.tagName === "H2" ? "1rem" : h.tagName === "H3" ? "2rem" : "0";
-        a.setAttribute('aria-label', h.textContent);
-        toc.appendChild(a);
-      });
-      toc.querySelectorAll('.toc-link').forEach(a => {
-        a.addEventListener('click', function(e){
-          e.preventDefault();
-          const t = document.getElementById(this.getAttribute('href').slice(1));
-          if (t) t.scrollIntoView({behavior:'smooth', block:'start'});
-        });
-      });
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          const id = entry.target.id;
-          const tocLinks = toc.querySelectorAll('.toc-link');
-          tocLinks.forEach(link => {
-            if (link.getAttribute('href') === '#' + id) {
-              link.classList.toggle('toc-active', entry.isIntersecting && entry.intersectionRatio > 0.55);
-            }
-          });
-        });
-      }, {
-        root: null,
-        threshold: [0.55],
-        rootMargin: "-40% 0px -50% 0px"
-      });
-      hs.forEach(h => observer.observe(h));
-    }
-
-    function highlightActiveNav(mdfile) {
-      document.querySelectorAll('.navlink').forEach(a => {
-        a.classList.toggle('bg-[#202737]', a.getAttribute('href') === "#" + mdfile);
-        a.setAttribute('aria-current', a.getAttribute('href') === "#" + mdfile ? 'page' : 'false');
-      });
-    }
-
-    function route() {
-      let file = decodeURIComponent(location.hash.replace(/^#/, "")) || (pages[0]?.file || "index.md");
-      const page = pages.find(p => p.file === file);
-      if (page && page.external) {
-        window.location.hash = "";
-        window.open(page.file, "_blank", "noopener");
-        return;
-      }
-      loadPage(file);
-    }
-
-    (async function() {
-      await loadNav();
-      window.addEventListener('hashchange', route);
-      route();
-    })();
   </script>
+  <!-- Docsify Scripts -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
 </body>
 </html>
