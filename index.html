@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TeamStation AI | Axiom Cortex™ — Tech-Evaluation Platform</title>
+  <title>TeamStation AI | Axiom Cortex™ — Technical Methodology</title>
   <meta name="description" content="A modern, single-page microsite for the Axiom Cortex tech-evaluation platform." />
+  <meta name="theme-color" content="#0b1220" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,49 +16,52 @@
       :root {
         --color-primary-900: #0b1220; /* deep navy */
         --color-primary-800: #0f1b2e; /* darker navy */
-        --color-bg-dark:     #161b22; /* deep dark (GitHub-like) */
-        --color-dark-gray:   #0d1117; /* darker panel */
+        --color-bg-dark:     #161b22; /* deep dark */
+        --color-panel:       #0d1117; /* panel bg */
         --color-accent:      #7bb3ff; /* link/CTA blue */
         --color-text-light:  #e6e9f0;
         --color-text-muted:  #a6adbb;
+        --radius:            16px;
+        --maxw:              1200px;
+        --header-h:          72px;
+        --toc-w:             300px;
       }
     }
 
-    /* Clean scrollbars */
+    /* scrollbar for neatness */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--color-dark-gray); }
+    ::-webkit-scrollbar-track { background: #0d1117; }
     ::-webkit-scrollbar-thumb { background: #3a4a5f; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #4a5f7a; }
 
-    /* Anchor offset so fixed header doesn't cover section titles */
-    section { scroll-margin-top: 88px; }
+    /* offset headings so sticky header doesn't cover anchors */
+    :where(h1,h2,h3,h4,h5,h6) { scroll-margin-top: calc(var(--header-h) + 12px); }
   </style>
 </head>
 <body class="bg-[--color-bg-dark] text-[--color-text-light] font-sans">
-  <!-- HEADER (fixed). Brand text at left, CENTERED nav, CTA at right -->
+  <!-- Header: brand (left), centered menu, CTA (right) -->
   <header class="fixed top-0 z-50 w-full border-b border-white/10 bg-zinc-900/60 backdrop-blur-md">
-    <div class="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4">
-      <!-- Brand (no logo image) -->
-      <a href="#hero" class="justify-self-start text-base font-semibold tracking-wide text-white hover:text-[--color-accent]">
+    <div class="mx-auto grid max-w-[var(--maxw)] grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4">
+      <a href="#/README.md" class="justify-self-start text-base font-semibold tracking-wide text-white hover:text-[--color-accent]">
         TeamStation AI | Axiom Cortex™
       </a>
 
-      <!-- CENTERED nav -->
+      <!-- centered nav mapped to your .md files -->
       <nav aria-label="Primary" class="justify-self-center">
         <ul class="flex items-center gap-6">
-          <li><a href="#overview"  class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Overview</a></li>
-          <li><a href="#features"  class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Features</a></li>
-          <li><a href="#contact"   class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Contact</a></li>
+          <li><a href="#/README.md"                 data-file="README.md"                 class="navlink text-sm font-medium hover:text-[--color-accent]">Overview</a></li>
+          <li><a href="#/architecture.md"          data-file="architecture.md"          class="navlink text-sm font-medium hover:text-[--color-accent]">Architecture</a></li>
+          <li><a href="#/scientific-foundations.md"data-file="scientific-foundations.md"class="navlink text-sm font-medium hover:text-[--color-accent]">Scientific Foundations</a></li>
+          <li><a href="#/risk-and-reliability.md"  data-file="risk-and-reliability.md"  class="navlink text-sm font-medium hover:text-[--color-accent]">Risk & Reliability</a></li>
         </ul>
       </nav>
 
-      <!-- Right CTA group -->
       <div class="justify-self-end hidden md:flex items-center gap-2">
         <a href="https://github.com/TeamStation-AI/Axiom-Cortex-Methodology" target="_blank" rel="noopener"
            class="rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white hover:border-[--color-accent] hover:text-[--color-accent]">
           GitHub ↗
         </a>
-        <a href="#contact"
+        <a href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener"
            class="rounded-full bg-[--color-accent] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
           Schedule Demo
         </a>
@@ -65,98 +69,190 @@
     </div>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section id="hero" class="min-h-[88vh] bg-[--color-dark-gray]">
-      <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-20 pt-36 lg:grid-cols-2 lg:gap-12">
-        <div class="text-center lg:text-left">
-          <h1 class="mb-4 text-5xl font-bold leading-tight md:text-6xl">
-            Powered by <span class="text-[--color-accent]">Axiom Cortex™</span>
-          </h1>
-          <p class="mx-auto mb-8 max-w-2xl text-lg text-[--color-text-muted] md:text-xl">
-            The AI-driven system for precise, bias-aware technical evaluations—engineered for CTO-grade rigor.
-          </p>
-          <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
-            <a href="#features"
-               class="rounded-full bg-[--color-accent] px-7 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:shadow-xl">
-              Discover the Features
-            </a>
-            <a href="#contact"
-               class="rounded-full border border-white/15 bg-white/10 px-7 py-3 font-semibold text-white transition hover:bg-white/20">
-              Schedule a Demo
-            </a>
-          </div>
-        </div>
+  <!-- Main layout: TOC (left) + content (right) -->
+  <main class="mx-auto grid max-w-[var(--maxw)] grid-cols-1 gap-6 px-4 pt-[calc(var(--header-h)+20px)] pb-24 lg:grid-cols-[var(--toc-w)_1fr]">
+    <!-- Sidebar / TOC built from headings of the loaded markdown -->
+    <aside class="hidden lg:block sticky top-[calc(var(--header-h)+16px)] self-start rounded-2xl border border-white/10 bg-[--color-panel] shadow-2xl">
+      <div class="border-b border-white/10 px-4 py-3 text-sm font-semibold">Contents</div>
+      <nav id="toc" class="max-h-[65vh] overflow-auto px-2 py-2 text-sm"></nav>
+    </aside>
 
-        <!-- Right visual (kept simple; no logo image in header as requested) -->
-        <div class="flex items-center justify-center">
-          <div class="aspect-square w-72 rounded-3xl border border-white/10 bg-gradient-to-br from-[--color-primary-800] to-[--color-primary-900] shadow-2xl ring-1 ring-black/40 lg:w-96"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- OVERVIEW -->
-    <section id="overview" class="bg-[--color-primary-800] py-20">
-      <div class="mx-auto max-w-4xl px-6 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">The Intelligence Behind the Process</h2>
-        <p class="mx-auto max-w-3xl leading-relaxed text-[--color-text-muted]">
-          Axiom Cortex is a deterministic evaluation engine that transforms hiring from guesswork into an auditable,
-          bias-mitigated discipline. Built for nearshore scale—without compromising scientific rigor or fairness.
-        </p>
-      </div>
-    </section>
-
-    <!-- FEATURES -->
-    <section id="features" class="bg-[--color-bg-dark] py-24">
-      <div class="mx-auto max-w-5xl px-6">
-        <h2 class="mb-10 text-center text-3xl font-bold text-white md:mb-12 md:text-4xl">Key Features</h2>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <!-- Feature -->
-          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
-            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">L2-Aware Scoring</h3>
-            <p class="text-[--color-text-muted]">
-              Proficiency-normalized scoring and cross-lingual semantics ensure zero penalty for accent or code-switching.
-            </p>
-          </div>
-          <!-- Feature -->
-          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
-            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">Network Psychometrics</h3>
-            <p class="text-[--color-text-muted]">
-              Gaussian graphical models map real skill connectivity—beyond keyword lists—to infer true full-stack depth.
-            </p>
-          </div>
-          <!-- Feature -->
-          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
-            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">Constrained Decision Theory</h3>
-            <p class="text-[--color-text-muted]">
-              Recommendations maximize expected utility while enforcing hard gates on collaboration and reliability.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="bg-[--color-primary-800] py-24">
-      <div class="mx-auto max-w-4xl px-6 text-center">
-        <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Integrate Axiom Cortex</h2>
-        <p class="mx-auto mb-8 max-w-2xl leading-relaxed text-[--color-text-muted]">
-          Learn how Axiom Cortex can harden your hiring pipeline with auditable, CTO-grade evaluations.
-        </p>
-        <a href="mailto:info@teamstation.ai"
-           class="rounded-full bg-[--color-accent] px-8 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:shadow-xl">
-          Get In Touch
-        </a>
-      </div>
-    </section>
+    <!-- Content panel -->
+    <article id="content"
+      class="min-w-0 rounded-2xl border border-white/10 bg-[--color-panel] p-5 shadow-2xl">
+      <p class="text-[--color-text-muted]">Loading…</p>
+    </article>
   </main>
 
-  <!-- FOOTER (simple, consistent, blue-only) -->
-  <footer class="border-t border-white/10 bg-zinc-900 py-8 text-center text-[--color-text-muted]">
-    <div class="mx-auto max-w-6xl px-6">
-      <p>© 2025 TeamStation AI. All rights reserved.</p>
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-zinc-900/80">
+    <div class="mx-auto flex max-w-[var(--maxw)] flex-col items-center gap-3 px-4 py-6 text-center text-[--color-text-muted]" id="footer">
+      <p>© 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.</p>
+      <p><a href="https://teamstation.dev/nearshore-integrated-services" target="_blank" rel="noopener" class="text-[--color-accent] hover:brightness-110">Explore the Co-Pilot Platform →</a></p>
     </div>
   </footer>
+
+  <!-- --- App script: loads your .md files, builds TOC, simple search-ready hooks --- -->
+  <script>
+    // --- tiny helpers
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+    const esc = s => s.replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+    // --- route → file (from hash #/file.md); default to README.md
+    function currentFile() {
+      const h = location.hash.replace(/^#\/?/, '').trim();
+      return h || 'README.md';
+    }
+
+    // --- preprocess fenced code blocks to preserve language class
+    function preprocessFences(md){
+      const out=[], lines=md.replace(/\r\n?/g,"\n").split("\n");
+      let inFence=false, lang="", buf=[];
+      for(const line of lines){
+        const m = line.match(/^```(\w+)?\s*$/);
+        if(m){
+          if(!inFence){ inFence=true; lang=(m[1]||""); buf=[]; }
+          else{
+            out.push(`<pre class="overflow-auto rounded-xl border border-white/10 bg-[#0a162d] p-4"><code class="lang-${lang}">${esc(buf.join("\n"))}</code></pre>`);
+            inFence=false; lang=""; buf=[];
+          }
+          continue;
+        }
+        if(inFence) buf.push(line); else out.push(line);
+      }
+      if(inFence){ out.push(`<pre class="overflow-auto rounded-xl border border-white/10 bg-[#0a162d] p-4"><code>${esc(buf.join("\n"))}</code></pre>`); }
+      return out.join("\n");
+    }
+
+    // --- very small Markdown → HTML (headings, lists, links, inline, hr, quotes)
+    function mdToHtml(md){
+      // blockquotes
+      md = md.replace(/^>\s*(.+)$/gm,'<blockquote class="my-4 rounded-r-xl border-l-4 border-[--color-accent] bg-white/5 px-4 py-3">$1</blockquote>');
+      // headings
+      md = md.replace(/^######\s*(.+)$/gm,'<h6 class="mt-6 mb-2 font-semibold">$1</h6>')
+             .replace(/^#####\s*(.+)$/gm,'<h5 class="mt-6 mb-2 font-semibold">$1</h5>')
+             .replace(/^####\s*(.+)$/gm,'<h4 class="mt-6 mb-2 text-lg font-bold">$1</h4>')
+             .replace(/^###\s*(.+)$/gm,'<h3 class="mt-6 mb-2 text-xl font-bold">$1</h3>')
+             .replace(/^##\s*(.+)$/gm,'<h2 class="mt-7 mb-3 text-2xl font-bold">$1</h2>')
+             .replace(/^#\s*(.+)$/gm,'<h1 class="mt-2 mb-4 text-3xl font-bold">$1</h1>');
+      // hr
+      md = md.replace(/^\s*([-*_])\1\1+\s*$/gm,'<hr class="my-6 border-white/10">');
+      // lists
+      md = md.replace(/^(?:\s*)[-*+]\s+(.+)$/gm,'<li>$1</li>');
+      md = md.replace(/(<li>[\s\S]*?<\/li>)/gms,'<ul class="my-4 list-disc pl-6 space-y-1">$1</ul>');
+      // inline
+      md = md.replace(/`([^`]+)`/g,'<code class="rounded bg-white/10 px-1 py-0.5">$1</code>');
+      md = md.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>');
+      md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a class="text-[--color-accent] font-semibold hover:brightness-110" href="$2" target="_blank" rel="noopener">$1</a>');
+      // paragraphs
+      md = md.split(/\n{2,}/).map(b=>/^\s*</.test(b.trim())?b:`<p class="my-3 leading-relaxed text-[--color-text-light]/95">${b.replace(/\n/g,'<br>')}</p>`).join('\n');
+      return md;
+    }
+
+    // --- tiny highlighter
+    function highlight(codeEl){
+      const cls = codeEl.className || '';
+      const lang = (cls.match(/lang-([a-z0-9]+)/i)||[])[1] || '';
+      let h = codeEl.innerHTML;
+      const re = {
+        str: /(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*`)/g,
+        num: /\b(\d+(?:\.\d+)?)\b/g,
+        com: /(\/\/.*?$|\/\*[\s\S]*?\*\/)/gm,
+        kw : /\b(await|break|case|catch|class|const|continue|debugger|default|delete|do|else|export|extends|finally|for|from|function|if|import|in|instanceof|let|new|null|of|return|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/g,
+        tag: /(&lt;\/?[a-zA-Z0-9\-]+)(?=[\s&gt;])/g,
+        attr:/([a-zA-Z\-:]+)=(&quot;[^&]*&quot;|&#39;[^&]*&#39;)/g
+      };
+      if(/^(js|ts|javascript|typescript)$/.test(lang)){
+        h = h.replace(re.com,'<span class="text-slate-400 italic">$1</span>')
+             .replace(re.str,'<span class="text-cyan-200">$1</span>')
+             .replace(re.kw,'<span class="text-blue-200 font-semibold">$1</span>')
+             .replace(re.num,'<span class="text-blue-100">$1</span>');
+      } else if(/^(html|xml|svg|markup)$/.test(lang)){
+        h = h.replace(re.attr,'<span class="text-blue-100">$1</span>=<span class="text-cyan-200">$2</span>')
+             .replace(re.tag,'<span class="text-blue-200">$1</span>');
+      } else if(/^(json)$/.test(lang)){
+        h = h.replace(/(&quot;[^&]*?&quot;)(\s*:)/g,'<span class="text-blue-100">$1</span>$2')
+             .replace(re.str,'<span class="text-cyan-200">$1</span>')
+             .replace(re.num,'<span class="text-blue-100">$1</span>');
+      }
+      codeEl.innerHTML = h;
+    }
+
+    // --- slugify & TOC
+    function slug(s){ return s.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-'); }
+    function buildTOC(){
+      const toc = $('#toc'); if(!toc) return;
+      toc.innerHTML = '';
+      const heads = $$('#content h1, #content h2, #content h3');
+      heads.forEach(h=>{
+        if(!h.id) h.id = slug(h.textContent);
+        const a = document.createElement('a');
+        a.href = '#'+h.id;
+        a.textContent = h.textContent;
+        a.className = (h.tagName==='H1' ? 'block px-2 py-1.5 font-semibold rounded-lg hover:bg-white/10'
+                    : h.tagName==='H2' ? 'block px-3 py-1.5 rounded-lg hover:bg-white/10'
+                    : 'block px-4 py-1.5 text-[--color-text-muted] hover:bg-white/10');
+        toc.appendChild(a);
+      });
+      // active on scroll
+      const links = $$('a', toc);
+      const map = new Map(links.map(a=>[a.getAttribute('href').slice(1), a]));
+      const obs = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            const id = en.target.id;
+            links.forEach(l=>l.classList.toggle('bg-white/10', l===map.get(id)));
+          }
+        });
+      }, {rootMargin:'-60% 0px -35% 0px', threshold:0});
+      heads.forEach(h=>obs.observe(h));
+    }
+
+    // --- load footer from _footer.md if present
+    async function loadFooter(){
+      try{
+        const res = await fetch('_footer.md?ts='+Date.now(), {cache:'no-store'});
+        if(!res.ok) return;
+        const md = await res.text();
+        $('#footer').innerHTML = mdToHtml(preprocessFences(md));
+      }catch(e){}
+    }
+
+    // --- main render: fetch MD, render, highlight, TOC
+    async function render(){
+      const file = currentFile();
+      const mount = $('#content');
+      // set active class on top nav
+      $$('.navlink').forEach(a=>{
+        a.classList.toggle('text-[--color-accent]', a.dataset.file === file);
+      });
+
+      try{
+        const res = await fetch(file + '?ts=' + Date.now(), {cache:'no-store'});
+        if(!res.ok) throw new Error('Not found');
+        const md = await res.text();
+        const html = mdToHtml(preprocessFences(md));
+        mount.innerHTML = html;
+        $$('pre > code', mount).forEach(highlight);
+        buildTOC();
+        window.scrollTo({top:0, behavior:'instant'});
+      }catch(e){
+        mount.innerHTML = `
+          <h1 class="text-2xl font-bold mb-2">404 — Not found</h1>
+          <p class="text-[--color-text-muted]">Could not load <code class="rounded bg-white/10 px-1">${esc(file)}</code>.
+          Make sure the file exists at the repository root and the name matches exactly.</p>`;
+        $('#toc') && ($('#toc').innerHTML = '');
+      }
+    }
+
+    // router: use #/file.md
+    window.addEventListener('hashchange', render);
+    window.addEventListener('DOMContentLoaded', async ()=>{
+      if(!location.hash) location.hash = '/README.md';
+      await render();
+      await loadFooter();
+    });
+  </script>
 </body>
 </html>
