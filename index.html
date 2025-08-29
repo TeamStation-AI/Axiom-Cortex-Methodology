@@ -2,20 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Axiom Cortex™: A Technical Methodology Brief</title>
+  <title>Axiom Cortex™: A Technical Methodology Brief | TeamStation AI</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="A public-facing technical brief on the Axiom Cortex™ cognitive AI engine.">
+  <meta name="description" content="A public-facing technical brief on the Axiom Cortex™ cognitive AI engine. For CTOs and VPs of Engineering who demand a higher standard of rigor in nearshore talent evaluation.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  
+  <!-- Open Graph Metadata for professional sharing -->
+  <meta property="og:title" content="Axiom Cortex™: A Technical Methodology Brief">
+  <meta property="og:description" content="The scientific principles, architectural design, and mathematical foundations of the AI engine that powers the TeamStation Nearshore IT Co-Pilot™ platform.">
+  <meta property="og:url" content="https://teamstation-ai.github.io/Axiom-Cortex-Methodology/">
+  <meta property="og:site_name" content="TeamStation AI">
+  <meta property="og:type" content="article">
+
+  <!-- 1. Load the base Docsify theme first -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
+
+  <!-- 2. Load the Poppins font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- 3. Apply all custom styles in a separate block -->
+  <style>
+    :root {
+      --base-font-family: 'Poppins', sans-serif;
+      --theme-color: #64ffda; /* Accent color for links */
+    }
+    body {
+      font-family: 'Poppins', sans-serif !important;
+      background: linear-gradient(135deg, #0a192f 0%, #1d3d66 100%) !important;
+      background-attachment: fixed !important;
+      color: #FFFFFF !important;
+    }
+    .sidebar, .content {
+      background: transparent !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 700 !important;
+      color: #FFFFFF !important;
+      border-bottom-color: #2a4d80 !important;
+    }
+    a {
+      color: #64ffda !important;
+    }
+    .sidebar-nav > ul > li > a {
+      color: #FFFFFF !important;
+    }
+    .sidebar-nav > ul > li > a.active, .sidebar-nav > ul > li > a:hover {
+      color: #64ffda !important;
+    }
+    .sidebar-nav > ul > li.active > a {
+      border-right: 2px solid #64ffda !important;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
+      name: 'Axiom Cortex™',
+      repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
       loadSidebar: true,
       loadFooter: true,
-      homepage: 'README.md',
-      auto2top: true
+      auto2top: true,
+      homepage: 'README.md'
     }
   </script>
   <!-- Docsify v4 -->
