@@ -1,81 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Axiom Cortex™: A Technical Methodology Brief | TeamStation AI</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="A public-facing technical brief on the Axiom Cortex™ cognitive AI engine. For CTOs and VPs of Engineering who demand a higher standard of rigor in nearshore talent evaluation.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  
-  <!-- Open Graph Metadata for professional sharing -->
-  <meta property="og:title" content="Axiom Cortex™: A Technical Methodology Brief">
-  <meta property="og:description" content="The scientific principles, architectural design, and mathematical foundations of the AI engine that powers the TeamStation Nearshore IT Co-Pilot™ platform.">
-  <meta property="og:url" content="https://teamstation-ai.github.io/Axiom-Cortex-Methodology/">
-  <meta property="og:site_name" content="TeamStation AI">
-  <meta property="og:type" content="article">
+background:linear-gradient(180deg, rgba(11,18,32,.85), rgba(11,18,32,.55));
+border-bottom:1px solid var(--brand-border);
+}
+.ts-brand{display:flex; align-items:center; gap:10px; color:#fff; text-decoration:none; font-weight:700;}
+.ts-logo{
+width:28px; height:28px; border-radius:8px;
+background:linear-gradient(135deg, var(--brand-blue), #7dd3fc);
+display:inline-block;
+}
+.ts-actions{display:flex; gap:10px; align-items:center;}
+.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.55rem .9rem; border-radius:999px; text-decoration:none; font-weight:600; border:1px solid var(--brand-border);}
+.btn:hover{transform:translateY(-1px);}
+.btn.primary{background:var(--brand-blue); color:#0b1220; border-color:transparent;}
+.btn.ghost{background:rgba(255,255,255,0.06); color:#fff;}
 
-  <!-- 1. Load a robust base theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/dark.css">
 
-  <!-- 2. Load the Poppins font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+/* Docsify layout offsets for fixed nav */
+.sidebar{top:var(--nav-h) !important;}
+.content{padding-top:calc(var(--nav-h) + 12px) !important;}
 
-  <!-- 3. All custom styles are here -->
-  <style>
-    :root {
-      --theme-color: #64ffda; /* Accent color */
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0a192f 0%, #1d3d66 100%);
-      background-attachment: fixed;
-      color: #FFFFFF;
-    }
-    .app-name .nav-link {
-      color: #FFFFFF !important;
-    }
-    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      color: #FFFFFF;
-      border-bottom-color: #2a4d80;
-    }
-    .markdown-section a {
-      color: #64ffda;
-      font-weight: 600;
-    }
-    .sidebar, .content {
-      background: transparent;
-    }
-    .sidebar-nav > ul > li > a {
-      color: #FFFFFF !important;
-    }
-    .sidebar-nav > ul > li > a.active, .sidebar-nav > ul > li > a:hover {
-      color: var(--theme-color) !important;
-    }
-    .sidebar-nav > ul > li.active > a {
-      border-right: 2px solid var(--theme-color) !important;
-    }
-    .footer a {
-      color: var(--theme-color) !important;
-    }
-  </style>
+
+/* Typography & elements */
+.markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4, .markdown-section h5 {
+color:#fff !important; font-weight:700 !important;
+}
+.markdown-section a{color:var(--brand-blue) !important; font-weight:600;}
+.markdown-section blockquote{background:var(--brand-card); border-left:4px solid var(--brand-blue); border-radius:0 var(--radius) var(--radius) 0;}
+.markdown-section pre code{border-radius:var(--radius) !important;}
+.markdown-section table{border:1px solid var(--brand-border); border-radius:var(--radius); overflow:hidden;}
+
+
+/* Sidebar polish */
+.sidebar{background:transparent !important;}
+.sidebar-nav > ul > li > a{color:#fff !important;}
+.sidebar-nav > ul > li > a.active, .sidebar-nav > ul > li > a:hover{color:var(--brand-blue) !important;}
+.sidebar-nav > ul > li.active > a{border-right:2px solid var(--brand-blue) !important;}
+.app-name{display:none;} /* keep header minimal */
+
+
+/* Footer link hue */
+.footer a{color:var(--brand-blue) !important;}
+</style>
 </head>
 <body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: 'Axiom Cortex™',
-      repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
-      loadSidebar: true,
-      loadFooter: true,
-      auto2top: true,
-      homepage: 'README.md'
-    }
-  </script>
-  <!-- Docsify Scripts -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<!-- Simple top nav matching main site actions -->
+<header class="ts-nav">
+<a class="ts-brand" href="https://teamstation.dev" target="_blank" rel="noopener">
+<span class="ts-logo" aria-hidden="true"></span> <span>TeamStation AI</span>
+</a>
+<div class="ts-actions">
+<a class="btn ghost" href="https://teamstation.dev" target="_blank" rel="noopener">Platform Login →</a>
+<a class="btn primary" href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener">Schedule Demo →</a>
+</div>
+</header>
+
+
+<div id="app"><p style="padding:2rem">Loading…</p></div>
+
+
+<script>
+window.$docsify = {
+name: 'Axiom Cortex™',
+repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
+loadSidebar: true,
+// loadFooter: true, // enable with plugin if desired
+auto2top: true,
+homepage: 'README.md'
+}
+</script>
+<!-- Docsify (pinned) + fallback -->
+<script src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js?v=20250828"></script>
+<script>if(!window.Docsify){var s=document.createElement('script');s.src='https://unpkg.com/docsify@4.13.1/lib/docsify.min.js?v=20250828';document.head.appendChild(s);}</script>
 </body>
 </html>
