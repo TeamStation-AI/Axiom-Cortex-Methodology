@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.5/dist/purify.min.js"></script>
   <style>
     :root {
       --bg: #161b22;
@@ -34,6 +35,38 @@
     .prose table { border-collapse: collapse; border: 1px solid #333; }
     .prose th, .prose td { border: 1px solid #333; padding: 6px 12px;}
     .prose ul, .prose ol { margin-left: 1.4em; }
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { 
+      color: var(--text); 
+      margin-top: 2rem; 
+      margin-bottom: 1rem; 
+      line-height: 1.25; 
+    }
+    .prose h1 { font-size: 2.25rem; font-weight: 800; }
+    .prose h2 { font-size: 1.875rem; font-weight: 700; }
+    .prose h3 { font-size: 1.5rem; font-weight: 600; }
+    .prose h4 { font-size: 1.25rem; font-weight: 600; }
+    .prose h5 { font-size: 1.125rem; font-weight: 600; }
+    .prose h6 { font-size: 1rem; font-weight: 600; }
+    .prose p { margin-bottom: 1rem; line-height: 1.75; }
+    .prose ul li, .prose ol li { margin-bottom: 0.5rem; }
+    .prose ul { list-style-type: disc; }
+    .prose ol { list-style-type: decimal; }
+    .prose ul ul { list-style-type: circle; margin-top: 0.5rem; }
+    .prose ul ul ul { list-style-type: square; }
+    .prose strong { font-weight: 700; color: var(--text); }
+    .prose em { font-style: italic; }
+    .prose hr { border-color: var(--border); margin: 2rem 0; }
+    .prose code { 
+      background-color: #202737; 
+      color: #e2e8f0; 
+      padding: 0.125rem 0.25rem; 
+      border-radius: 0.25rem; 
+      font-size: 0.875em; 
+    }
+    .prose pre code { 
+      background-color: transparent; 
+      padding: 0; 
+    }
     @media (max-width: 1023px) {
       aside#tocWrap { display: none !important; }
     }
@@ -77,7 +110,69 @@
     let pages = [];
 
     function parseMarkdown(md) {
-      return marked.parse(md);
+      // Configure marked with enhanced options
+      marked.setOptions({
+        breaks: true,        // Support line breaks
+        gfm: true,          // GitHub Flavored Markdown
+        tables: true,       // Support tables
+        sanitize: false,    // Allow HTML (we'll use DOMPurify)
+        smartLists: true,   // Better list handling
+        smartypants: true,  // Smart quotes and dashes
+        xhtml: false,       // HTML5 mode
+        headerIds: true,    // Generate header IDs
+        mangle: false       // Don't mangle email addresses
+      });
+      
+      // Create a custom renderer for better styling
+      const renderer = new marked.Renderer();
+      
+      // Enhance list rendering
+      renderer.list = function(body, ordered, start) {
+        const type = ordered ? 'ol' : 'ul';
+        const startatt = (ordered && start !== 1) ? ' start="' + start + '"' : '';
+        return '<' + type + startatt + ' class="' + (ordered ? 'list-decimal' : 'list-disc') + ' pl-6 space-y-2">\n' + body + '</' + type + '>\n';
+      };
+      
+      renderer.listitem = function(text) {
+        return '<li class="leading-relaxed">' + text + '</li>\n';
+      };
+      
+      // Enhance paragraph rendering
+      renderer.paragraph = function(text) {
+        return '<p class="mb-4 leading-relaxed">' + text + '</p>\n';
+      };
+      
+      // Enhance header rendering with proper spacing
+      renderer.heading = function(text, level, raw) {
+        const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+        const classes = {
+          1: 'text-4xl font-bold mb-6 mt-8 text-white',
+          2: 'text-3xl font-semibold mb-4 mt-6 text-white',
+          3: 'text-2xl font-semibold mb-3 mt-5 text-white',
+          4: 'text-xl font-semibold mb-3 mt-4 text-white',
+          5: 'text-lg font-semibold mb-2 mt-4 text-white',
+          6: 'text-base font-semibold mb-2 mt-3 text-white'
+        };
+        
+        return '<h' + level + ' id="' + escapedText + '" class="' + (classes[level] || classes[6]) + '">' + text + '</h' + level + '>\n';
+      };
+      
+      // Enhance code block rendering
+      renderer.code = function(code, lang) {
+        return '<pre class="bg-[#1a1f2e] rounded-lg p-4 my-4 overflow-x-auto border border-gray-700"><code class="text-sm text-gray-200">' + code + '</code></pre>\n';
+      };
+      
+      // Enhance blockquote rendering
+      renderer.blockquote = function(quote) {
+        return '<blockquote class="border-l-4 border-blue-400 bg-slate-800/50 pl-6 py-2 my-4 italic">' + quote + '</blockquote>\n';
+      };
+      
+      // Set the custom renderer
+      marked.setOptions({ renderer: renderer });
+      
+      // Parse and sanitize
+      const html = marked.parse(md);
+      return typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(html) : html;
     }
 
     async function loadNav() {
@@ -116,7 +211,27 @@
         const resp = await fetch(RAW_BASE + mdfile + "?v=" + Date.now());
         if (!resp.ok) throw new Error("Could not load: " + mdfile);
         const md = await resp.text();
-        content.innerHTML = parseMarkdown(md);
+        
+        // Check if marked is available, otherwise use basic HTML rendering
+        if (typeof marked !== 'undefined') {
+          content.innerHTML = parseMarkdown(md);
+        } else {
+          // Fallback: Basic HTML conversion for common Markdown elements
+          let html = md
+            .replace(/^### (.*$)/gim, '<h3 class="text-2xl font-semibold mb-3 mt-5 text-white">$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2 class="text-3xl font-semibold mb-4 mt-6 text-white">$1</h2>')
+            .replace(/^# (.*$)/gim, '<h1 class="text-4xl font-bold mb-6 mt-8 text-white">$1</h1>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+            .replace(/`(.*?)`/g, '<code class="bg-slate-700 text-gray-200 px-1 py-0.5 rounded text-sm">$1</code>')
+            .replace(/^[\*\-\+] (.*)$/gim, '<li class="leading-relaxed ml-6">$1</li>')
+            .replace(/\n\n/g, '</p><p class="mb-4 leading-relaxed">')
+            .replace(/^(?!<[h|l|p])/gm, '<p class="mb-4 leading-relaxed">')
+            .replace(/(<\/p><p[^>]*>)$/, '');
+          
+          content.innerHTML = html;
+        }
+        
         buildTOC();
         highlightActiveNav(mdfile);
         content.focus();
