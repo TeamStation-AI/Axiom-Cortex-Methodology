@@ -28,9 +28,14 @@
       --border:rgba(255,255,255,.12);
       --card:rgba(255,255,255,.04);
       --radius:16px;
+
+      /* layout tuning */
+      --sidebar-w: 240px;         /* was ~300px */
+      --content-gutter: 24px;     /* space between sidebar and content */
+      --content-max: 1000px;      /* readable line-length */
     }
 
-    /* ===== Background (simple; no layout hacks so scrolling stays native) ===== */
+    /* Background */
     body{
       margin:0;
       font-family:'Poppins',sans-serif !important;
@@ -41,18 +46,28 @@
       background-attachment:fixed !important;
     }
 
-    /* ===== Docsify polish (does NOT change positioning/scroll) ===== */
+    /* ===== Reduce the gap: make sidebar narrower and pull content left ===== */
+    .sidebar{ width: var(--sidebar-w) !important; }
+    /* Docsify positions content with a left offset; normalize using margin-left */
+    .content{
+      margin-left: calc(var(--sidebar-w) + var(--content-gutter)) !important;
+      margin-right: var(--content-gutter) !important;
+    }
+    /* Left-align the markdown block instead of centering with huge auto margins */
+    .markdown-section{
+      max-width: var(--content-max) !important;
+      margin: 0 var(--content-gutter) 96px 0 !important; /* hugs the sidebar */
+    }
+
+    /* Typography & elements */
     .sidebar, .content { background:transparent !important; }
-    .markdown-section{ max-width:940px; }
-    .markdown-section h1, .markdown-section h2, .markdown-section h3,
-    .markdown-section h4, .markdown-section h5{ color:#fff !important; font-weight:700 !important; }
-    .markdown-section p, .markdown-section li{ color:var(--text) !important; }
+    .markdown-section h1,.markdown-section h2,.markdown-section h3,.markdown-section h4,.markdown-section h5{
+      color:#fff !important; font-weight:700 !important;
+    }
+    .markdown-section p,.markdown-section li{ color:var(--text) !important; }
     .markdown-section a{ color:var(--accent) !important; font-weight:600; text-underline-offset:3px; }
     .markdown-section a:hover{ color:var(--accent-weak) !important; }
-    .markdown-section blockquote{
-      background:var(--card); border-left:4px solid var(--accent);
-      border-radius:0 var(--radius) var(--radius) 0;
-    }
+    .markdown-section blockquote{ background:var(--card); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; }
     .markdown-section pre code{ border-radius:var(--radius) !important; }
     .markdown-section table{ border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
 
@@ -61,10 +76,7 @@
     .sidebar-nav > ul > li > a:hover{ color:var(--accent) !important; }
     .sidebar-nav > ul > li.active > a{ border-right:2px solid var(--accent) !important; }
 
-    /* Extra breathing room so footer never sits on top of content */
-    .content{ padding-bottom:140px !important; }
-
-    /* ===== Footer (static; no JS; no position:fixed) ===== */
+    /* Footer (static) */
     footer.ts-footer{
       border-top:1px solid var(--border);
       background:rgba(0,0,0,.20);
@@ -75,24 +87,21 @@
     .ts-footer p{ margin:.35rem 0; color:var(--muted); }
     .ts-footer strong{ color:#fff; }
     .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:.65rem 1rem; border-radius:999px; text-decoration:none; font-weight:600;
-      border:1px solid rgba(255,255,255,.18); transition:transform .12s ease, background .12s ease;
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; padding:.65rem 1rem; border-radius:999px; text-decoration:none; font-weight:600; border:1px solid rgba(255,255,255,.18); transition:transform .12s ease, background .12s ease; }
     .btn:hover{ transform:translateY(-1px); }
     .btn.primary{ background:var(--accent); color:#0b1220; border-color:transparent; }
     .btn.ghost{ background:rgba(255,255,255,.06); color:#fff; }
 
-    /* Accessible focus */
-    a:focus-visible, .btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:8px; }
+    /* Mobile: sidebar becomes overlay; remove left margin so content is full width */
+    @media (max-width: 768px){
+      .content{ margin: 0 !important; }
+      .markdown-section{ margin: 0 16px 96px 16px !important; max-width: 100% !important; }
+    }
   </style>
 </head>
 <body>
-  <!-- Default Docsify root (keeps sidebar + scrolling intact) -->
   <div id="app"><p style="padding:2rem">Loading…</p></div>
 
-  <!-- Footer -->
   <footer class="ts-footer" role="contentinfo" aria-label="Site footer">
     <div class="ts-footer-inner">
       <p><strong>Tired of the noise? See what data-driven team building actually looks like.</strong></p>
@@ -107,21 +116,12 @@
     window.$docsify = {
       name: 'Axiom Cortex™',
       repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
-      loadSidebar: true,   // expects _sidebar.md at repo root
+      loadSidebar: true,
       auto2top: true,
       homepage: 'README.md',
       relativePath: true
     };
   </script>
-
-  <!-- Docsify (pinned) + fallback -->
   <script defer src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
-  <script>
-    if (!window.Docsify) {
-      var s=document.createElement('script'); s.defer=true;
-      s.src='https://unpkg.com/docsify@4.13.1/lib/docsify.min.js';
-      document.head.appendChild(s);
-    }
-  </script>
 </body>
 </html>
