@@ -1,8 +1,4 @@
 [
-  { "file": "README.md", "title": "Overview" },
-  { "file": "architecture.md", "title": "Architecture" },
-  { "file": "deliverables.md", "title": "Deliverables" },
-  { "file": "risk-and-reliability.md", "title": "Risk & Reliability" },
-  { "file": "scientific-foundations.md", "title": "Scientific Foundations" },
-  { "file": "nearshore-co-pilot.md", "title": "Nearshore IT Co‑Pilot™" }
+  { "title": "Home", "file": "index.md" },
+  { "title": "Nearshore IT Staff Augmentation", "file": "https://teamstation.dev/nearshore-it-staff-augmentation-process", "external": true }
 ]
