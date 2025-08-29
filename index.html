@@ -17,7 +17,8 @@
                 --color-accent: #7bb3ff;       /* link/cta blue */
                 --color-text-light: #e6e9f0;
                 --color-text-muted: #a6adbb;
-                --color-bg-dark: #0b1220;
+                --color-bg-dark: #22272e;  /* GitHub Dark theme color */
+                --color-dark-gray: #161b22; /* GitHub's deeper dark gray */
             }
         }
 
@@ -26,7 +27,7 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--color-primary-900);
+            background: var(--color-dark-gray);
         }
         ::-webkit-scrollbar-thumb {
             background: #4a5568;
@@ -36,17 +37,12 @@
             background: #6b7280;
         }
         
-        /* Custom hero gradient and texture */
-        .hero-bg {
-            background: 
-                radial-gradient(900px 600px at 88% -10%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent 60%),
-                linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-800) 70%);
-        }
+        /* Removed custom hero gradient */
     </style>
 </head>
 <body class="bg-[--color-bg-dark] text-[--color-text-light] font-sans">
     
-    <!-- Header with smooth-scrolling navigation -->
+    <!-- Header with smooth-scrolling navigation, simplified -->
     <header class="bg-zinc-900/50 backdrop-blur-sm fixed top-0 w-full z-50 shadow-lg border-b border-gray-700/50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#hero" class="text-xl font-bold text-white transition-colors hover:text-[--color-accent]">
@@ -64,7 +60,7 @@
 
     <main>
         <!-- Hero Section - Matching the split-screen layout -->
-        <section id="hero" class="h-screen flex items-center bg-[--color-primary-900] hero-bg relative">
+        <section id="hero" class="h-screen flex items-center bg-[--color-dark-gray] relative">
             <div class="container mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Content -->
                 <div class="text-center lg:text-left">
@@ -121,7 +117,7 @@
         </section>
 
         <!-- Platform Section - Matching a section from the screenshots -->
-        <section id="platform" class="py-24 bg-[--color-primary-900]">
+        <section id="platform" class="py-24 bg-[--color-bg-dark]">
             <div class="container mx-auto px-6 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Content -->
                 <div class="text-center lg:text-left">
