@@ -21,31 +21,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Custom TeamStation AI Styling -->
+  <!-- Custom TeamStation AI Styling with Gradient -->
   <style>
-    /* Base Theme: Dark Blue */
     :root {
-      --theme-color: #3a76f7; /* A slightly brighter blue for accents */
-      --sidebar-background: #0a192f; /* Deep Navy Blue */
-      --content-background: #0a192f; /* Deep Navy Blue */
-      --body-background: #0a192f; /* Deep Navy Blue */
-      --text-color: #ccd6f6; /* Light, muted blue-white for text */
-      --heading-color: #e6f1ff; /* Brighter white for headings */
-      --link-color: #64ffda; /* A vibrant cyan/mint for links, a common tech accent */
-      --border-color: #1d3d66; /* A subtle border color */
+      --link-color: #64ffda; /* A vibrant cyan/mint for links */
+      --border-color: #2a4d80; /* A subtle border color */
+      --code-bg-color: #112240; /* A slightly lighter navy for code blocks */
     }
 
-    /* Apply Poppins Font */
+    /* Apply Poppins Font & White Text */
     body, .markdown-section {
       font-family: 'Poppins', sans-serif !important;
-      color: var(--text-color) !important;
+      color: #FFFFFF !important; /* Pure white for all body text */
+    }
+
+    /* Apply the Strong Gradient Background */
+    body {
+      background: linear-gradient(135deg, #0a192f 0%, #1d3d66 100%) !important;
+      background-attachment: fixed !important;
+    }
+    .content, .sidebar {
+        background: transparent !important; /* Make content areas transparent to show the body gradient */
     }
 
     /* Headings Styling */
     .markdown-section h1, .markdown-section h2, .markdown-section h3 {
       font-family: 'Poppins', sans-serif !important;
       font-weight: 700 !important;
-      color: var(--heading-color) !important;
+      color: #FFFFFF !important; /* Pure white for headings */
       border-bottom-color: var(--border-color) !important;
     }
 
@@ -60,26 +63,27 @@
     }
 
     /* Sidebar Styling */
-    .sidebar {
-      background-color: var(--sidebar-background) !important;
-    }
     .sidebar-nav .active {
       border-right: 2px solid var(--link-color) !important;
     }
     .sidebar-nav li a.active, .sidebar-nav li a:hover {
         color: var(--link-color) !important;
     }
+    .sidebar-nav li a {
+        color: #FFFFFF !important; /* White for inactive sidebar links */
+    }
 
     /* Code Block Styling */
     .markdown-section code {
-      background-color: #112240 !important; /* Slightly lighter navy for code blocks */
+      background-color: var(--code-bg-color) !important;
       border-radius: 4px !important;
-      color: #8892b0 !important;
+      color: #ccd6f6 !important; /* A light blue-white for code text */
     }
     
     /* Footer Styling */
     .footer {
         border-top: 1px solid var(--border-color) !important;
+        background: transparent !important;
     }
   </style>
   
