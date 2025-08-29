@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/dark.css" />
 
   <style>
-    /* ===== TeamStation dark palette — blues only ===== */
+    /* ===== TeamStation dark palette — blues only (no greens/peach) ===== */
     :root{
       color-scheme: dark;
       --bg-1:#0b1220;         /* deep navy */
@@ -29,9 +29,10 @@
       --border:rgba(255,255,255,.12);
       --card:rgba(255,255,255,.04);
       --radius:16px;
+      --footer-h:120px;       /* will be measured & updated by JS */
     }
 
-    /* ===== Layout & Background (no red/peach, no green) ===== */
+    /* ===== Layout & Background ===== */
     html,body{height:100%;}
     body{
       margin:0;
@@ -43,8 +44,10 @@
       background-attachment:fixed !important;
       display:flex; flex-direction:column; min-height:100vh;
     }
-    .page{flex:1 0 auto;}
-    footer.ts-footer{flex:0 0 auto;}
+
+    /* page area grows; footer never overlays */
+    .page{ flex:1 0 auto; min-height:calc(100vh - var(--footer-h)); }
+    footer.ts-footer{ flex:0 0 auto; position:relative !important; z-index:0; }
 
     /* ===== Docsify polish ===== */
     .sidebar, .content { background:transparent !important; }
@@ -64,18 +67,20 @@
     }
     .markdown-section pre code{ border-radius:var(--radius) !important; }
     .markdown-section table{ border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+
     .sidebar-nav > ul > li > a{ color:#fff !important; }
     .sidebar-nav > ul > li > a.active,
     .sidebar-nav > ul > li > a:hover{ color:var(--accent) !important; }
     .sidebar-nav > ul > li.active > a{ border-right:2px solid var(--accent) !important; }
 
-    /* GitHub corner (Docsify repo link) forced to blue scheme */
-    .github-corner svg { fill:#1e3a8a !important; color:#0b1220 !important; }
+    /* Remove Docsify ribbons/toggles that clash with brand */
+    .github-corner{ display:none !important; }      /* orange corner ribbon */
+    .sidebar-toggle, .sidebar-toggle-button{ display:none !important; } /* bottom-left toggle */
 
-    /* Keep room so footer never overlaps short pages */
-    .content{ padding-bottom:140px !important; }
+    /* Ensure content never hides behind footer even on very short pages */
+    .content{ padding-bottom: calc(var(--footer-h) + 24px) !important; position:relative; z-index:1; }
 
-    /* ===== Built-in footer (no plugin; stable) ===== */
+    /* ===== Built-in footer (no plugin) ===== */
     footer.ts-footer{
       border-top:1px solid var(--border);
       background:rgba(0,0,0,.20);
@@ -107,7 +112,7 @@
 
   <!-- Persistent footer -->
   <footer class="ts-footer" role="contentinfo" aria-label="Site footer">
-    <div class="ts-footer-inner">
+    <div class="ts-footer-inner" id="ts-footer-inner">
       <p><strong>Tired of the noise? See what data-driven team building actually looks like.</strong></p>
       <div class="cta-row">
         <a class="btn primary" href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener">Schedule a Technical Demo →</a>
@@ -123,6 +128,7 @@
   </noscript>
 
   <script>
+    // Docsify config — footer plugin off; avoid 'undefined' artifacts
     window.$docsify = {
       name: 'Axiom Cortex™',
       repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
@@ -131,7 +137,24 @@
       homepage: 'README.md',
       relativePath: true
     };
+
+    // Measure footer and reserve space so buttons never overlay content.
+    function setFooterHeight() {
+      var el = document.getElementById('ts-footer-inner');
+      if (!el) return;
+      var h = el.offsetHeight + 32; // padding buffer
+      document.documentElement.style.setProperty('--footer-h', h + 'px');
+    }
+    window.addEventListener('load', setFooterHeight);
+    window.addEventListener('resize', setFooterHeight);
+    // Re-run after Docsify renders markdown
+    document.addEventListener('DOMContentLoaded', function(){
+      document.addEventListener('DOMContentSwitch', setFooterHeight);
+      document.addEventListener('scroll', setFooterHeight, {passive:true});
+      setTimeout(setFooterHeight, 300);
+    });
   </script>
+
   <!-- Docsify (pinned) + fallback -->
   <script defer src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
   <script>
