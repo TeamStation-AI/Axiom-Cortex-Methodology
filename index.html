@@ -8,7 +8,7 @@
   <meta name="description" content="Technical documentation microsite for Axiom Cortex™."/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- ADD THIS LINE: Best-in-class markdown parser -->
+  <!-- MARKDOWN PARSER -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
@@ -73,17 +73,15 @@
     </div>
   </footer>
   <script>
-    // CONFIGURATION (make sure this matches your repo!)
+    // CONFIGURATION
     const RAW_BASE = "https://raw.githubusercontent.com/teamstation-ai/Axiom-Cortex-Methodology/main/";
     const PAGES_JSON = "_pages.json";
     let pages = [];
 
-    // USE MARKED.JS FOR MARKDOWN PARSING
     function parseMarkdown(md) {
       return marked.parse(md);
     }
 
-    // Syntax highlighting for JS code blocks (autonomous, minimal)
     function highlightAllCode() {
       document.querySelectorAll('pre > code').forEach(code => {
         const lang = code.className.match(/lang-(\w+)/)?.[1] || '';
@@ -104,7 +102,14 @@
         nav.innerHTML = "";
         pages.forEach((p, idx) => {
           const a = document.createElement("a");
-          a.href = "#" + encodeURIComponent(p.file);
+          // Support external links
+          if (p.external) {
+            a.href = p.file;
+            a.target = "_blank";
+            a.rel = "noopener";
+          } else {
+            a.href = "#" + encodeURIComponent(p.file);
+          }
           a.className = "text-[--accent] font-medium hover:text-white px-2 py-1 rounded transition navlink focus:outline-none focus-visible:ring-2 focus-visible:ring-[--accent]";
           a.textContent = p.title;
           nav.appendChild(a);
@@ -116,6 +121,12 @@
 
     // Routing & Content Loading
     async function loadPage(mdfile) {
+      // Don't try to load if this is an external link!
+      const page = pages.find(p => p.file === mdfile);
+      if (page && page.external) {
+        window.open(page.file, "_blank", "noopener");
+        return;
+      }
       const content = document.getElementById('content');
       content.innerHTML = "<div class='text-gray-400'>Loading…</div>";
       try {
@@ -190,7 +201,14 @@
 
     // Routing
     function route() {
-      let file = decodeURIComponent(location.hash.replace(/^#/, "")) || (pages[0]?.file || "README.md");
+      let file = decodeURIComponent(location.hash.replace(/^#/, "")) || (pages[0]?.file || "index.md");
+      // Don't try to load content for external links
+      const page = pages.find(p => p.file === file);
+      if (page && page.external) {
+        window.location.hash = "";
+        window.open(page.file, "_blank", "noopener");
+        return;
+      }
       loadPage(file);
     }
 
