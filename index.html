@@ -10,7 +10,6 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Dark, blue-only palette + neat scrollbars + fixed header offset for headings -->
   <style type="text/tailwindcss">
     @layer base {
       :root{
@@ -73,9 +72,8 @@
     </div>
   </footer>
 
-  <!-- APP: load real MD files, build TOC, scrollspy, nav updates -->
   <script>
-    // --------- CONFIG ---------
+    // CONFIG
     const REPO_OWNER = "TeamStation-AI";
     const REPO_NAME = "Axiom-Cortex-Methodology";
     const SCHEDULE_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq';
@@ -90,18 +88,31 @@
       return h || 'README.md';
     }
 
-    // Get list of .md files in the repo using GitHub API (public, no auth)
-    async function fetchMarkdownFiles() {
-      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
+    // Recursively get all .md files in the repo using the GitHub API
+    async function fetchMarkdownFiles(path = "") {
+      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
       const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
       const files = await res.json();
-      // Only .md files, ignore _footer.md and files starting with _
-      return files
-        .filter(f => f.name.endsWith(".md") && !f.name.startsWith("_"))
-        .map(f => ({
-          title: prettifyTitle(f.name),
-          file: f.name
-        }));
+      let mdFiles = [];
+      for (const f of files) {
+        if (f.type === "dir") {
+          const subFiles = await fetchMarkdownFiles(f.path);
+          mdFiles = mdFiles.concat(subFiles);
+        } else if (
+          f.name.endsWith(".md") &&
+          !f.name.startsWith("_") &&
+          // ignore .github folder content
+          !f.path.startsWith(".github/")
+        ) {
+          mdFiles.push({
+            title: prettifyTitle(f.name),
+            file: f.path
+          });
+        }
+      }
+      // Sort by file path (can customize if you want a different order)
+      mdFiles.sort((a, b) => a.title.localeCompare(b.title));
+      return mdFiles;
     }
 
     // Prettify filename to title (e.g. scientific-foundations.md -> Scientific Foundations)
@@ -301,7 +312,7 @@
       }
     }
 
-    // Build top nav automatically from repo .md files
+    // Build top nav automatically from all .md files (even in subfolders)
     async function buildTopNav() {
       const nav = $('#top-nav'); nav.innerHTML='';
       const pages = await fetchMarkdownFiles();
