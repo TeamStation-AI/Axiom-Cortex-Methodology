@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Home",
+    "file": "README.md"
+  },
+  {
+    "title": "Core Architecture", 
+    "file": "architecture.md"
+  },
+  {
+    "title": "Latent Trait Analysis",
+    "file": "latent-traits.md"
+  },
+  {
+    "title": "Scientific Foundations",
+    "file": "scientific-foundations.md"
+  },
+  {
+    "title": "Risk & Reliability",
+    "file": "risk-and-reliability.md"
+  },
+  {
+    "title": "Deliverables",
+    "file": "deliverables.md"
+  }
+]
