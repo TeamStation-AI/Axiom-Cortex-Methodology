@@ -1,201 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Axiom Cortex™: Technical Methodology Brief | TeamStation AI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Public technical brief for the Axiom Cortex™ cognitive AI engine.">
-  <meta name="theme-color" content="#0b1220">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Public technical brief for the Axiom Cortex™ cognitive AI engine." />
+  <meta name="theme-color" content="#0b1220" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/dark.css">
+  <!-- Docsify theme (pinned) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/themes/dark.css" />
 
   <style>
-    /* ===== TeamStation dark palette — blues only (no greens/peach) ===== */
-    :root {
+    /* ===== TeamStation dark palette — blues only ===== */
+    :root{
       color-scheme: dark;
-      --bg-1: #0b1220;
-      --bg-2: #0f1b2e;
-      --accent: #7bb3ff;
-      --accent-weak: #9fc6ff;
-      --text: #e6e9f0;
-      --muted: #a6adbb;
-      --border: rgba(255, 255, 255, .12);
-      --card: rgba(255, 255, 255, .04);
-      --radius: 16px;
-      --footer-h: 120px;
+      --bg-1:#0b1220;       /* deep navy */
+      --bg-2:#0f1b2e;       /* darker navy */
+      --accent:#7bb3ff;     /* link/cta blue */
+      --accent-weak:#9fc6ff;
+      --text:#e6e9f0;
+      --muted:#a6adbb;
+      --border:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.04);
+      --radius:16px;
     }
 
-    /* ===== Layout & Background ===== */
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif !important;
-      color: var(--text) !important;
+    /* ===== Background (simple; no layout hacks so scrolling stays native) ===== */
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif !important;
+      color:var(--text) !important;
       background:
-        radial-gradient(900px 600px at 88% -10%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
+        radial-gradient(900px 600px at 88% -10%, rgba(123,179,255,.18), rgba(123,179,255,0) 60%),
         linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 70%);
-      background-attachment: fixed !important;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh; /* Re-added to ensure minimum height, but allows for expansion */
+      background-attachment:fixed !important;
     }
 
-    /* page area grows; footer never overlays */
-    .page {
-      flex: 1 0 auto;
-      min-height: calc(100vh - var(--footer-h));
-    }
-
-    /* Ensure content never hides behind footer even on very short pages */
-    .content {
-      padding-bottom: calc(var(--footer-h) + 24px) !important;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ===== Docsify polish ===== */
-    .sidebar, .content {
-      background: transparent !important;
-    }
-
-    .markdown-section {
-      max-width: 940px;
-    }
-
+    /* ===== Docsify polish (does NOT change positioning/scroll) ===== */
+    .sidebar, .content { background:transparent !important; }
+    .markdown-section{ max-width:940px; }
     .markdown-section h1, .markdown-section h2, .markdown-section h3,
-    .markdown-section h4, .markdown-section h5 {
-      color: #fff !important;
-      font-weight: 700 !important;
+    .markdown-section h4, .markdown-section h5{ color:#fff !important; font-weight:700 !important; }
+    .markdown-section p, .markdown-section li{ color:var(--text) !important; }
+    .markdown-section a{ color:var(--accent) !important; font-weight:600; text-underline-offset:3px; }
+    .markdown-section a:hover{ color:var(--accent-weak) !important; }
+    .markdown-section blockquote{
+      background:var(--card); border-left:4px solid var(--accent);
+      border-radius:0 var(--radius) var(--radius) 0;
     }
+    .markdown-section pre code{ border-radius:var(--radius) !important; }
+    .markdown-section table{ border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
 
-    .markdown-section p, .markdown-section li {
-      color: var(--text) !important;
-    }
-
-    .markdown-section a {
-      color: var(--accent) !important;
-      font-weight: 600;
-      text-underline-offset: 3px;
-    }
-
-    .markdown-section a:hover {
-      color: var(--accent-weak) !important;
-    }
-
-    .markdown-section blockquote {
-      background: var(--card);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 var(--radius) var(--radius) 0;
-    }
-
-    .markdown-section pre code {
-      border-radius: var(--radius) !important;
-    }
-
-    .markdown-section table {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .sidebar-nav > ul > li > a {
-      color: #fff !important;
-    }
-
+    .sidebar-nav > ul > li > a{ color:#fff !important; }
     .sidebar-nav > ul > li > a.active,
-    .sidebar-nav > ul > li > a:hover {
-      color: var(--accent) !important;
-    }
+    .sidebar-nav > ul > li > a:hover{ color:var(--accent) !important; }
+    .sidebar-nav > ul > li.active > a{ border-right:2px solid var(--accent) !important; }
 
-    .sidebar-nav > ul > li.active > a {
-      border-right: 2px solid var(--accent) !important;
-    }
+    /* Extra breathing room so footer never sits on top of content */
+    .content{ padding-bottom:140px !important; }
 
-    /* Remove Docsify ribbons/toggles that clash with brand */
-    .github-corner, .sidebar-toggle, .sidebar-toggle-button {
-      display: none !important;
+    /* ===== Footer (static; no JS; no position:fixed) ===== */
+    footer.ts-footer{
+      border-top:1px solid var(--border);
+      background:rgba(0,0,0,.20);
     }
+    .ts-footer-inner{
+      max-width:1100px; margin:0 auto; padding:28px 20px; text-align:center;
+    }
+    .ts-footer p{ margin:.35rem 0; color:var(--muted); }
+    .ts-footer strong{ color:#fff; }
+    .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:.65rem 1rem; border-radius:999px; text-decoration:none; font-weight:600;
+      border:1px solid rgba(255,255,255,.18); transition:transform .12s ease, background .12s ease;
+    }
+    .btn:hover{ transform:translateY(-1px); }
+    .btn.primary{ background:var(--accent); color:#0b1220; border-color:transparent; }
+    .btn.ghost{ background:rgba(255,255,255,.06); color:#fff; }
 
-    /* ===== Built-in footer (no plugin) ===== */
-    footer.ts-footer {
-      flex: 0 0 auto;
-      position: relative !important;
-      z-index: 0;
-      border-top: 1px solid var(--border);
-      background: rgba(0, 0, 0, .20);
-    }
-
-    .ts-footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 20px;
-      text-align: center;
-    }
-
-    .ts-footer p {
-      margin: .35rem 0;
-      color: var(--muted);
-    }
-
-    .ts-footer strong {
-      color: #fff;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: .65rem 1rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, .18);
-      transition: transform .12s ease, background .12s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn.primary {
-      background: var(--accent);
-      color: #0b1220;
-      border-color: transparent;
-    }
-
-    .btn.ghost {
-      background: rgba(255, 255, 255, .06);
-      color: #fff;
-    }
-
-    /* Keyboard focus */
-    a:focus-visible, .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 8px;
-    }
+    /* Accessible focus */
+    a:focus-visible, .btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:8px; }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div id="app">
-      <p style="padding:2rem">Loading…</p>
-    </div>
-  </div>
+  <!-- Default Docsify root (keeps sidebar + scrolling intact) -->
+  <div id="app"><p style="padding:2rem">Loading…</p></div>
 
+  <!-- Footer -->
   <footer class="ts-footer" role="contentinfo" aria-label="Site footer">
-    <div class="ts-footer-inner" id="ts-footer-inner">
+    <div class="ts-footer-inner">
       <p><strong>Tired of the noise? See what data-driven team building actually looks like.</strong></p>
       <div class="cta-row">
         <a class="btn primary" href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener">Schedule a Technical Demo →</a>
@@ -204,42 +103,25 @@
     </div>
   </footer>
 
-  <noscript>
-    <div style="padding:1rem 1.25rem; background:#2b2f3b; color:#fff; text-align:center">
-      JavaScript is required to render these docs. View the raw files in the repository.
-    </div>
-  </noscript>
-
   <script>
-    // Docsify config — footer plugin off; avoid 'undefined' artifacts
     window.$docsify = {
       name: 'Axiom Cortex™',
       repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
-      loadSidebar: true,
+      loadSidebar: true,   // expects _sidebar.md at repo root
       auto2top: true,
       homepage: 'README.md',
       relativePath: true
     };
-
-    // Measure footer and reserve space so buttons never overlay content.
-    function setFooterHeight() {
-      const el = document.getElementById('ts-footer-inner');
-      if (!el) return;
-      const h = el.offsetHeight + 32; // padding buffer
-      document.documentElement.style.setProperty('--footer-h', h + 'px');
-    }
-
-    window.addEventListener('load', setFooterHeight);
-    window.addEventListener('resize', setFooterHeight);
-    
-    // Re-run after Docsify renders markdown
-    document.addEventListener('DOMContentLoaded', function(){
-      document.addEventListener('DOMContentSwitch', setFooterHeight);
-      document.addEventListener('scroll', setFooterHeight, {passive:true});
-      setTimeout(setFooterHeight, 300);
-    });
   </script>
 
+  <!-- Docsify (pinned) + fallback -->
   <script defer src="https://cdn.jsdelivr.net/npm/docsify@4.13.1/lib/docsify.min.js"></script>
+  <script>
+    if (!window.Docsify) {
+      var s=document.createElement('script'); s.defer=true;
+      s.src='https://unpkg.com/docsify@4.13.1/lib/docsify.min.js';
+      document.head.appendChild(s);
+    }
+  </script>
 </body>
 </html>
