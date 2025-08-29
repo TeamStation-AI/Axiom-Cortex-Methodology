@@ -1,4 +1,9 @@
 [
   { "title": "Home", "file": "index.md" },
+  { "title": "Getting Started", "file": "getting-started.md" },
+  { "title": "Architecture", "file": "architecture.md" },
+  { "title": "Deliverables", "file": "deliverables.md" },
+  { "title": "Risk & Reliability", "file": "risk-and-reliability.md" },
+  { "title": "Scientific Foundations", "file": "scientific-foundations.md" },
   { "title": "Nearshore IT Staff Augmentation", "file": "https://teamstation.dev/nearshore-it-staff-augmentation-process", "external": true }
 ]
