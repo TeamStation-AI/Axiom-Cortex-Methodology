@@ -1,466 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TeamStation AI | Axiom Cortex™ — Technical Methodology Brief</title>
-<meta name="description" content="Public technical brief for the Axiom Cortex™ cognitive AI engine.">
-<meta name="theme-color" content="#0b1220">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamStation AI | Nearshore IT Co-Pilot™</title>
+    <meta name="description" content="A modern, single-page microsite template for GitHub Pages.">
 
-<style>
-/* ============ Design System (Dark, blue-only) ============ */
-:root{
-  color-scheme:dark;
-  --bg-1:#0b1220;      /* deep navy */
-  --bg-2:#0f1b2e;      /* darker navy */
-  --text:#e6e9f0;      /* primary text */
-  --muted:#a6adbb;     /* secondary text */
-  --accent:#5f95ff;    /* blue accent only */
-  --accent-weak:#9fb8ff;
-  --card:rgba(255,255,255,.05);
-  --border:rgba(255,255,255,.12);
-  --edge:rgba(0,0,0,.35);
-  --radius:14px;
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        /* Define a custom color palette based on your brand */
+        @layer base {
+            :root {
+                --color-primary-800: #0f1b2e; /* darker navy */
+                --color-primary-900: #0b1220; /* deep navy */
+                --color-accent: #7bb3ff;       /* link/cta blue */
+                --color-text-light: #e6e9f0;
+                --color-text-muted: #a6adbb;
+                --color-bg-dark: #0b1220;
+            }
+        }
 
-  --layout-max:1200px;
-  --sidebar-w:300px;
-  --header-h:64px;
-}
-
-/* Base */
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  color:var(--text);
-  background:
-    radial-gradient(900px 600px at 85% -10%, rgba(95,149,255,.12), transparent 60%),
-    linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 70%);
-}
-
-/* Layout: header | main (sidebar + content) */
-header{
-  position:sticky; top:0; z-index:40;
-  height:var(--header-h);
-  display:flex; align-items:center;
-  backdrop-filter: blur(8px) saturate(130%);
-  background:rgba(9,15,28,.75);
-  border-bottom:1px solid var(--border);
-}
-.header-inner{
-  width:100%; max-width:var(--layout-max);
-  margin:0 auto; padding:0 16px;
-  display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap:12px;
-}
-.brand{font-weight:700; letter-spacing:.2px}
-.brand a{color:#fff; text-decoration:none}
-.search-wrap{justify-self:center; display:flex; align-items:center; gap:8px}
-#search{
-  width:min(52vw,520px);
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:.6rem .9rem; border-radius:999px;
-  outline:none; transition:box-shadow .15s ease,border-color .15s ease;
-}
-#search:focus{box-shadow:0 0 0 3px rgba(95,149,255,.25); border-color:var(--accent)}
-.count{font-size:.85rem; color:var(--muted)}
-.actions{justify-self:end; display:flex; gap:8px}
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-  padding:.55rem .9rem; border-radius:999px; text-decoration:none; font-weight:600;
-  background:rgba(255,255,255,.06); color:#fff; border:1px solid var(--border);
-  transition:transform .12s ease, background .12s ease, border-color .12s ease}
-.btn:hover{transform:translateY(-1px); border-color:var(--accent); background:rgba(255,255,255,.08)}
-.btn.primary{background:var(--accent); color:#0b1220; border-color:transparent}
-.btn.primary:hover{filter:brightness(1.05)}
-/* Mobile header collapse */
-@media (max-width:900px){
-  .header-inner{grid-template-columns:1fr; gap:8px; padding:8px 12px}
-  .search-wrap{justify-self:stretch}
-  #search{width:100%}
-  .actions{justify-self:center}
-}
-
-/* Main area */
-main{
-  width:100%; max-width:var(--layout-max); margin:0 auto;
-  display:grid; grid-template-columns: var(--sidebar-w) 1fr; gap:24px;
-  padding:24px 16px 60px 16px;
-}
-@media (max-width:1100px){
-  :root{--sidebar-w:270px}
-}
-@media (max-width:900px){
-  main{grid-template-columns:1fr}
-}
-
-/* Sidebar (sticky, collapsible) */
-aside{
-  position:sticky; top:calc(var(--header-h) + 16px);
-  align-self:start;
-  border:1px solid var(--border);
-  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  border-radius:var(--radius);
-  box-shadow: 0 10px 30px var(--edge);
-  overflow:hidden;
-}
-.nav-head{
-  padding:.85rem 1rem; font-weight:700; border-bottom:1px solid var(--border);
-}
-.nav{ max-height:65vh; overflow:auto; padding:.4rem .4rem 1rem .4rem; scroll-behavior:smooth}
-.nav::-webkit-scrollbar{height:8px;width:8px}
-.nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12); border-radius:999px}
-.nav a{
-  display:block; text-decoration:none; color:var(--text);
-  padding:.5rem .6rem; border-radius:10px; border:1px solid transparent;
-  transition:background .12s ease, color .12s ease, border-color .12s ease;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-.nav a:hover{background:rgba(255,255,255,.06); border-color:var(--border)}
-.nav a.active{background:rgba(95,149,255,.18); border-color:var(--accent); color:#fff}
-.nav .h1{font-weight:700}
-.nav .h2{padding-left:1rem; font-weight:600}
-.nav .h3{padding-left:2rem; color:var(--muted)}
-.section-toggle{cursor:pointer; user-select:none; display:flex; align-items:center; gap:.5rem}
-.section-toggle .chev{transition:transform .15s ease; opacity:.9}
-.section.collapsed .chev{transform:rotate(-90deg)}
-.section-items{margin-top:.35rem}
-
-/* Content */
-article{
-  min-width:0;
-  border:1px solid var(--border);
-  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  border-radius:var(--radius);
-  box-shadow: 0 10px 30px var(--edge);
-  padding:clamp(14px, 2.4vw, 28px);
-}
-article :is(h1,h2,h3,h4,h5){scroll-margin-top:calc(var(--header-h) + 16px); color:#fff}
-article h1{font-size:clamp(1.5rem,2.2vw,2rem); margin:.2rem 0 1rem 0}
-article h2{margin:1.2rem 0 .5rem 0; border-top:1px dashed var(--border); padding-top:.8rem}
-article p{line-height:1.65}
-article a{color:var(--accent); text-underline-offset:3px; font-weight:600}
-article a:hover{color:var(--accent-weak)}
-article blockquote{margin:1rem 0; padding:.75rem 1rem; background:var(--card); border-left:4px solid var(--accent); border-radius:0 10px 10px 0}
-pre{background:#0a162d; border:1px solid var(--border); border-radius:12px; padding:1rem; overflow:auto}
-code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92em}
-pre code{display:block;}
-
-/* Syntax “tokens” (lightweight highlighter) */
-.tok-kw{color:#89b4ff; font-weight:600}
-.tok-str{color:#a7f0ff}
-.tok-num{color:#b0d0ff}
-.tok-com{color:#7e8aa6; font-style:italic}
-.tok-tag{color:#9fb8ff}
-.tok-attr{color:#c7dcff}
-.tok-punc{color:#c3cbe1}
-
-/* Search highlight */
-mark.hl{background: rgba(95,149,255,.35); color:#fff; border-radius:4px; padding:0 2px}
-
-/* Footer */
-footer{
-  border-top:1px solid var(--border);
-  background:rgba(4,8,16,.85);
-}
-.footer-inner{
-  width:100%; max-width:var(--layout-max); margin:0 auto; padding:18px 16px;
-  display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; color:var(--muted); text-align:center
-}
-footer .btn{padding:.5rem .8rem}
-
-/* Subtle fades */
-.fade-in{animation:fade .22s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-</style>
+        /* Basic scrollbar styling for a clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-primary-900);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+        
+        /* Custom hero gradient and texture */
+        .hero-bg {
+            background: 
+                radial-gradient(900px 600px at 88% -10%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent 60%),
+                linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-800) 70%);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-[--color-bg-dark] text-[--color-text-light] font-sans">
+    
+    <!-- Header with smooth-scrolling navigation -->
+    <header class="bg-zinc-900/50 backdrop-blur-sm fixed top-0 w-full z-50 shadow-lg border-b border-gray-700/50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-xl font-bold text-white transition-colors hover:text-[--color-accent]">
+                TeamStation AI
+            </a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#services" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Services</a></li>
+                    <li><a href="#platform" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Platform</a></li>
+                    <li><a href="#contact" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<header>
-  <div class="header-inner">
-    <div class="brand"><a href="#">TeamStation AI | Axiom Cortex™</a></div>
-    <div class="search-wrap">
-      <input id="search" type="search" placeholder="Search the brief…" aria-label="Search the brief">
-      <span class="count" id="count" aria-live="polite"></span>
-    </div>
-    <div class="actions">
-      <a class="btn" href="https://github.com/TeamStation-AI/Axiom-Cortex-Methodology" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="btn primary" href="https://teamstation.dev/home/executive-summary" target="_blank" rel="noopener">Schedule Demo →</a>
-    </div>
-  </div>
-</header>
+    <main>
+        <!-- Hero Section - Matching the split-screen layout -->
+        <section id="hero" class="h-screen flex items-center bg-[--color-primary-900] hero-bg relative">
+            <div class="container mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-center lg:text-left">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight">
+                        Your Nearshore <span class="text-[--color-accent]">IT Co-Pilot™</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-[--color-text-muted] leading-relaxed mb-8">
+                        One intelligent system to hire, equip, secure, and pay LATAM engineers. Tech-Evaluations via **Axiom Cortex™** plus expert-in-the-loop.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center lg:justify-start">
+                        <a href="#contact" class="px-8 py-3 bg-[--color-accent] text-white font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                            Schedule a Demo
+                        </a>
+                        <a href="#rates" class="px-8 py-3 bg-white/10 text-white font-semibold rounded-full border border-gray-700 transition-all duration-300 transform hover:scale-105 hover:bg-white/20">
+                            See Rates
+                        </a>
+                    </div>
+                </div>
+                <!-- Right Visual -->
+                <div class="flex justify-center items-center">
+                    <img src="https://placehold.co/400x400/0f1b2e/a6adbb?text=AI+Co-Pilot" alt="AI Co-Pilot visual" class="rounded-3xl shadow-2xl scale-125">
+                </div>
+            </div>
+        </section>
 
-<main>
-  <aside class="fade-in">
-    <div class="nav-head">Contents</div>
-    <nav class="nav" id="toc" aria-label="On-page navigation"></nav>
-  </aside>
+        <!-- Services Section - Matching a section from the screenshots -->
+        <section id="services" class="py-24 bg-[--color-primary-800]">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <h2 class="text-4xl font-bold mb-12 text-center text-white">Your Service Platform for End-to-End Staffing</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-transparent p-6 rounded-xl text-center">
+                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">Global Search and Hire</h3>
+                        <p class="text-[--color-text-muted] leading-relaxed">
+                            Access a vast, pre-vetted talent pool to find the best engineers for your needs.
+                        </p>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="bg-transparent p-6 rounded-xl text-center">
+                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">Talent Onboarding</h3>
+                        <p class="text-[--color-text-muted] leading-relaxed">
+                            Streamline the onboarding process to get your new team members productive, fast.
+                        </p>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="bg-transparent p-6 rounded-xl text-center">
+                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">EOR Compliance</h3>
+                        <p class="text-[--color-text-muted] leading-relaxed">
+                            Handle all employment-related compliance with our all-in-one platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <article id="content" class="fade-in">
-    <p><em>Loading the technical brief…</em></p>
-  </article>
-</main>
+        <!-- Platform Section - Matching a section from the screenshots -->
+        <section id="platform" class="py-24 bg-[--color-primary-900]">
+            <div class="container mx-auto px-6 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-center lg:text-left">
+                    <h2 class="text-4xl font-bold mb-4 text-white">
+                        Run Your LATAM Engineering Operation in One Platform
+                    </h2>
+                    <p class="text-[--color-text-muted] leading-relaxed">
+                        Hire, onboard, equip, and manage elite LATAM engineers in one system—proprietary AI, secure devices, compliance, and performance under a single SLA.
+                    </p>
+                    <div class="mt-8">
+                        <a href="#contact" class="px-8 py-3 bg-[--color-accent] text-white font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                            Start a Free Trial
+                        </a>
+                    </div>
+                </div>
+                <!-- Right Visual Placeholder -->
+                <div class="flex justify-center items-center">
+                    <img src="https://placehold.co/500x300/0f1b2e/a6adbb?text=Platform+UI+Screenshot" alt="Platform UI" class="rounded-xl shadow-2xl">
+                </div>
+            </div>
+        </section>
 
-<footer>
-  <div class="footer-inner">
-    <span>© TeamStation AI — Axiom Cortex™ Technical Methodology Brief</span>
-    <a class="btn" href="https://teamstation.dev/nearshore-integrated-services" target="_blank" rel="noopener">Explore Co-Pilot Platform</a>
-  </div>
-</footer>
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-[--color-primary-800]">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <h2 class="text-4xl font-bold mb-4 text-white">Let's Build Your Team</h2>
+                <p class="text-[--color-text-muted] leading-relaxed mb-8">
+                    Schedule a demo to see how we can help you build and scale your engineering team.
+                </p>
+                <a href="mailto:info@teamstation.ai" class="px-8 py-3 bg-[--color-accent] text-white font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                    Get In Touch
+                </a>
+            </div>
+        </section>
+    </main>
 
-<script>
-/* ============ Minimal utilities ============ */
-const $ = (sel,root=document)=>root.querySelector(sel);
-const $$ = (sel,root=document)=>Array.from(root.querySelectorAll(sel));
-const escapeHtml = s => s.replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+    <!-- Footer -->
+    <footer class="bg-zinc-900 py-8 text-center text-[--color-text-muted] border-t border-gray-700">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2024 TeamStation AI. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-/* ============ Tiny Markdown pipeline ============ */
-/* Preprocess fenced code to preserve language; then use a small markdown converter (snarkdown-like) */
-function preprocessFences(md){
-  const out = [];
-  const lines = md.replace(/\r\n?/g,"\n").split("\n");
-  let inFence=false, lang="", buf=[];
-  for(const line of lines){
-    const m = line.match(/^```(\w+)?\s*$/);
-    if(m){
-      if(!inFence){ inFence=true; lang=(m[1]||""); buf=[]; }
-      else{
-        const code = escapeHtml(buf.join("\n"));
-        out.push(`<pre><code class="lang-${lang}">${code}</code></pre>`);
-        inFence=false; lang=""; buf=[];
-      }
-      continue;
-    }
-    if(inFence){ buf.push(line); } else out.push(line);
-  }
-  if(inFence){
-    out.push(`<pre><code>${escapeHtml(buf.join("\n"))}</code></pre>`);
-  }
-  return out.join("\n");
-}
-
-/* Super-small markdown to HTML (headings, lists, bold/italic, code, links, blockquote) */
-function mdToHtml(md){
-  md = md.replace(/^\s+$/gm,''); // trim blank lines
-  // blockquotes
-  md = md.replace(/^>(.*)$/gm, (_,a)=>`<blockquote>${a.trim()}</blockquote>`);
-  // headings
-  md = md.replace(/^######\s*(.+)$/gm,'<h6>$1</h6>')
-         .replace(/^#####\s*(.+)$/gm,'<h5>$1</h5>')
-         .replace(/^####\s*(.+)$/gm,'<h4>$1</h4>')
-         .replace(/^###\s*(.+)$/gm,'<h3>$1</h3>')
-         .replace(/^##\s*(.+)$/gm,'<h2>$1</h2>')
-         .replace(/^#\s*(.+)$/gm,'<h1>$1</h1>');
-  // horizontal rules
-  md = md.replace(/^\s*([-*_])\1\1+\s*$/gm,'<hr>');
-  // unordered lists
-  md = md.replace(/^(?:\s*)[-*+]\s+(.+)$/gm,'<li>$1</li>');
-  md = md.replace(/(<li>[\s\S]*?<\/li>)/gms,'<ul>$1</ul>');
-  // inline code
-  md = md.replace(/`([^`]+)`/g,'<code>$1</code>');
-  // bold/italic
-  md = md.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
-         .replace(/\*([^*]+)\*/g,'<em>$1</em>')
-         .replace(/__([^_]+)__/g,'<strong>$1</strong>')
-         .replace(/_([^_]+)_/g,'<em>$1</em>');
-  // links [text](url)
-  md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
-  // paragraphs (wrap loose lines not already HTML)
-  md = md.split(/\n{2,}/).map(b=>{
-    if (/^\s*<(h\d|ul|ol|li|pre|blockquote|hr)/i.test(b.trim())) return b;
-    return `<p>${b.replace(/\n/g,'<br>')}</p>`;
-  }).join('\n');
-  return md;
-}
-
-/* ============ Lightweight syntax highlighter ============ */
-function highlightBlock(codeEl){
-  const cls = codeEl.className || '';
-  const lang = (cls.match(/lang-([a-z0-9]+)/i)||[])[1] || '';
-  let t = codeEl.textContent;
-
-  // Common tokens
-  const str = /(\"[^\"\\\n]*(?:\\.[^\"\\\n]*)*\"|\'[^\'\\\n]*(?:\\.[^\'\\\n]*)*\'|\`[^`]*\`)/g;
-  const num = /\b(\d+(?:\.\d+)?)\b/g;
-  const comJS = /(\/\*[\s\S]*?\*\/|\/\/.*?$)/gm;
-  const kwJS = /\b(await|break|case|catch|class|const|continue|debugger|default|delete|do|else|export|extends|finally|for|from|function|if|import|in|instanceof|let|new|null|of|return|super|switch|this|throw|try|typeof|var|void|while|with|yield|enum|implements|interface|package|private|protected|public|static)\b/g;
-  const tag = /(&lt;\/?[a-zA-Z0-9\-]+)(?=[\s&gt;])/g;
-  const attr = /([a-zA-Z\-:]+)(=)("[^"]*"|'[^']*')/g;
-
-  const esc = s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-  let html = esc(t);
-
-  if (lang==='js' || lang==='javascript' || lang==='ts' || lang==='typescript'){
-    html = html
-      .replace(comJS,'<span class="tok-com">$1</span>')
-      .replace(str,'<span class="tok-str">$1</span>')
-      .replace(kwJS,'<span class="tok-kw">$1</span>')
-      .replace(num,'<span class="tok-num">$1</span>');
-  } else if (lang==='json'){
-    html = html
-      .replace(/("(?:\\.|[^"])*")(\s*:)/g,'<span class="tok-attr">$1</span>$2')
-      .replace(str,'<span class="tok-str">$1</span>')
-      .replace(num,'<span class="tok-num">$1</span>');
-  } else if (lang==='html' || lang==='xml' || lang==='svg' || lang==='markup'){
-    html = html
-      .replace(attr,'<span class="tok-attr">$1</span>$2<span class="tok-str">$3</span>')
-      .replace(tag,'<span class="tok-tag">$1</span>');
-  } else if (lang==='bash' || lang==='sh'){
-    html = html
-      .replace(/^#.*$/gm,'<span class="tok-com">$&</span>')
-      .replace(str,'<span class="tok-str">$1</span>')
-      .replace(num,'<span class="tok-num">$1</span>');
-  }
-  codeEl.innerHTML = html;
-}
-
-/* ============ Sidebar builder (from headings) ============ */
-function slugify(text){
-  return text.toLowerCase().trim()
-    .replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-');
-}
-function buildTOC(){
-  const toc = $("#toc"); toc.innerHTML='';
-  const hs = $$("#content h1, #content h2, #content h3");
-  let lastH1=null, lastH2=null;
-
-  hs.forEach(h=>{
-    if(!h.id){ h.id = slugify(h.textContent); }
-    const level = +h.tagName.substring(1);
-    if(level===1){
-      lastH1 = document.createElement('div');
-      lastH1.className='section';
-      lastH1.innerHTML = `<div class="section-toggle h1"><span class="chev">▾</span><a href="#${h.id}" class="h1">${h.textContent}</a></div><div class="section-items"></div>`;
-      toc.appendChild(lastH1);
-      lastH2 = null;
-    } else if(level===2){
-      if(!lastH1){ // ensure a container
-        lastH1 = document.createElement('div');
-        lastH1.className='section';
-        lastH1.innerHTML = `<div class="section-toggle h1"><span class="chev">▾</span><a href="#${h.id}" class="h1">Section</a></div><div class="section-items"></div>`;
-        toc.appendChild(lastH1);
-      }
-      const wrap = document.createElement('div');
-      wrap.innerHTML = `<a href="#${h.id}" class="h2">${h.textContent}</a>`;
-      lastH1.querySelector('.section-items').appendChild(wrap);
-      lastH2 = wrap;
-    } else if(level===3){
-      const a = document.createElement('a');
-      a.className='h3'; a.href = `#${h.id}`; a.textContent = h.textContent;
-      if(lastH2){
-        let sub = lastH2.querySelector('.sub');
-        if(!sub){ sub = document.createElement('div'); sub.className='sub'; lastH2.appendChild(sub); }
-        sub.appendChild(a);
-      } else {
-        toc.appendChild(a);
-      }
-    }
-  });
-
-  // Collapse/expand
-  $$(".section-toggle", toc).forEach(t=>{
-    t.addEventListener('click', e=>{
-      if(e.target.tagName==='A') return;
-      t.parentElement.classList.toggle('collapsed');
-    });
-  });
-
-  // Active link on scroll
-  const links = $$("a[href^='#']", toc);
-  const map = new Map(links.map(a=>[a.getAttribute('href').slice(1), a]));
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        const id = en.target.id;
-        links.forEach(l=>l.classList.toggle('active', l===map.get(id)));
-      }
-    });
-  }, {rootMargin:"-60% 0px -35% 0px", threshold:0});
-  $$("#content h1, #content h2, #content h3").forEach(h=>obs.observe(h));
-}
-
-/* ============ Search (client-side, highlight + jump) ============ */
-let lastMarks=[];
-function clearMarks(root){ lastMarks.forEach(m=>{ const p=m.parentNode; if(p){ p.replaceChild(document.createTextNode(m.textContent), m);} }); lastMarks=[]; }
-function highlightTerm(root, term){
-  if(!term){ clearMarks(root); return 0; }
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode: n => n.parentElement && !/script|style/i.test(n.parentElement.tagName)
-  });
-  const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
-  let count=0, nodes=[];
-  while(walker.nextNode()) nodes.push(walker.currentNode);
-  nodes.forEach(node=>{
-    const txt = node.nodeValue;
-    if(!txt) return;
-    const frag = document.createDocumentFragment();
-    let lastIndex=0, m;
-    while((m=re.exec(txt))){
-      const before = txt.slice(lastIndex, m.index);
-      if(before) frag.appendChild(document.createTextNode(before));
-      const mark = document.createElement('mark'); mark.className='hl'; mark.textContent = m[0];
-      frag.appendChild(mark); lastMarks.push(mark);
-      lastIndex = m.index + m[0].length; count++;
-    }
-    if(count && lastIndex){
-      const after = txt.slice(lastIndex); if(after) frag.appendChild(document.createTextNode(after));
-      node.parentNode.replaceChild(frag, node);
-    }
-  });
-  return count;
-}
-
-/* ============ Render pipeline ============ */
-async function render(){
-  const target = $("#content");
-  try{
-    const res = await fetch("README.md?ts="+Date.now(), {cache:"no-store"});
-    if(!res.ok) throw new Error("README.md missing");
-    const raw = await res.text();
-
-    // 1) fenced code → HTML-preserved blocks with language class
-    const prepped = preprocessFences(raw);
-
-    // 2) markdown → html
-    const html = mdToHtml(prepped);
-
-    // 3) inject
-    target.innerHTML = html;
-
-    // 4) syntax highlight
-    $$("pre > code", target).forEach(highlightBlock);
-
-    // 5) headings → IDs + TOC
-    buildTOC();
-
-  }catch(e){
-    target.innerHTML = `<h1>README.md not found</h1>
-    <p class="muted">Place your content in <code>README.md</code> at the repository root. The page auto-renders it.</p>`;
-  }
-}
-
-/* Search UI wiring */
-$("#search").addEventListener("input", e=>{
-  clearMarks($("#content"));
-  const q = e.target.value.trim();
-  const n = q ? highlightTerm($("#content"), q) : 0;
-  $("#count").textContent = q ? `${n} result${n!==1?'s':''}` : "";
-});
-
-/* Smooth scrolling for sidebar links */
-$("#toc").addEventListener("click", e=>{
-  const a = e.target.closest("a[href^='#']");
-  if(!a) return;
-  e.preventDefault();
-  const id = a.getAttribute("href").slice(1);
-  const el = document.getElementById(id);
-  if(el){ el.scrollIntoView({behavior:"smooth", block:"start"}); history.replaceState(null,"","#"+id); }
-});
-
-/* Kickoff */
-render();
-</script>
 </body>
 </html>
