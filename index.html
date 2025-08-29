@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0b1220" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked.js for full markdown support -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body { background: #161b22; color: #e6e9f0; font-family: sans-serif; }
     header, footer { background: #0d1117; }
@@ -80,24 +82,6 @@
       });
     }
 
-    // Improved Markdown to HTML function
-    function mdToHtml(md) {
-      md = md.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
-      md = md.replace(/```([\s\S]*?)```/g, (m, code) => `<pre><code>${code.replace(/</g,"&lt;")}</code></pre>`);
-      md = md.replace(/`([^`]+)`/g, "<code>$1</code>");
-      md = md.replace(/^### (.*)$/gm, "<h3>$1</h3>")
-             .replace(/^## (.*)$/gm, "<h2>$1</h2>")
-             .replace(/^# (.*)$/gm, "<h1>$1</h1>");
-      md = md.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-             .replace(/\*([^*]+)\*/g, "<em>$1</em>");
-      md = md.replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>");
-      md = md.replace(/^(?:\s*)[-*+] (.+)$/gm, "<li>$1</li>");
-      md = md.replace(/(<li>[\s\S]*?<\/li>)/gms, "<ul>$1</ul>");
-      md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
-      md = md.replace(/(?:^|\n)(?!<[hulpbqo])([^\n<][^\n]*)\n/g, '<p>$1</p>\n');
-      return md;
-    }
-
     async function loadDoc(file) {
       setActiveNav(`#${file}`);
       document.getElementById('content').textContent = 'Loading…';
@@ -105,7 +89,8 @@
         const res = await fetch(file + '?ts=' + Date.now());
         if (!res.ok) throw new Error('Not found');
         const md = await res.text();
-        document.getElementById('content').innerHTML = mdToHtml(md);
+        // Use marked.js for full markdown rendering
+        document.getElementById('content').innerHTML = marked.parse(md);
       } catch (e) {
         document.getElementById('content').innerHTML = `<h1>404 — Not found</h1>
           <p class="text-[--muted]">Could not load <code>${file}</code>.</p>
@@ -115,11 +100,9 @@
 
     function buildNav() {
       const toc = document.getElementById('toc');
-      // Internal docs nav
       toc.innerHTML = docs.map(d =>
         `<a href="#${d.file}"${location.hash === '#' + d.file ? ' class="active"' : ''}>${d.title}</a>`
       ).join("");
-      // Add external links
       for (const ext of externalLinks) {
         toc.innerHTML += `<a class="external-link" href="${ext.url}" target="_blank" rel="noopener">${ext.title} &#8599;</a>`;
       }
