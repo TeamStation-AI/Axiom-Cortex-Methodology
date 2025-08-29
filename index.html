@@ -71,35 +71,45 @@
     </div>
   </footer>
   <script>
-    const RAW_BASE = "https://raw.githubusercontent.com/TeamstationAI/Axiom-Cortex-Methodology/main/";
+    // CONFIGURATION (use your actual repo details here!)
+    const RAW_BASE = "https://raw.githubusercontent.com/teamstation-ai/Axiom-Cortex-Methodology/main/";
     const PAGES_JSON = "_pages.json";
     let pages = [];
 
-    // Markdown Parser (Minimal, Accessible, Autonomous)
+    // Autonomous Markdown Parser
     function parseMarkdown(md) {
+      // Fenced code blocks
       md = md.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
         code = code.replace(/[<>&]/g, c=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[c]));
         return `<pre class="overflow-auto my-4 rounded-lg border border-white/10 bg-[#202737] p-4"><code class="lang-${lang||''}">${code}</code></pre>`;
       });
+      // Blockquotes
       md = md.replace(/^>\s?(.*)$/gm, '<blockquote>$1</blockquote>');
+      // Headings
       md = md.replace(/^###### (.*)$/gm, '<h6>$1</h6>')
              .replace(/^##### (.*)$/gm, '<h5>$1</h5>')
              .replace(/^#### (.*)$/gm, '<h4>$1</h4>')
              .replace(/^### (.*)$/gm, '<h3>$1</h3>')
              .replace(/^## (.*)$/gm, '<h2>$1</h2>')
              .replace(/^# (.*)$/gm, '<h1>$1</h1>');
+      // Horizontal rule
       md = md.replace(/^\s*([-*_])\1\1+\s*$/gm,'<hr>');
+      // Lists
       md = md.replace(/^\s*[-*+] (.*)$/gm, '<li>$1</li>');
       md = md.replace(/(<li>.*<\/li>)/gms, m => `<ul>${m}</ul>`);
+      // Inline code
       md = md.replace(/`([^`]+)`/g, '<code>$1</code>');
+      // Bold & Italics
       md = md.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
       md = md.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+      // Links
       md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      // Paragraphs
       md = md.replace(/^(?!<[hluo][lina]|<blockquote|<hr|<pre|<code|<img|<table|<tr|<td|<th|<ul|<ol|<li|<strong|<em|<a|<p)([^\n]+)\n?/gm, '<p>$1</p>');
       return md;
     }
 
-    // Minimal syntax highlighter for code blocks (autonomous)
+    // Syntax highlighting for JS code blocks (autonomous, minimal)
     function highlightAllCode() {
       document.querySelectorAll('pre > code').forEach(code => {
         const lang = code.className.match(/lang-(\w+)/)?.[1] || '';
@@ -111,7 +121,7 @@
       });
     }
 
-    // Navigation: Fetch and Build
+    // Navigation Fetch & Build
     async function loadNav() {
       try {
         const resp = await fetch(RAW_BASE + PAGES_JSON);
@@ -145,7 +155,7 @@
         content.focus();
         window.scrollTo({top:0});
       } catch (e) {
-        content.innerHTML = `<div class="text-red-400">Error loading <b>${mdfile}</b><br>${e.message}</div>`;
+        content.innerHTML = `<div class="text-red-400">Error loading <b>${mdfile}</b><br>Could not load: ${mdfile}</div>`;
         document.getElementById('toc').innerHTML = "";
       }
     }
@@ -210,7 +220,7 @@
       loadPage(file);
     }
 
-    // Init
+    // INIT
     (async function() {
       await loadNav();
       window.addEventListener('hashchange', route);
