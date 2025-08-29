@@ -1,0 +1,8 @@
+[
+  { "file": "README.md", "title": "Overview" },
+  { "file": "architecture.md", "title": "Architecture" },
+  { "file": "deliverables.md", "title": "Deliverables" },
+  { "file": "risk-and-reliability.md", "title": "Risk & Reliability" },
+  { "file": "scientific-foundations.md", "title": "Scientific Foundations" },
+  { "file": "nearshore-co-pilot.md", "title": "Nearshore IT Co‑Pilot™" }
+]
