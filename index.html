@@ -177,4 +177,182 @@
             .replace(re.kw,'<span class="text-blue-200 font-semibold">$1</span>')
             .replace(re.num,'<span class="text-blue-100">$1</span>');
       }else if(/^(html|xml|svg|markup)$/.test(lang)){
-        h=h.replace(re.attr,'<span class=
+        h=h.replace(re.attr,'<span class="text-blue-100">$1</span>=<span class="text-cyan-200">$2</span>')
+            .replace(re.tag,'<span class="text-blue-200">$1</span>');
+      }else if(/^(json)$/.test(lang)){
+        h=h.replace(/(&quot;[^&]*?&quot;)(\s*:)/g,'<span class="text-blue-100">$1</span>$2')
+            .replace(re.str,'<span class="text-cyan-200">$1</span>')
+            .replace(re.num,'<span class="text-blue-100">$1</span>');
+      }
+      codeEl.innerHTML=h;
+    }
+
+    /* ---------- super-accurate scrollspy ---------- */
+    // We combine IntersectionObserver (medium viewport band) + a throttled scroll fallback
+    // + ResizeObserver to keep positions fresh when content changes (images, fonts, md updates).
+    const spy = {
+      headings: [],
+      map: new Map(),
+      ticking: false,
+      headerOffset: () => (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72) + 16,
+
+      collect(){
+        const hs = $$('#content h1, #content h2, #content h3');
+        this.headings = hs;
+        this.map.clear();
+        hs.forEach(h => {
+          if (!h.id) h.id = slug(h.textContent);
+          this.map.set(h.id, h);
+        });
+      },
+
+      // Binary search fallback for active heading
+      activeByScroll(){
+        const top = window.scrollY + this.headerOffset();
+        let lo = 0, hi = this.headings.length - 1, idx = 0;
+        while (lo <= hi){
+          const mid = (lo + hi) >> 1;
+          const el = this.headings[mid];
+          const y = el.getBoundingClientRect().top + window.scrollY;
+          if (y <= top){ idx = mid; lo = mid + 1; } else { hi = mid - 1; }
+        }
+        return this.headings[idx];
+      },
+
+      setActive(id){
+        const tocLinks = $$('#toc a');
+        tocLinks.forEach(a => a.classList.toggle('bg-white/10', a.getAttribute('href') === '#'+id));
+      },
+
+      observe(){
+        if (this.io) this.io.disconnect();
+        this.io = new IntersectionObserver(entries => {
+          // Use a central viewport band to reduce jitter
+          entries.forEach(en => {
+            if (en.isIntersecting){
+              this.setActive(en.target.id);
+            }
+          });
+        }, { root: null, rootMargin: '-45% 0px -45% 0px', threshold: [0, 1] });
+        this.headings.forEach(h => this.io.observe(h));
+      },
+
+      onScroll(){
+        if (this.ticking) return;
+        this.ticking = true;
+        requestAnimationFrame(() => {
+          // Fallback ensures accuracy when IO misses fast jumps
+          const active = this.activeByScroll();
+          if (active) this.setActive(active.id);
+          this.ticking = false;
+        });
+      },
+
+      watchResize(){
+        if (this.ro) this.ro.disconnect();
+        this.ro = new ResizeObserver(() => {
+          this.collect(); this.observe();
+        });
+        this.ro.observe($('#content'));
+      }
+    };
+
+    function slug(s){ return s.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-'); }
+
+    function buildTOC(){
+      const toc = $('#toc'); if(!toc) return;
+      toc.innerHTML='';
+      const hs = $$('#content h1, #content h2, #content h3');
+      hs.forEach(h=>{
+        if(!h.id) h.id = slug(h.textContent);
+        const a = document.createElement('a');
+        a.href = '#'+h.id;
+        a.textContent = h.textContent;
+        a.className = (h.tagName==='H1' ? 'block px-2 py-1.5 font-semibold rounded-lg hover:bg-white/10'
+                    : h.tagName==='H2' ? 'block px-3 py-1.5 rounded-lg hover:bg-white/10'
+                    : 'block px-4 py-1.5 text-[--muted] hover:bg-white/10');
+        toc.appendChild(a);
+      });
+      // smooth scroll on click
+      toc.addEventListener('click', e=>{
+        const a = e.target.closest('a[href^="#"]'); if(!a) return;
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        history.replaceState(null,'','#'+id);
+      });
+
+      // wire up scrollspy
+      spy.collect();
+      spy.observe();
+      spy.watchResize();
+      window.removeEventListener('scroll', spy._bound);
+      spy._bound = spy.onScroll.bind(spy);
+      window.addEventListener('scroll', spy._bound, {passive:true});
+    }
+
+    async function loadFooter(){
+      try{
+        const r = await fetch('_footer.md?ts='+Date.now(), {cache:'no-store'});
+        if(!r.ok) return;
+        const md = await r.text();
+        $('#footer').innerHTML = mdToHtml(preprocessFences(md));
+      }catch(e){}
+    }
+
+    async function render(){
+      const file = routeFile();
+      // set active in top nav
+      $$('#top-nav a').forEach(a=>a.classList.toggle('text-[--accent]', a.dataset.file===file));
+
+      try{
+        const res = await fetch(file + '?ts=' + Date.now(), {cache:'no-store'});
+        if(!res.ok) throw new Error('404');
+        const md = await res.text();
+        const html = mdToHtml(preprocessFences(md));
+        $('#content').innerHTML = html;
+        $$('pre > code', $('#content')).forEach(highlight);
+        buildTOC();
+        window.scrollTo({top:0, behavior:'instant'});
+      }catch(e){
+        $('#content').innerHTML = `
+          <h1 class="mb-2 text-2xl font-bold">404 — Not found</h1>
+          <p class="text-[--muted]">Could not load <code class="rounded bg-white/10 px-1">${esc(file)}</code>.</p>`;
+        $('#toc').innerHTML='';
+      }
+    }
+
+    // Build top nav dynamically: ONLY include files that actually exist
+    async function buildTopNav(){
+      const nav = $('#top-nav'); nav.innerHTML='';
+      for (const p of PAGES){
+        if (await urlExists(p.file)){
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#/${p.file}" data-file="${p.file}" class="navlink text-sm font-medium hover:text-[--accent]">${p.title}</a>`;
+          nav.appendChild(li);
+        }
+      }
+      // If none found, at least show Overview
+      if(!nav.children.length){
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#/README.md" data-file="README.md" class="navlink text-sm font-medium hover:text-[--accent]">Overview</a>`;
+        nav.appendChild(li);
+      }
+    }
+
+    // Router
+    window.addEventListener('hashchange', render);
+    window.addEventListener('DOMContentLoaded', async ()=>{
+      // set Schedule links
+      const s1 = $('#cta-schedule'); if (s1) { s1.href = SCHEDULE_URL; }
+      const s2 = $('#footer-schedule'); if (s2) { s2.href = SCHEDULE_URL; }
+
+      await buildTopNav();
+      if(!location.hash) location.hash = '/README.md';
+      await render();
+      await loadFooter();
+    });
+  </script>
+</body>
+</html>
