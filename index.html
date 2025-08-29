@@ -4,20 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO METADATA - THE "TRUTH BOMB" FOR GOOGLE -->
+  <!-- SEO METADATA -->
   <title>Axiom Cortex™: A Technical Methodology Brief | TeamStation AI</title>
   <meta name="description" content="A public-facing technical brief on the Axiom Cortex™ cognitive AI engine. For CTOs and VPs of Engineering who demand a higher standard of rigor in nearshore talent evaluation.">
   
-  <!-- OPEN GRAPH METADATA - FOR PROFESSIONAL SHARING ON LINKEDIN -->
+  <!-- OPEN GRAPH METADATA -->
   <meta property="og:title" content="Axiom Cortex™: A Technical Methodology Brief">
   <meta property="og:description" content="The scientific principles, architectural design, and mathematical foundations of the AI engine that powers the TeamStation Nearshore IT Co-Pilot™ platform.">
   <meta property="og:url" content="https://teamstation-ai.github.io/Axiom-Cortex-Methodology/">
   <meta property="og:site_name" content="TeamStation AI">
   <meta property="og:type" content="article">
   <meta property="article:author" content="TeamStation AI">
-  
-  <!-- A professional-looking dark theme -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+
+  <!-- Poppins Font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom TeamStation AI Styling -->
+  <style>
+    /* Base Theme: Dark Blue */
+    :root {
+      --theme-color: #3a76f7; /* A slightly brighter blue for accents */
+      --sidebar-background: #0a192f; /* Deep Navy Blue */
+      --content-background: #0a192f; /* Deep Navy Blue */
+      --body-background: #0a192f; /* Deep Navy Blue */
+      --text-color: #ccd6f6; /* Light, muted blue-white for text */
+      --heading-color: #e6f1ff; /* Brighter white for headings */
+      --link-color: #64ffda; /* A vibrant cyan/mint for links, a common tech accent */
+      --border-color: #1d3d66; /* A subtle border color */
+    }
+
+    /* Apply Poppins Font */
+    body, .markdown-section {
+      font-family: 'Poppins', sans-serif !important;
+      color: var(--text-color) !important;
+    }
+
+    /* Headings Styling */
+    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 700 !important;
+      color: var(--heading-color) !important;
+      border-bottom-color: var(--border-color) !important;
+    }
+
+    /* Link Styling */
+    .markdown-section a {
+      color: var(--link-color) !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+    }
+    .markdown-section a:hover {
+      text-decoration: underline !important;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      background-color: var(--sidebar-background) !important;
+    }
+    .sidebar-nav .active {
+      border-right: 2px solid var(--link-color) !important;
+    }
+    .sidebar-nav li a.active, .sidebar-nav li a:hover {
+        color: var(--link-color) !important;
+    }
+
+    /* Code Block Styling */
+    .markdown-section code {
+      background-color: #112240 !important; /* Slightly lighter navy for code blocks */
+      border-radius: 4px !important;
+      color: #8892b0 !important;
+    }
+    
+    /* Footer Styling */
+    .footer {
+        border-top: 1px solid var(--border-color) !important;
+    }
+  </style>
   
 </head>
 <body>
@@ -26,14 +90,10 @@
     window.$docsify = {
       name: 'Axiom Cortex™ Methodology',
       repo: 'TeamStation-AI/Axiom-Cortex-Methodology',
-      loadSidebar: false,
+      loadSidebar: true,
       loadFooter: true,
       auto2top: true,
-      homepage: 'README.md', // This tells it to use your README as the main content
-      themeable: {
-          readyTransition : true,
-          responsiveTables: true
-      }
+      homepage: 'README.md'
     }
   </script>
   <!-- Docsify v4 -->
