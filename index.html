@@ -6,8 +6,6 @@
   <title>TeamStation AI | Axiom Cortex™ — Technical Methodology</title>
   <meta name="description" content="Technical methodology brief for the Axiom Cortex cognitive AI engine." />
   <meta name="theme-color" content="#0b1220" />
-
-  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style type="text/tailwindcss">
     @layer base {
@@ -34,7 +32,6 @@
   </style>
 </head>
 <body class="bg-[--bg] text-[--text] font-sans">
-  <!-- HEADER: brand left, CENTERED nav, CTA right -->
   <header class="fixed top-0 z-50 w-full border-b border-white/10 bg-zinc-900/60 backdrop-blur-md">
     <div class="mx-auto grid max-w-[var(--maxw)] grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4">
       <a href="#/README.md" class="justify-self-start text-base font-semibold tracking-wide text-white hover:text-[--accent]">
@@ -51,84 +48,49 @@
       </div>
     </div>
   </header>
-
-  <!-- MAIN: TOC + content -->
   <main class="mx-auto grid max-w-[var(--maxw)] grid-cols-1 gap-6 px-4 pt-[calc(var(--header-h)+20px)] pb-24 lg:grid-cols-[var(--toc-w)_1fr]">
     <aside class="hidden lg:block sticky top-[calc(var(--header-h)+16px)] self-start rounded-2xl border border-white/10 bg-[--panel] shadow-2xl">
       <div class="border-b border-white/10 px-4 py-3 text-sm font-semibold">Contents</div>
       <nav id="toc" class="max-h-[65vh] overflow-auto px-2 py-2 text-sm"></nav>
     </aside>
     <article id="content" class="min-w-0 rounded-2xl border border-white/10 bg-[--panel] p-5 shadow-2xl">
-      <p class="text-[--muted]" id="main-status">Loading…</p>
+      <p class="text-[--muted]">Loading…</p>
     </article>
   </main>
-
-  <!-- FOOTER (uses _footer.md if present; falls back to default) -->
   <footer class="border-t border-white/10 bg-zinc-900/80">
     <div id="footer" class="mx-auto flex max-w-[var(--maxw)] flex-col items-center gap-3 px-4 py-6 text-center text-[--muted]">
       <p>© 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.</p>
       <p><a id="footer-schedule" target="_blank" rel="noopener" class="text-[--accent] hover:brightness-110">Schedule a Technical Demo →</a></p>
     </div>
   </footer>
-
   <script>
     // CONFIG
     const REPO_OWNER = "TeamStation-AI";
     const REPO_NAME = "Axiom-Cortex-Methodology";
     const SCHEDULE_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq';
-
-    // --------- HELPERS ---------
     const $ = (s, r=document) => r.querySelector(s);
-    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-    const esc = s => s.replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
-
     function routeFile() {
       const h = location.hash.replace(/^#\/?/, '').trim();
       return h || 'README.md';
     }
-
-    // Recursively get all .md files in the repo using the GitHub API
-    async function fetchMarkdownFiles(path = "") {
-      try {
-        const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
-        const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
-        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
-        const files = await res.json();
-        let mdFiles = [];
-        for (const f of files) {
-          if (f.type === "dir") {
-            // Do not recurse into .github or hidden/system folders
-            if (!f.name.startsWith('.')) {
-              const subFiles = await fetchMarkdownFiles(f.path);
-              mdFiles = mdFiles.concat(subFiles);
-            }
-          } else if (
-            f.name.endsWith(".md") &&
-            !f.name.startsWith("_")
-          ) {
-            mdFiles.push({
-              title: prettifyTitle(f.name, f.path),
-              file: f.path
-            });
-          }
-        }
-        return mdFiles;
-      } catch (err) {
-        throw err;
-      }
+    async function fetchMarkdownFiles() {
+      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
+      const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
+      const files = await res.json();
+      // Only .md files, ignore _footer.md and files starting with _
+      return files
+        .filter(f => f.name.endsWith(".md") && !f.name.startsWith("_"))
+        .map(f => ({
+          title: prettifyTitle(f.name),
+          file: f.name
+        }));
     }
-
-    // Prettify filename to title (e.g. files/deliverables.md -> Deliverables)
-    function prettifyTitle(name, path) {
+    function prettifyTitle(name) {
       let base = name.replace(/\.md$/i, "");
-      // Special case: README.md always "Overview"
       if (/^readme$/i.test(base)) return "Overview";
-      // For files in folders: use name only
       return base.replace(/[-_]+/g, ' ')
         .replace(/\b\w/g, c => c.toUpperCase());
     }
-
-    /* ---------- MD pipeline (tiny) ---------- */
     function preprocessFences(md){
       const out=[], lines=md.replace(/\r\n?/g,"\n").split("\n");
       let inFence=false, lang="", buf=[];
@@ -147,7 +109,7 @@
       if(inFence) out.push(`<pre class="overflow-auto rounded-xl border border-white/10 bg-[#0a162d] p-4"><code>${esc(buf.join("\n"))}</code></pre>`);
       return out.join("\n");
     }
-
+    function esc(s){return s.replace(/[&<>"]/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));}
     function mdToHtml(md){
       md = md.replace(/^>\s*(.+)$/gm,'<blockquote class="my-4 rounded-r-xl border-l-4 border-[--accent] bg-white/5 px-4 py-3">$1</blockquote>');
       md = md.replace(/^######\s*(.+)$/gm,'<h6 class="mt-6 mb-2 font-semibold">$1</h6>')
@@ -165,96 +127,6 @@
       md = md.split(/\n{2,}/).map(b=>/^\s*</.test(b.trim())?b:`<p class="my-3 leading-relaxed text-[--text]/95">${b.replace(/\n/g,'<br>')}</p>`).join('\n');
       return md;
     }
-
-    function highlight(codeEl){
-      const cls=codeEl.className||'', lang=(cls.match(/lang-([a-z0-9]+)/i)||[])[1]||'';
-      let h=codeEl.innerHTML;
-      const re={
-        str:/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*`)/g,
-        num:/\b(\d+(?:\.\d+)?)\b/g,
-        com:/(\/\/.*?$|\/\*[\s\S]*?\*\/)/gm,
-        kw:/\b(await|break|case|catch|class|const|continue|debugger|default|delete|do|else|export|extends|finally|for|from|function|if|import|in|instanceof|let|new|null|of|return|super|switch|this|thr[...]
-        tag:/(&lt;\/?[a-zA-Z0-9\-]+)(?=[\s&gt;])/g,
-        attr:/([a-zA-Z\-:]+)=(&quot;[^&]*&quot;|&#39;[^&]*&#39;)/g
-      };
-      if(/^(js|ts|javascript|typescript)$/.test(lang)){
-        h=h.replace(re.com,'<span class="text-slate-400 italic">$1</span>')
-            .replace(re.str,'<span class="text-cyan-200">$1</span>')
-            .replace(re.kw,'<span class="text-blue-200 font-semibold">$1</span>')
-            .replace(re.num,'<span class="text-blue-100">$1</span>');
-      }else if(/^(html|xml|svg|markup)$/.test(lang)){
-        h=h.replace(re.attr,'<span class="text-blue-100">$1</span>=<span class="text-cyan-200">$2</span>')
-            .replace(re.tag,'<span class="text-blue-200">$1</span>');
-      }else if(/^(json)$/.test(lang)){
-        h=h.replace(/(&quot;[^&]*?&quot;)(\s*:)/g,'<span class="text-blue-100">$1</span>$2')
-            .replace(re.str,'<span class="text-cyan-200">$1</span>')
-            .replace(re.num,'<span class="text-blue-100">$1</span>');
-      }
-      codeEl.innerHTML=h;
-    }
-
-    // --------- TOC & SCROLLSPY ---------
-    const spy = {
-      headings: [],
-      map: new Map(),
-      ticking: false,
-      headerOffset: () => (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72) + 16,
-
-      collect(){
-        const hs = $$('#content h1, #content h2, #content h3');
-        this.headings = hs;
-        this.map.clear();
-        hs.forEach(h => {
-          if (!h.id) h.id = slug(h.textContent);
-          this.map.set(h.id, h);
-        });
-      },
-      activeByScroll(){
-        const top = window.scrollY + this.headerOffset();
-        let lo = 0, hi = this.headings.length - 1, idx = 0;
-        while (lo <= hi){
-          const mid = (lo + hi) >> 1;
-          const el = this.headings[mid];
-          const y = el.getBoundingClientRect().top + window.scrollY;
-          if (y <= top){ idx = mid; lo = mid + 1; } else { hi = mid - 1; }
-        }
-        return this.headings[idx];
-      },
-      setActive(id){
-        const tocLinks = $$('#toc a');
-        tocLinks.forEach(a => a.classList.toggle('bg-white/10', a.getAttribute('href') === '#'+id));
-      },
-      observe(){
-        if (this.io) this.io.disconnect();
-        this.io = new IntersectionObserver(entries => {
-          entries.forEach(en => {
-            if (en.isIntersecting){
-              this.setActive(en.target.id);
-            }
-          });
-        }, { root: null, rootMargin: '-45% 0px -45% 0px', threshold: [0, 1] });
-        this.headings.forEach(h => this.io.observe(h));
-      },
-      onScroll(){
-        if (this.ticking) return;
-        this.ticking = true;
-        requestAnimationFrame(() => {
-          const active = this.activeByScroll();
-          if (active) this.setActive(active.id);
-          this.ticking = false;
-        });
-      },
-      watchResize(){
-        if (this.ro) this.ro.disconnect();
-        this.ro = new ResizeObserver(() => {
-          this.collect(); this.observe();
-        });
-        this.ro.observe($('#content'));
-      }
-    };
-
-    function slug(s){ return s.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-'); }
-
     function buildTOC(){
       const toc = $('#toc'); if(!toc) return;
       toc.innerHTML='';
@@ -269,22 +141,8 @@
                     : 'block px-4 py-1.5 text-[--muted] hover:bg-white/10');
         toc.appendChild(a);
       });
-      toc.addEventListener('click', e=>{
-        const a = e.target.closest('a[href^="#"]'); if(!a) return;
-        e.preventDefault();
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-        history.replaceState(null,'','#'+id);
-      });
-      spy.collect();
-      spy.observe();
-      spy.watchResize();
-      window.removeEventListener('scroll', spy._bound);
-      spy._bound = spy.onScroll.bind(spy);
-      window.addEventListener('scroll', spy._bound, {passive:true});
     }
-
+    function slug(s){ return s.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-'); }
     async function loadFooter(){
       try{
         const r = await fetch('_footer.md?ts='+Date.now(), {cache:'no-store'});
@@ -293,7 +151,6 @@
         $('#footer').innerHTML = mdToHtml(preprocessFences(md));
       }catch(e){}
     }
-
     async function render(){
       const file = routeFile();
       $$('#top-nav a').forEach(a=>a.classList.toggle('text-[--accent]', a.dataset.file===file));
@@ -303,10 +160,8 @@
         const md = await res.text();
         const html = mdToHtml(preprocessFences(md));
         $('#content').innerHTML = html;
-        $$('pre > code', $('#content')).forEach(highlight);
         buildTOC();
         window.scrollTo({top:0, behavior:'instant'});
-        $('#main-status')?.remove();
       }catch(e){
         $('#content').innerHTML = `
           <h1 class="mb-2 text-2xl font-bold">404 — Not found</h1>
@@ -315,8 +170,6 @@
         $('#toc').innerHTML='';
       }
     }
-
-    // Build top nav automatically from all .md files (even in subfolders)
     async function buildTopNav() {
       const nav = $('#top-nav'); nav.innerHTML='';
       let pages = [];
@@ -324,7 +177,6 @@
         pages = await fetchMarkdownFiles();
       } catch (err) {
         nav.innerHTML = `<li><span class="text-red-400 text-sm">Error loading docs: ${esc(err.message)}</span></li>`;
-        $('#main-status').textContent = 'Error loading documentation navigation. Please try again later.';
         return;
       }
       for (const p of pages){
@@ -338,11 +190,8 @@
         nav.appendChild(li);
       }
     }
-
-    // Router
     window.addEventListener('hashchange', render);
     window.addEventListener('DOMContentLoaded', async ()=>{
-      // set Schedule links
       const s1 = $('#cta-schedule'); if (s1) { s1.href = SCHEDULE_URL; }
       const s2 = $('#footer-schedule'); if (s2) { s2.href = SCHEDULE_URL; }
       await buildTopNav();
