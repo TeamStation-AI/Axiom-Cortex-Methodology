@@ -1,4 +1,5 @@
 [
+  { "title": "Home", "file": "index.md" },
   { "title": "Overview", "file": "README.md" },
   { "title": "Getting Started", "file": "getting-started.md" },
   { "title": "Architecture", "file": "architecture.md" },
