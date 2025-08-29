@@ -1,151 +1,162 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axiom Cortex | Tech-Evaluation Platform</title>
-    <meta name="description" content="A modern, single-page microsite for the Axiom Cortex tech-evaluation platform.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TeamStation AI | Axiom Cortex™ — Tech-Evaluation Platform</title>
+  <meta name="description" content="A modern, single-page microsite for the Axiom Cortex tech-evaluation platform." />
 
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/tailwindcss">
-        /* Define a custom color palette based on your brand */
-        @layer base {
-            :root {
-                --color-primary-800: #0f1b2e; /* darker navy */
-                --color-primary-900: #0b1220; /* deep navy */
-                --color-accent: #7bb3ff;       /* link/cta blue */
-                --color-text-light: #e6e9f0;
-                --color-text-muted: #a6adbb;
-                --color-bg-dark: #22272e;  /* GitHub Dark theme color */
-                --color-dark-gray: #161b22; /* GitHub's deeper dark gray */
-            }
-        }
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        /* Basic scrollbar styling for a clean look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--color-dark-gray);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4a5568;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280;
-        }
-        
-        /* Removed custom hero gradient */
-    </style>
+  <!-- Brand palette (blue-only, dark mode) -->
+  <style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --color-primary-900: #0b1220; /* deep navy */
+        --color-primary-800: #0f1b2e; /* darker navy */
+        --color-bg-dark:     #161b22; /* deep dark (GitHub-like) */
+        --color-dark-gray:   #0d1117; /* darker panel */
+        --color-accent:      #7bb3ff; /* link/CTA blue */
+        --color-text-light:  #e6e9f0;
+        --color-text-muted:  #a6adbb;
+      }
+    }
+
+    /* Clean scrollbars */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--color-dark-gray); }
+    ::-webkit-scrollbar-thumb { background: #3a4a5f; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4a5f7a; }
+
+    /* Anchor offset so fixed header doesn't cover section titles */
+    section { scroll-margin-top: 88px; }
+  </style>
 </head>
 <body class="bg-[--color-bg-dark] text-[--color-text-light] font-sans">
-    
-    <!-- Header with smooth-scrolling navigation, simplified -->
-    <header class="bg-zinc-900/50 backdrop-blur-sm fixed top-0 w-full z-50 shadow-lg border-b border-gray-700/50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-xl font-bold text-white transition-colors hover:text-[--color-accent]">
-                Axiom Cortex
+  <!-- HEADER (fixed). Brand text at left, CENTERED nav, CTA at right -->
+  <header class="fixed top-0 z-50 w-full border-b border-white/10 bg-zinc-900/60 backdrop-blur-md">
+    <div class="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4">
+      <!-- Brand (no logo image) -->
+      <a href="#hero" class="justify-self-start text-base font-semibold tracking-wide text-white hover:text-[--color-accent]">
+        TeamStation AI | Axiom Cortex™
+      </a>
+
+      <!-- CENTERED nav -->
+      <nav aria-label="Primary" class="justify-self-center">
+        <ul class="flex items-center gap-6">
+          <li><a href="#overview"  class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Overview</a></li>
+          <li><a href="#features"  class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Features</a></li>
+          <li><a href="#contact"   class="text-sm font-medium text-[--color-text-light] hover:text-[--color-accent]">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right CTA group -->
+      <div class="justify-self-end hidden md:flex items-center gap-2">
+        <a href="https://github.com/TeamStation-AI/Axiom-Cortex-Methodology" target="_blank" rel="noopener"
+           class="rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white hover:border-[--color-accent] hover:text-[--color-accent]">
+          GitHub ↗
+        </a>
+        <a href="#contact"
+           class="rounded-full bg-[--color-accent] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
+          Schedule Demo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="min-h-[88vh] bg-[--color-dark-gray]">
+      <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-20 pt-36 lg:grid-cols-2 lg:gap-12">
+        <div class="text-center lg:text-left">
+          <h1 class="mb-4 text-5xl font-bold leading-tight md:text-6xl">
+            Powered by <span class="text-[--color-accent]">Axiom Cortex™</span>
+          </h1>
+          <p class="mx-auto mb-8 max-w-2xl text-lg text-[--color-text-muted] md:text-xl">
+            The AI-driven system for precise, bias-aware technical evaluations—engineered for CTO-grade rigor.
+          </p>
+          <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
+            <a href="#features"
+               class="rounded-full bg-[--color-accent] px-7 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:shadow-xl">
+              Discover the Features
             </a>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#overview" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Overview</a></li>
-                    <li><a href="#features" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Features</a></li>
-                    <li><a href="#contact" class="text-sm font-medium transition-colors hover:text-[--color-accent]">Contact</a></li>
-                </ul>
-            </nav>
+            <a href="#contact"
+               class="rounded-full border border-white/15 bg-white/10 px-7 py-3 font-semibold text-white transition hover:bg-white/20">
+              Schedule a Demo
+            </a>
+          </div>
         </div>
-    </header>
 
-    <main>
-        <!-- Hero Section - Focusing on Axiom Cortex -->
-        <section id="hero" class="h-screen flex items-center bg-[--color-dark-gray] relative">
-            <div class="container mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="text-center lg:text-left">
-                    <h1 class="text-5xl md:text-7xl font-bold mb-4 leading-tight">
-                        Powered by <span class="text-[--color-accent]">Axiom Cortex™</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-[--color-text-muted] leading-relaxed mb-8">
-                        The AI-driven system for precise and secure technical evaluations, integrated seamlessly into your hiring workflow.
-                    </p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center lg:justify-start">
-                        <a href="#features" class="px-8 py-3 bg-[--color-accent] text-white font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                            Discover the Features
-                        </a>
-                        <a href="#contact" class="px-8 py-3 bg-white/10 text-white font-semibold rounded-full border border-gray-700 transition-all duration-300 transform hover:scale-105 hover:bg-white/20">
-                            Schedule a Demo
-                        </a>
-                    </div>
-                </div>
-                <!-- Right Visual -->
-                <div class="flex justify-center items-center">
-                    <img src="https://placehold.co/400x400/0f1b2e/a6adbb?text=Axiom+Cortex+Logo" alt="Axiom Cortex visual" class="rounded-3xl shadow-2xl scale-125">
-                </div>
-            </div>
-        </section>
-
-        <!-- Overview Section -->
-        <section id="overview" class="py-24 bg-[--color-primary-800]">
-            <div class="container mx-auto px-6 max-w-4xl text-center">
-                <h2 class="text-4xl font-bold mb-4 text-white">The Intelligence Behind the Process</h2>
-                <p class="text-[--color-text-muted] leading-relaxed">
-                    Axiom Cortex is an advanced evaluation engine designed to provide objective, in-depth technical assessments of engineering talent. It combines powerful AI analysis with expert human validation to deliver actionable insights.
-                </p>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="py-24 bg-[--color-bg-dark]">
-            <div class="container mx-auto px-6 max-w-5xl">
-                <h2 class="text-4xl font-bold mb-12 text-center text-white">Key Features</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="bg-[--color-primary-800] p-8 rounded-xl shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-[1.02]">
-                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">AI-Powered Assessments</h3>
-                        <p class="text-[--color-text-muted] leading-relaxed">
-                            Automated, rigorous technical evaluations for a wide range of engineering skills.
-                        </p>
-                    </div>
-                    <!-- Feature 2 -->
-                    <div class="bg-[--color-primary-800] p-8 rounded-xl shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-[1.02]">
-                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">Expert-in-the-Loop</h3>
-                        <p class="text-[--color-text-muted] leading-relaxed">
-                            Every evaluation is reviewed and validated by our network of technical experts.
-                        </p>
-                    </div>
-                    <!-- Feature 3 -->
-                    <div class="bg-[--color-primary-800] p-8 rounded-xl shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-[1.02]">
-                        <h3 class="text-2xl font-semibold mb-3 text-[--color-accent]">Comprehensive Reporting</h3>
-                        <p class="text-[--color-text-muted] leading-relaxed">
-                            Get detailed, shareable reports on candidate skills, strengths, and weaknesses.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-24 bg-[--color-primary-800]">
-            <div class="container mx-auto px-6 max-w-4xl text-center">
-                <h2 class="text-4xl font-bold mb-4 text-white">Integrate Axiom Cortex</h2>
-                <p class="text-[--color-text-muted] leading-relaxed mb-8">
-                    Learn how Axiom Cortex can transform your hiring process.
-                </p>
-                <a href="mailto:info@teamstation.ai" class="px-8 py-3 bg-[--color-accent] text-white font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
-                    Get In Touch
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-zinc-900 py-8 text-center text-[--color-text-muted] border-t border-gray-700">
-        <div class="container mx-auto px-6">
-            <p>&copy; 2024 TeamStation AI. All Rights Reserved.</p>
+        <!-- Right visual (kept simple; no logo image in header as requested) -->
+        <div class="flex items-center justify-center">
+          <div class="aspect-square w-72 rounded-3xl border border-white/10 bg-gradient-to-br from-[--color-primary-800] to-[--color-primary-900] shadow-2xl ring-1 ring-black/40 lg:w-96"></div>
         </div>
-    </footer>
+      </div>
+    </section>
 
+    <!-- OVERVIEW -->
+    <section id="overview" class="bg-[--color-primary-800] py-20">
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">The Intelligence Behind the Process</h2>
+        <p class="mx-auto max-w-3xl leading-relaxed text-[--color-text-muted]">
+          Axiom Cortex is a deterministic evaluation engine that transforms hiring from guesswork into an auditable,
+          bias-mitigated discipline. Built for nearshore scale—without compromising scientific rigor or fairness.
+        </p>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="bg-[--color-bg-dark] py-24">
+      <div class="mx-auto max-w-5xl px-6">
+        <h2 class="mb-10 text-center text-3xl font-bold text-white md:mb-12 md:text-4xl">Key Features</h2>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Feature -->
+          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
+            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">L2-Aware Scoring</h3>
+            <p class="text-[--color-text-muted]">
+              Proficiency-normalized scoring and cross-lingual semantics ensure zero penalty for accent or code-switching.
+            </p>
+          </div>
+          <!-- Feature -->
+          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
+            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">Network Psychometrics</h3>
+            <p class="text-[--color-text-muted]">
+              Gaussian graphical models map real skill connectivity—beyond keyword lists—to infer true full-stack depth.
+            </p>
+          </div>
+          <!-- Feature -->
+          <div class="rounded-xl border border-white/10 bg-[--color-primary-800] p-6 shadow-md transition duration-200 hover:translate-y-[-2px] hover:shadow-xl">
+            <h3 class="mb-2 text-xl font-semibold text-[--color-accent]">Constrained Decision Theory</h3>
+            <p class="text-[--color-text-muted]">
+              Recommendations maximize expected utility while enforcing hard gates on collaboration and reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="bg-[--color-primary-800] py-24">
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Integrate Axiom Cortex</h2>
+        <p class="mx-auto mb-8 max-w-2xl leading-relaxed text-[--color-text-muted]">
+          Learn how Axiom Cortex can harden your hiring pipeline with auditable, CTO-grade evaluations.
+        </p>
+        <a href="mailto:info@teamstation.ai"
+           class="rounded-full bg-[--color-accent] px-8 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:shadow-xl">
+          Get In Touch
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (simple, consistent, blue-only) -->
+  <footer class="border-t border-white/10 bg-zinc-900 py-8 text-center text-[--color-text-muted]">
+    <div class="mx-auto max-w-6xl px-6">
+      <p>© 2025 TeamStation AI. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
