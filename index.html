@@ -1,204 +1,119 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TeamStation AI | Axiom Cortex™ — Technical Methodology</title>
-  <meta name="description" content="Technical methodology brief for the Axiom Cortex cognitive AI engine." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0b1220" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style type="text/tailwindcss">
-    @layer base {
-      :root{
-        --bg:#161b22;
-        --panel:#0d1117;
-        --primary-900:#0b1220;
-        --primary-800:#0f1b2e;
-        --accent:#7bb3ff;
-        --text:#e6e9f0;
-        --muted:#a6adbb;
-        --border:rgba(255,255,255,.12);
-        --radius:16px;
-        --maxw:1200px;
-        --header-h:72px;
-        --toc-w:300px;
-      }
-    }
-    ::-webkit-scrollbar{width:8px;height:8px}
-    ::-webkit-scrollbar-track{background:#0d1117}
-    ::-webkit-scrollbar-thumb{background:#3a4a5f;border-radius:4px}
-    ::-webkit-scrollbar-thumb:hover{background:#4a5f7a}
-    :where(h1,h2,h3,h4,h5,h6){scroll-margin-top:calc(var(--header-h) + 12px)}
+  <style>
+    body { background: #161b22; color: #e6e9f0; font-family: sans-serif; }
+    header, footer { background: #0d1117; }
+    nav a.active, nav a:hover { color: #7bb3ff; }
+    main { max-width: 900px; margin: 0 auto; padding: 90px 16px 48px; }
+    .toc { margin-bottom: 2em; }
+    .toc a { display: inline-block; margin-right: 1.5em; margin-bottom: 0.5em; color: #a6adbb; text-decoration: none; font-weight: 500; }
+    .toc a.active, .toc a:hover { color: #7bb3ff; }
+    article { background: #0d1117; border-radius: 16px; padding: 2em; }
+    pre { background: #0a162d; border-radius: 10px; padding: 1em; overflow-x: auto; }
+    code { background: #212c3b; border-radius: 4px; padding: 0.2em 0.4em; }
+    blockquote { border-left: 4px solid #7bb3ff; background: #202737; padding: 1em; border-radius: 0 12px 12px 0; margin: 1.5em 0; color: #a6adbb;}
+    h1, h2, h3 { margin-top: 1.5em; font-weight: bold;}
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.4em; }
+    h3 { font-size: 1.1em; }
+    ul { list-style: disc inside; margin: 1em 0; }
   </style>
 </head>
-<body class="bg-[--bg] text-[--text] font-sans">
-  <header class="fixed top-0 z-50 w-full border-b border-white/10 bg-zinc-900/60 backdrop-blur-md">
-    <div class="mx-auto grid max-w-[var(--maxw)] grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4">
-      <a href="#/README.md" class="justify-self-start text-base font-semibold tracking-wide text-white hover:text-[--accent]">
+<body>
+  <header class="fixed top-0 left-0 w-full border-b border-white/10 z-10">
+    <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
+      <a href="#README.md" class="text-base font-semibold tracking-wide text-white hover:text-[--accent]">
         TeamStation AI | Axiom Cortex™
       </a>
-      <nav aria-label="Primary" class="justify-self-center">
-        <ul id="top-nav" class="flex items-center gap-6"></ul>
-      </nav>
-      <div class="justify-self-end hidden md:flex items-center gap-2">
-        <a id="cta-schedule" target="_blank" rel="noopener"
-           class="rounded-full bg-[--accent] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
-          Schedule Demo
-        </a>
-      </div>
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq" target="_blank"
+         class="rounded-full bg-[#7bb3ff] px-3 py-2 text-xs font-semibold text-black hover:brightness-110">
+         Schedule Demo
+      </a>
     </div>
   </header>
-  <main class="mx-auto grid max-w-[var(--maxw)] grid-cols-1 gap-6 px-4 pt-[calc(var(--header-h)+20px)] pb-24 lg:grid-cols-[var(--toc-w)_1fr]">
-    <aside class="hidden lg:block sticky top-[calc(var(--header-h)+16px)] self-start rounded-2xl border border-white/10 bg-[--panel] shadow-2xl">
-      <div class="border-b border-white/10 px-4 py-3 text-sm font-semibold">Contents</div>
-      <nav id="toc" class="max-h-[65vh] overflow-auto px-2 py-2 text-sm"></nav>
-    </aside>
-    <article id="content" class="min-w-0 rounded-2xl border border-white/10 bg-[--panel] p-5 shadow-2xl">
-      <p class="text-[--muted]">Loading…</p>
-    </article>
+  <main>
+    <nav class="toc" id="toc"></nav>
+    <article id="content">Loading…</article>
   </main>
-  <footer class="border-t border-white/10 bg-zinc-900/80">
-    <div id="footer" class="mx-auto flex max-w-[var(--maxw)] flex-col items-center gap-3 px-4 py-6 text-center text-[--muted]">
-      <p>© 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.</p>
-      <p><a id="footer-schedule" target="_blank" rel="noopener" class="text-[--accent] hover:brightness-110">Schedule a Technical Demo →</a></p>
+  <footer class="border-t border-white/10 py-6 text-center text-[--muted]">
+    <div id="footer">
+      © 2025 TeamStation AI. Axiom Cortex™ Technical Methodology.<br>
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq"
+         class="text-[#7bb3ff] hover:brightness-110" target="_blank">Schedule a Technical Demo →</a>
     </div>
   </footer>
   <script>
-    // CONFIG
-    const REPO_OWNER = "TeamStation-AI";
-    const REPO_NAME = "Axiom-Cortex-Methodology";
-    const SCHEDULE_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1JD2e4SmSzEC82NiTvzvUJNaghMafqlUdoTB9YlWfUSsJa2fC4uqoXGoOb9XNhRIsNa-IOIXSq';
-    const $ = (s, r=document) => r.querySelector(s);
-    function routeFile() {
-      const h = location.hash.replace(/^#\/?/, '').trim();
-      return h || 'README.md';
-    }
-    async function fetchMarkdownFiles() {
-      const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/`;
-      const res = await fetch(url, { headers: { Accept: "application/vnd.github.v3+json" }});
-      const files = await res.json();
-      // Only .md files, ignore _footer.md and files starting with _
-      return files
-        .filter(f => f.name.endsWith(".md") && !f.name.startsWith("_"))
-        .map(f => ({
-          title: prettifyTitle(f.name),
-          file: f.name
-        }));
-    }
-    function prettifyTitle(name) {
-      let base = name.replace(/\.md$/i, "");
-      if (/^readme$/i.test(base)) return "Overview";
-      return base.replace(/[-_]+/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
-    }
-    function preprocessFences(md){
-      const out=[], lines=md.replace(/\r\n?/g,"\n").split("\n");
-      let inFence=false, lang="", buf=[];
-      for(const line of lines){
-        const m=line.match(/^```(\w+)?\s*$/);
-        if(m){
-          if(!inFence){ inFence=true; lang=(m[1]||""); buf=[]; }
-          else{
-            out.push(`<pre class="overflow-auto rounded-xl border border-white/10 bg-[#0a162d] p-4"><code class="lang-${lang}">${esc(buf.join("\n"))}</code></pre>`);
-            inFence=false; lang=""; buf=[];
-          }
-          continue;
-        }
-        if(inFence) buf.push(line); else out.push(line);
-      }
-      if(inFence) out.push(`<pre class="overflow-auto rounded-xl border border-white/10 bg-[#0a162d] p-4"><code>${esc(buf.join("\n"))}</code></pre>`);
-      return out.join("\n");
-    }
-    function esc(s){return s.replace(/[&<>"]/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));}
-    function mdToHtml(md){
-      md = md.replace(/^>\s*(.+)$/gm,'<blockquote class="my-4 rounded-r-xl border-l-4 border-[--accent] bg-white/5 px-4 py-3">$1</blockquote>');
-      md = md.replace(/^######\s*(.+)$/gm,'<h6 class="mt-6 mb-2 font-semibold">$1</h6>')
-             .replace(/^#####\s*(.+)$/gm,'<h5 class="mt-6 mb-2 font-semibold">$1</h5>')
-             .replace(/^####\s*(.+)$/gm,'<h4 class="mt-6 mb-2 text-lg font-bold">$1</h4>')
-             .replace(/^###\s*(.+)$/gm,'<h3 class="mt-6 mb-2 text-xl font-bold">$1</h3>')
-             .replace(/^##\s*(.+)$/gm,'<h2 class="mt-7 mb-3 text-2xl font-bold">$1</h2>')
-             .replace(/^#\s*(.+)$/gm,'<h1 class="mt-2 mb-4 text-3xl font-bold">$1</h1>');
-      md = md.replace(/^\s*([-*_])\1\1+\s*$/gm,'<hr class="my-6 border-white/10">');
-      md = md.replace(/^(?:\s*)[-*+]\s+(.+)$/gm,'<li>$1</li>');
-      md = md.replace(/(<li>[\s\S]*?<\/li>)/gms,'<ul class="my-4 list-disc pl-6 space-y-1">$1</ul>');
-      md = md.replace(/`([^`]+)`/g,'<code class="rounded bg-white/10 px-1 py-0.5">$1</code>');
-      md = md.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>');
-      md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a class="text-[--accent] font-semibold hover:brightness-110" href="$2" target="_blank" rel="noopener">$1</a>');
-      md = md.split(/\n{2,}/).map(b=>/^\s*</.test(b.trim())?b:`<p class="my-3 leading-relaxed text-[--text]/95">${b.replace(/\n/g,'<br>')}</p>`).join('\n');
-      return md;
-    }
-    function buildTOC(){
-      const toc = $('#toc'); if(!toc) return;
-      toc.innerHTML='';
-      const hs = $$('#content h1, #content h2, #content h3');
-      hs.forEach(h=>{
-        if(!h.id) h.id = slug(h.textContent);
-        const a = document.createElement('a');
-        a.href = '#'+h.id;
-        a.textContent = h.textContent;
-        a.className = (h.tagName==='H1' ? 'block px-2 py-1.5 font-semibold rounded-lg hover:bg-white/10'
-                    : h.tagName==='H2' ? 'block px-3 py-1.5 rounded-lg hover:bg-white/10'
-                    : 'block px-4 py-1.5 text-[--muted] hover:bg-white/10');
-        toc.appendChild(a);
+    // List of shown markdown files:
+    const docs = [
+      { file: "README.md", title: "Overview" },
+      { file: "architecture.md", title: "Architecture" },
+      { file: "deliverables.md", title: "Deliverables" },
+      { file: "risk-and-reliability.md", title: "Risk & Reliability" },
+      { file: "scientific-foundations.md", title: "Scientific Foundations" }
+    ];
+
+    function setActiveNav(hash) {
+      document.querySelectorAll('.toc a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === hash);
       });
     }
-    function slug(s){ return s.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-'); }
-    async function loadFooter(){
-      try{
-        const r = await fetch('_footer.md?ts='+Date.now(), {cache:'no-store'});
-        if(!r.ok) return;
-        const md = await r.text();
-        $('#footer').innerHTML = mdToHtml(preprocessFences(md));
-      }catch(e){}
+
+    function mdToHtml(md) {
+      // very basic Markdown rendering, enough for your docs
+      md = md.replace(/^# (.+)$/gm, "<h1>$1</h1>")
+             .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+             .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+             .replace(/^> (.+)$/gm, "<blockquote>$1</blockquote>")
+             .replace(/```([^`\n]*)\n([\s\S]+?)```/g, '<pre><code>$2</code></pre>')
+             .replace(/`([^`]+)`/g, '<code>$1</code>')
+             .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+             .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+             .replace(/\n\n+/g, "</p><p>")
+             .replace(/<p>/g, '<p class="my-3 leading-relaxed">');
+      return "<p>" + md + "</p>";
     }
-    async function render(){
-      const file = routeFile();
-      $$('#top-nav a').forEach(a=>a.classList.toggle('text-[--accent]', a.dataset.file===file));
-      try{
-        const res = await fetch(file + '?ts=' + Date.now(), {cache:'no-store'});
-        if(!res.ok) throw new Error('404');
-        const md = await res.text();
-        const html = mdToHtml(preprocessFences(md));
-        $('#content').innerHTML = html;
-        buildTOC();
-        window.scrollTo({top:0, behavior:'instant'});
-      }catch(e){
-        $('#content').innerHTML = `
-          <h1 class="mb-2 text-2xl font-bold">404 — Not found</h1>
-          <p class="text-[--muted]">Could not load <code class="rounded bg-white/10 px-1">${esc(file)}</code>.</p>
-          <p><a href="#/README.md" class="text-[--accent] hover:underline">Go to Overview</a></p>`;
-        $('#toc').innerHTML='';
-      }
-    }
-    async function buildTopNav() {
-      const nav = $('#top-nav'); nav.innerHTML='';
-      let pages = [];
+
+    async function loadDoc(file) {
+      setActiveNav(`#${file}`);
+      document.getElementById('content').textContent = 'Loading…';
       try {
-        pages = await fetchMarkdownFiles();
-      } catch (err) {
-        nav.innerHTML = `<li><span class="text-red-400 text-sm">Error loading docs: ${esc(err.message)}</span></li>`;
-        return;
-      }
-      for (const p of pages){
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="#/${p.file}" data-file="${p.file}" class="navlink text-sm font-medium hover:text-[--accent]">${p.title}</a>`;
-        nav.appendChild(li);
-      }
-      if(!nav.children.length){
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="#/README.md" data-file="README.md" class="navlink text-sm font-medium hover:text-[--accent]">Overview</a>`;
-        nav.appendChild(li);
+        const res = await fetch(file + '?ts=' + Date.now());
+        if (!res.ok) throw new Error('Not found');
+        const md = await res.text();
+        document.getElementById('content').innerHTML = mdToHtml(md);
+      } catch (e) {
+        document.getElementById('content').innerHTML = `<h1>404 — Not found</h1>
+          <p class="text-[--muted]">Could not load <code>${file}</code>.</p>
+          <p><a href="#README.md" class="text-[#7bb3ff]">Go to Overview</a></p>`;
       }
     }
-    window.addEventListener('hashchange', render);
-    window.addEventListener('DOMContentLoaded', async ()=>{
-      const s1 = $('#cta-schedule'); if (s1) { s1.href = SCHEDULE_URL; }
-      const s2 = $('#footer-schedule'); if (s2) { s2.href = SCHEDULE_URL; }
-      await buildTopNav();
-      if(!location.hash) location.hash = '/README.md';
-      await render();
-      await loadFooter();
+
+    function buildNav() {
+      const toc = document.getElementById('toc');
+      toc.innerHTML = docs.map(d =>
+        `<a href="#${d.file}"${location.hash === '#' + d.file ? ' class="active"' : ''}>${d.title}</a>`
+      ).join("");
+    }
+
+    window.addEventListener('hashchange', () => {
+      const hash = location.hash || '#README.md';
+      const doc = docs.find(d => '#' + d.file === hash);
+      if (doc) loadDoc(doc.file);
+      setActiveNav(hash);
     });
+
+    // Initial build and load
+    buildNav();
+    if (!location.hash || !docs.some(d => '#' + d.file === location.hash)) location.hash = '#README.md';
+    loadDoc(location.hash.slice(1));
+
   </script>
 </body>
 </html>
