@@ -1,15 +1,101 @@
-<ul class="sidebar">
-    <li><a href="#">Schedule a Demo</a></li>
-    <li><a href="#">See Nearshore IT Co-Pilot™</a></li>
-    <li><a href="#">Technical Interviews</a></li>
-</ul>
-<style>
-    .sidebar a {
-        background-color: lightblue;
-        color: #fff;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Axiom Cortex™ Methodology</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Axiom Cortex™: A comprehensive methodology for engineering elite nearshore teams through scientific evaluation and cognitive analysis.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --theme-color: #2c5aa0;
+      --theme-color-secondary: #1e3a6f;
     }
-    body {
-        background-color: navy;
-        color: #f0f0f0;
+    
+    .sidebar {
+      background: linear-gradient(135deg, var(--theme-color-secondary) 0%, var(--theme-color) 100%);
     }
-</style>
+    
+    .sidebar ul li a {
+      color: #fff;
+      font-weight: 500;
+    }
+    
+    .sidebar ul li a:hover {
+      color: #ffd700;
+    }
+    
+    .sidebar .app-name {
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    
+    .markdown-section h1 {
+      color: var(--theme-color);
+      border-bottom: 2px solid var(--theme-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .markdown-section h2 {
+      color: var(--theme-color-secondary);
+    }
+    
+    .markdown-section strong {
+      color: var(--theme-color);
+    }
+    
+    .markdown-section a {
+      color: var(--theme-color);
+      text-decoration: none;
+    }
+    
+    .markdown-section a:hover {
+      color: var(--theme-color-secondary);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">Loading...</div>
+  <script>
+    window.$docsify = {
+      name: 'Axiom Cortex™',
+      repo: 'https://github.com/TeamStation-AI/Axiom-Cortex-Methodology',
+      homepage: 'README.md',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Search documentation...',
+        noData: 'No results found.',
+      },
+      copyCode: {
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      pagination: {
+        previousText: 'Previous',
+        nextText: 'Next',
+        crossChapter: true,
+        crossChapterText: true,
+      }
+    }
+  </script>
+  <!-- Docsify core -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Search plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <!-- Copy code plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <!-- Pagination plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+  <!-- Zoom image plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+</body>
+</html>
